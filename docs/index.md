@@ -18,3 +18,8 @@ performing any sensitive operation. Fobnail does not need an Internet
 connection what makes it immune to the network stack and remote infrastructure
 attacks. It brings the power of solid system integrity validation to the
 individual in a privacy-preserving solution.
+
+## Table of content
+
+* [Project description](description.md)
+* [Fobnail architecture](architecture.md)
