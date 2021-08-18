@@ -13,3 +13,5 @@ markdown_extensions:
     - pymdownx.keys
 nav:
     - 'Intro': index.md
+    - 'Project description': description.md
+    - 'Fobnail architecture': architecture.md
