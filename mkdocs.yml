@@ -15,3 +15,5 @@ nav:
     - 'Intro': index.md
     - 'Project description': description.md
     - 'Fobnail architecture': architecture.md
+    - 'Flashing sample applications': flashing_samples.md
+    - 'Environment setup': environment.md
