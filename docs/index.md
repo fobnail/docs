@@ -25,3 +25,4 @@ individual in a privacy-preserving solution.
 * [Fobnail architecture](architecture.md)
 * [Environment setup](environment.md)
 * [Flashing sample applications](flashing_samples.md)
+* [Resources](resources.md)
