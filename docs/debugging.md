@@ -1,8 +1,8 @@
 # Debugging nRF52840 dongle
 
 It is possible to debug the nRF82540 dongle wit ha JLink debugger. The dongle
-contains an unpopulated JLink header and a 10 pads for connecting the IDC tag
-probe.
+contains a depopulated JLink header and a 10 pads for connecting the ribbon
+needle connector or a straight ribbon.
 
 ## Prerequisites
 

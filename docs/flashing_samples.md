@@ -55,7 +55,7 @@ which contains zephyr and mcuboot. To compile mcuboot follow the steps below:
    successful, plug the dongle again into the USB port of your computer but
    this time, hold the SW1 switch while plugging. The SW1 switch is the white
    button near the reset button. This will put the dongle into mcuboot
-   bootloader mode. DO nto press the reset button as it will put the dongle
+   bootloader mode. Do not press the reset button as it will put the dongle
    into Nordic bootloader mode (we do not want this). Note this is different
    than previous situation, because this time we are using mcuboot instead of
    stock Nordic's bootlaoder. Unlike Nordic's bootloader, mcuboot does not
