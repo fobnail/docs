@@ -17,9 +17,9 @@ In order to build the container follow the steps below:
    git clone https://github.com/fobnail/fobnail-sdk.git
    ```
 3. Go to fobnail SDK directory: `cd fobnail-sdk`
-4. To use latest container checkout `rust` branch: `git checkout rust`
-5. Execute `docker build . -f Dockerfile.rust -t 3mdeb/fobnail-rust-sdk`. It
-   will build the container with following software available:
+4. To use latest SDK version checkout `rust` branch: `git checkout rust`
+5. Execute `./build.sh`. It will build the container with following software
+   available:
    - Rust 1.55.0
    - Cargo-embed: always the latest version available from Cargo registry
 
