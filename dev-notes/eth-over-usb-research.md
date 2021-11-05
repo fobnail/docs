@@ -67,3 +67,14 @@ CoAP protocol (used by CHARRA) doesn't seem to depend on UDP or any other
 transport layer, yet implementations do depend and removing that dependence
 could require more work than getting UDP support.
 
+There is one particularly interesting project called
+[smoltcp](https://github.com/smoltcp-rs/smoltcp), it is a library providing
+implementation of TCP/IP stack. These are the most important features:
+- provides support for IP + TCP + UDP and others
+- support for individual protocols may be disabled at compile time so we can
+  remove unneeded features like TCP (we can rely on UDP since USB already
+  provides reliable transmission)
+- no unsafe code inside library
+
+Looks like this the only TCP/IP stack written in Rust and compatible with
+`no_std` environments.
