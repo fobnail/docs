@@ -2,25 +2,33 @@
 
 ## Environment prepare
 
-* Get latest stable Rust version from https://rustup.rs.
+* Download and build Fobnail SDK and
 
-* Install required target and tools
-
-```shell
-rustup target add thumbv7em-none-eabihf
-rustup component add llvm-tools-preview
-cargo install cargo-binutils
-cargo install cargo-embed
-cargo install probe-rs-cli
-```
+  ```shell
+  git clone https://github.com/fobnail/fobnail-sdk.git
+  cd fobnail-sdk
+  git checkout rust
+  ./build.sh
+  ```
 
 ## Building app
 
-This is a custom app based on [blinky-button-demo](https://github.com/nrf-rs/nrf-hal/tree/master/examples/blinky-button-demo)
-sample. Code has been adapted run on nRF52840 dongle.
+This is a custom app based on `blinky-button-demo` sample from `nrf-hal`. Code
+has been adapted run on nRF52840 dongle and is available from our
+[nrf-hal](https://github.com/fobnail/nrf-hal/tree/master/examples/blinky-demo-nrf52840)
+fork.
+
+* Clone code and start Fobnail SDK
 
 ```shell
 git clone https://github.com/fobnail/nrf-hal
+cd nrf-hal
+./run-container.sh
+```
+
+* Build sample app
+
+```
 cd examples/blinky-demo-nrf52840
 cargo build --target thumbv7em-none-eabihf
 ```
@@ -28,7 +36,9 @@ cargo build --target thumbv7em-none-eabihf
 ## Flashing app with J-Link compatible device
 
 This is the simpler procedure, it requires J-Link (or compatible device) or
-CMSIS-DAP device. I am using nRF52840-DK development board (J-Link compatible).
+CMSIS-DAP device. I am using
+[nRF52840-DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dk)
+development board (J-Link compatible).
 
 First, check if your device is detected `probe-rs`.
 
@@ -58,13 +68,13 @@ Then type following command to build and run app on target device.
 cargo embed --target thumbv7em-none-eabihf
 ```
 
-Console with emulated UART should start, you see `Blinky demo starting` message,
-on-board leds should start flashing.
+Console with emulated UART should start, you should see `Blinky demo starting`
+message, on-board leds should start flashing.
 
 ## Flashing app with OpenOCD
 
-Flashing is done using Olimex ARM-USB-OCD-H and OpenOCD.
-```
+Flashing is done using Olimex ARM-USB-OCD-H and OpenOCD. Note that OpenOCD isn't
+part of Fobnail SDK so you have to install it manually.
 
 You need OpenOCD version 0.11.0 or later for flashing to work, if your distro
 has older version you need to build it from source.
@@ -83,7 +93,7 @@ make
 sudo make install
 ```
 
-* Convert app into binary format
+* Build app using Fobnail SDK, then convert it into binary format
 
 ```shell
 cargo objdump --target thumbv7em-none-eabihf -- -O binary app.bin
