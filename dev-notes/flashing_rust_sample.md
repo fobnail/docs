@@ -40,7 +40,7 @@ CMSIS-DAP device. I am using
 [nRF52840-DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dk)
 development board (J-Link compatible).
 
-First, check if your device is detected `probe-rs`.
+Start Fobnail SDK and check if your device is detected `probe-rs`.
 
 ```shell
 (docker)$ probe-rs-cli list
@@ -56,13 +56,14 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="1366", ATTR{idProduct}=="1015", OWNER="userna
 
 Set correct `OWNER`, if needed update `idVendor` and `idProduct` to match with
 your device (check output of `lsusb`). Save these rules to
-`/etc/udev/rules.d/99-usb.rules`, then run
+`/etc/udev/rules.d/99-usb.rules` (this must be done on host), then run
 
 ```shell
 $ sudo systemctl reload systemd-udevd
 ```
 
-Then type following command to build and run app on target device.
+Re-plug J-Link for rules to start working, then type following command to build
+and run app on target device.
 
 ```shell
 (docker)$ cargo embed --target thumbv7em-none-eabihf
