@@ -60,14 +60,14 @@ USB driver for NRF52 is already provided by [nrf-hal](https://github.com/nrf-rs/
 project.
 
 Implementations of EEM protocol exist, but these are mostly written in C. I
-haven't found a single Rust implementation of EEM protocol (nor ECM), so a custom
-implementation is needed.
+haven't found a single Rust implementation of EEM protocol (nor ECM), so a
+custom implementation is needed.
 
 Besides the EEM driver, we need an actual Ethernet driver, additionally we may
-need IP + UDP support for CoAP protocol, this may not necessarily be a requirement as
-CoAP protocol (used by CHARRA) doesn't seem to depend on UDP or any other
-transport layer, yet implementations do depend and removing that dependence
-could require more work than getting UDP support.
+need IP + UDP support for CoAP protocol, this may not necessarily be a
+requirement as CoAP protocol (used by CHARRA) doesn't seem to depend on UDP or
+any other transport layer, yet implementations do depend and removing that
+dependence could require more work than getting UDP support.
 
 There is one particularly interesting project called
 [smoltcp](https://github.com/smoltcp-rs/smoltcp), it is a library providing
