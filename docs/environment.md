@@ -1,6 +1,6 @@
 # Environment setup
 
-This document describes hwo to prepare development environment for fobnail.
+This document describes how to prepare development environment for fobnail.
 
 ## Building docker container
 
