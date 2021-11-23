@@ -9,6 +9,27 @@ Prepare the development environment first as described in
 
 ![](images/nRF52840_dongle_buttons_leds.svg)
 
+## Required hardware
+
+You need following hardware to flash apps:
+
+- [nRF52840 dongle](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dongle) -
+  this is the target device on which Fobnail firmware runs.
+
+- [nRF52840-DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dk) -
+  development board used for dongle flashing and debugging.
+
+- [SWD Cable](https://www.adafruit.com/product/1675) - 2x5 1.27 mm pitch IDC
+  cable used for connecting dongle to debugger.
+
+- [Adafruit 4048 header](https://www.adafruit.com/product/4048) - nRF dongle
+  comes without SWD header, so it must be soldered. This is the same header as
+  used in nRF52840-DK board.
+
+When soldered, 4048 header's notch must face direction opposite to USB plug.
+
+<img src="images/nRF52840_dongle_with_swd_header.jpg" width="50%" />
+
 ## Preparing debugger
 
 We use `cargo-embed` for firmware flashing and debugging, which internally uses
