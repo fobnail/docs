@@ -17,8 +17,7 @@ In order to build the container follow the steps below:
    git clone https://github.com/fobnail/fobnail-sdk.git
    ```
 3. Go to fobnail SDK directory: `cd fobnail-sdk`
-4. To use latest SDK version checkout `rust` branch: `git checkout rust`
-5. Execute `./build.sh`. It will build the container with following software
+4. Execute `./build.sh`. It will build the container with following software
    available:
    - Rust 1.55.0
    - Cargo-embed: always the latest version available from Cargo registry
@@ -30,13 +29,14 @@ freshly built docker container. Follow the steps below to test the container:
 
 1. `git clone https://github.com/fobnail/nrf-hal`
 2. `cd nrf-hal`
-3. Start container: `./run-container.sh`
-4. Build a blinky application:
+3. Switch to `blinky-demo-nrf52840` branch: `git checkout blinky-demo-nrf52840`
+4. Start container: `./run-container.sh`
+5. Build a blinky application:
    ```
    cd examples/blinky-demo-nrf52840
    cargo build --target thumbv7em-none-eabihf
    ```
-5. At the end of the process you should see something like this:
+6. At the end of the process you should see something like this:
    ```
    Compiling blinky-demo-nrf52840 v0.1.0 (/home/build/nrf-hal/examples/blinky-demo-nrf52840)
    Finished dev [unoptimized + debuginfo] target(s) in 1m 14s

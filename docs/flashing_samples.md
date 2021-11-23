@@ -27,8 +27,9 @@ If `probe-rs` does not detect debugger, that could mean it is not supported. You
 can set `RUST_LOG=trace` environment variable to retry scanning with debug
 output enabled.
 
-For debugger to work, you need to add a Udev rule granting you correct
+For debugger to work, you need to add an Udev rule granting you correct
 permissions:
+
 ```
 SUBSYSTEM=="usb", ATTR{idVendor}=="1366", ATTR{idProduct}=="1015", OWNER="akowalski", MODE="0660"
 ```
