@@ -18,3 +18,4 @@ nav:
     - 'Environment setup': environment.md
     - 'Flashing sample applications': flashing_samples.md
     - 'Resources': resources.md
+    - 'Run CHARRA concept on PC': charra-concept-on-pc.md
