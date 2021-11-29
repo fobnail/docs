@@ -18,3 +18,4 @@ nav:
     - 'Environment setup': environment.md
     - 'Flashing sample applications': flashing_samples.md
     - 'Resources': resources.md
+    - 'Ethernet over USB research': eth-over-usb-research.md
