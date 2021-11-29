@@ -4,19 +4,25 @@ Fobnail firmware can be built to run either on nRF52840 or Linux. The latter
 option is more suitable for development as it does not need any hardware except
 a development machine.
 
-## Setup
+## Obtaining firmware source code
+
+You can obtain source code from our
+[GitHub repository](https://github.com/fobnail/fobnail).
+
+```shell
+$ git clone https://github.com/fobnail/fobnail --recurse-submodules
+```
+
+## Building and running firmware locally
 
 Make sure you have the latest Fobnail SDK installed and network setup properly.
 See [Environment setup](environment.md) for instructions. For firmware to work
 properly you need the `fobnail0` network interface configured.
 
-## Building and running firmware locally
-
-Clone Fobnail firmware, build, and run it using the following commands.
+To build and run firmware execute the following commands
+(from fobnail directory).
 
 ```shell
-$ git clone https://github.com/fobnail/fobnail --recurse-submodules
-$ cd fobnail
 $ env FOBNAIL_LOG=trace ./build.sh -t pc --run
     Finished dev [unoptimized + debuginfo] target(s) in 0.60s
      Running `target/x86_64-unknown-linux-gnu/debug/fobnail-poc`
