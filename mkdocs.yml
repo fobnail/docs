@@ -19,3 +19,4 @@ nav:
     - 'Flashing sample applications': flashing_samples.md
     - 'Resources': resources.md
     - 'Ethernet over USB research': eth-over-usb-research.md
+    - 'Implementing Ethernet over USB': implementing-eth-over-usb.md
