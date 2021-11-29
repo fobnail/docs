@@ -3,7 +3,7 @@
 This document describes various stuff regarding implementation of
 Ethernet-over-USB. Before commencing implementation we have conducted research
 (see [eth-over-usb-research.md](eth-over-usb-research.md)) for more information.
-To sum up, thats what we have decided:
+To sum up, that's what we have decided:
 
 - we run on bare-metal using `nrf-hal`
 - we use EEM protocol for Ethernet emulation and `smoltcp` as TCP/IP stack
@@ -93,13 +93,13 @@ which aren't a big problem for a PoC, but should eventually be solved.
 
 ## Testing
 
-If you environment is properly set up, app can be flashed by simply running
+If your environment is properly set up, app can be flashed by simply running
 
 ```shell
 $ cargo embed
 ```
 
-`cargo embed` spawn RTT console used for debugging. On host you should see new
+`cargo embed` spawns RTT console used for debugging. On host you should see new
 network interface.
 
 ```shell
@@ -118,7 +118,7 @@ Assign IP address to `usb0`, Fobnail token is at `169.254.0.1`
 $ ifconfig usb0 169.254.0.2
 ```
 
-Fobnail should start printing debug information on RTT console. Note that these
+Fobnail should start to print debug information on RTT console. Note that these
 errors are caused by host sending IPv6 packets. IPv6 support is disabled in
 `smoltcp`.
 
