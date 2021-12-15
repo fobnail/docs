@@ -51,7 +51,7 @@ based on platform metadata (CPU serial, MAC) and the AIK public part.
 
 In the case of local provisioning, the Fobnail token takes the platform
 owner role. The Fobnail token does not receive the policies, and default
-policies policies are used during the attestation.
+policies are used during the attestation.
 
 ### Local platform provisioning diagram
 
