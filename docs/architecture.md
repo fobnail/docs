@@ -47,7 +47,7 @@ based on platform metadata (CPU serial, MAC) and the AIK public part.
 
 ### Remote platform provisioning diagram
 
-![remote-provisioning](images/Fobnail-flows-local-platform-provisioning.png)
+![remote-provisioning](images/Fobnail-flows-remote-platform-provisioning.png)
 
 In the case of local provisioning, the Fobnail token takes the platform
 owner role. The Fobnail token does not receive the policies, and default
