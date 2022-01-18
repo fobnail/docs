@@ -28,7 +28,7 @@ You need following hardware to flash apps:
 
 When soldered, 4048 header's notch must face direction opposite to USB plug.
 
-<img src="images/nRF52840_dongle_with_swd_header.jpg" width="50%" />
+<img src="../images/nRF52840_dongle_with_swd_header.jpg" width="50%" />
 
 ## Preparing debugger
 
