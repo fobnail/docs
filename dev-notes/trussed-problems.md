@@ -55,3 +55,12 @@ Trussed does not provide any mechanisms for performing RSA operations. Only
 ED25519 is supported, but we cannot use it because it's not supported by TPMs.
 Due to lack of documentation, it is unclear how a custom RSA mechanism could
 be implemented.
+
+## Discussions
+
+This is a list of relevant discussions:
+
+- [General project status](https://github.com/trussed-dev/trussed/discussions/17)
+- [Hardware crypto and RSA support](https://github.com/trussed-dev/trussed/discussions/18)
+- [Saving space by disabling unneeded features](https://github.com/trussed-dev/trussed/discussions/19)
+- [Isolation support](https://github.com/trussed-dev/trussed/discussions/20)
