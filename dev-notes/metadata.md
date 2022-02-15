@@ -31,6 +31,7 @@ this
 {
     // metadata version, used to detect backward-incompatible changes
     "version": 1,
+    "model": "Gigabyte A520 AORUS ELITE",
     "mac": [0xea, 0x96, 0x91, 0x87, 0x26, 0x8d],
     "sn": [],
 }
