@@ -42,7 +42,7 @@ additional unique value when other data is not unique enough.
 Metadata is transferred in a CBOR-encoded format. Example metadata looks like
 this (for readability, presented as JSON).
 
-```json
+```jsonc
 {
     // metadata version, used to detect backward-incompatible changes
     "version": 1,
@@ -55,7 +55,7 @@ this (for readability, presented as JSON).
 
 Signature is generated from CBOR blob and added to metadata:
 
-```json
+```jsonc
 {
     // Metadata encoded in CBOR
     "encoded_metadata": [0x42, ...],
