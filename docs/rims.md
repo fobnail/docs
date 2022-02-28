@@ -1,6 +1,6 @@
 # Reference Integrity Manifests
 
-Trusted Computign Group (TCG) specifies Referency Integrity Manifest (RIM) as a
+Trusted Computign Group (TCG) specifies Reference Integrity Manifest (RIM) as a
 structure to convey information about the software and firmware running on
 given system. These manifests are used as an input to retrieve the reference
 golden measurements which indicate teh system is genuine, trusted and runs a
@@ -23,7 +23,7 @@ There are two types of RIMs (Base RIM and Support RIM) with different payload
 types they hold, but there is always Base RIM at the beginning. Base RIM can
 hold 3 different payload types:
 
-* **direct** - contains referency integrity measurements, no Binding
+* **direct** - contains reference integrity measurements, no Binding
   Specification is required for interpreting the payload contents
 * **indirect** - contains the reference integrity measurements for Support RIM.
   A Binding Specification defines the Support RIM
@@ -44,10 +44,12 @@ SWID is followed by the
 
 * Entity structure - describing the RIM creator
 * Link structure - containing a reference/download URL for firmware/software
-  the RIM corresponds to or an UR Lto the previosu RIM superseded/patched by
+  the RIM corresponds to or an URL to the previous RIM superseded/patched by
   current RIM
 * Metadata - various human readable strings describing versions of the RIM,
   platform information and firmware information
+* Payload - description of the data held by the RIM
+* Signature - digital signature of the RIM
 
 Example Base RIM:
 
@@ -100,18 +102,18 @@ Table 1 RIM IM Element-Attribute table
 ```
 
 The RIM above contains two files, one with TPM event log, second with reference
-PCRs. These Support RIM foramts are called TPM Event Log Assertions and TPM PCR
-Assertions. These formats are mandated by PC CLient RIM binding specification
+PCRs. These Support RIM formats are called TPM Event Log Assertions and TPM PCR
+Assertions. These formats are mandated by PC Client RIM binding specification
 (in other words the TCG PC Client Reference Integrity Manifest Specification).
 
 The content of the files is simple:
 
 * TPM Event Log Assertions - raw TPM event log dump
-* TPM PCR Assertionts - raw output from TPM2_PCR_Read command (without response
+* TPM PCR Assertions - raw output from TPM2_PCR_Read command (without response
   header):
-    * UINT32 pcrUpdateCounter
-    * TPML_PCR_SELECTION pcrSelectionOut
-    * TPML_DIGEST pcrValues
+    * `UINT32 pcrUpdateCounter`
+    * `TPML_PCR_SELECTION pcrSelectionOut`
+    * `TPML_DIGEST pcrValues`
 
 There may be multiple Support RIMs with PCRs or Event Logs.
 
@@ -120,11 +122,12 @@ There is a tool abel to generate the RIMs in
 
 ## RIM packaging
 
-The RIM format is not processor-friendly. The data is not structurized. RIM can
+The RIM format is not processor-friendly. The data is not structured. RIM can
 be well described by XML, but in such form it is almost not consumable by a
 small MCU. Thus a few modifications must be made in order to transfer such RIM
-and its payload to fobnail. The following structures are proposed to be used by
-fobnail firmware (all strings are NULL terminated unless stated otherwise):
+and its payload to fobnail. The following structures are proposed (as close to
+specification as possible)to be used by fobnail firmware (all strings are NULL
+terminated unless stated otherwise):
 
 ```C
 struct rim_swid {
