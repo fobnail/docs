@@ -6,11 +6,11 @@ attested. Metadata is composed of
 - Device manufacturer and model name
 - MAC address
 - Serial number
-- EK certificate hash
 
 ## Device manufacturer and model name
 
-Human-readable device name as provided by firmware. On x86 this information should be fetched from SMBIOS `System Information/Manufacturer` and
+Human-readable device name as provided by firmware. On x86 this information
+should be fetched from SMBIOS `System Information/Manufacturer` and
 `System Information/Product Name`.
 
 ## MAC address
