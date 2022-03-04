@@ -4,7 +4,8 @@ The main problem with LittleFS is its space inefficiency (see LittleFS issue
 [#645](https://github.com/littlefs-project/littlefs/issues/645)).
 
 We are using 64 KiB for LittleFS storage, flash memory on nRF52840 is 1 MiB, but
-most of the space has been consumed by firmware.
+most of the space has been consumed by firmware (see
+[firmware-size.md](firmware-size.md) for more information).
 
 We have 64 KiB divided into 16 4 KiB blocks, block size is the erase block size
 of the underlying device. LittleFS reserves 2 blocks for each directory, so
@@ -55,3 +56,21 @@ Certificate storage uses 2 level structure - we create directory named after
 organization name (from certificate subject) an put there certificates with
 matching organization name. This is purely an optimization (for faster cert
 chain verification) and directory structure could be flattened.
+
+## Replacing LittleFS
+
+The reason we are using LittleFS is that Trussed uses it, but Trussed could be
+adapted to work on another filesystem.
+
+There is an embedded filesystem library called
+[TicKV](https://docs.tockos.org/tickv/index.html). Contrary to LittleFS it is
+implemented Rust (LittleFS is implemented in C). It is resistant to power loss
+and has wear levelling.
+
+We need to check whether it doesn't suffer from same or similar problems as
+LittleFS. Also TickV is not a full filesystem, according to
+[TicKV README](https://github.com/tock/tock/tree/master/libraries/tickv#how-tickv-works)
+TicKV can store key/value pairs, not files, also it is'nt stable and on-disk
+format may change at any time.
+
+
