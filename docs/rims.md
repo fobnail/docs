@@ -1,11 +1,11 @@
 # Reference Integrity Manifests
 
-Trusted Computign Group (TCG) specifies Reference Integrity Manifest (RIM) as a
+Trusted Computing Group (TCG) specifies Reference Integrity Manifest (RIM) as a
 structure to convey information about the software and firmware running on
 given system. These manifests are used as an input to retrieve the reference
-golden measurements which indicate teh system is genuine, trusted and runs a
+golden measurements which indicate the system is genuine, trusted and runs a
 configuration and software approved by the RIM issuer (System Supplier, Value
-Added Reseller, Maintenance Organisation, etc.).
+Added Reseller, Maintenance Organization, etc.).
 
 ![RIMs](/images/rims.png)
 
@@ -117,7 +117,7 @@ The content of the files is simple:
 
 There may be multiple Support RIMs with PCRs or Event Logs.
 
-There is a tool abel to generate the RIMs in
+There is a tool able to generate the RIMs in
 [Host Integrity at Runtime and Start-up (HIRS) repository](https://github.com/nsacyber/HIRS/tree/master/tools/tcg_rim_tool)
 
 ## RIM packaging
