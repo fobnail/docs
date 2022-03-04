@@ -11,7 +11,7 @@ tool to copy to and from nRF flash.
   $ cargo build --release
   ```
 
-* For convenience there is `install-certificate` command that takes PEM
+* For convenience there is `install-certificate` command that takes PEM/DER
   certificate, creates required directories and writes DER-encoded certificate
   to memory.
 
@@ -26,3 +26,4 @@ tool to copy to and from nRF flash.
     running Fobnail on PC.
   * `--trusted` flag controls whether certificate is marked as trusted, this
     flag should be set for root CAs. For intermediate certificates it shouldn't.
+  * `--der` flag allows to install DER certificate (default is PEM).
