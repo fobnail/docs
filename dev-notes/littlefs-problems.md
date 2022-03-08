@@ -59,18 +59,18 @@ chain verification) and directory structure could be flattened.
 
 ## Replacing LittleFS
 
-The reason we are using LittleFS is that Trussed uses it, but Trussed could be
-adapted to work on another filesystem.
+The reason we are using LittleFS is that Trussed uses it, but we believe that
+Trussed could be adapted to work with another filesystem.
 
 There is an embedded filesystem library called
 [TicKV](https://docs.tockos.org/tickv/index.html). Contrary to LittleFS it is
-implemented Rust (LittleFS is implemented in C). It is resistant to power loss
-and has wear levelling.
+implemented in Rust (LittleFS is implemented in C). It is resistant to power
+loss and has wear levelling.
 
 We need to check whether it doesn't suffer from same or similar problems as
 LittleFS. Also TickV is not a full filesystem, according to
 [TicKV README](https://github.com/tock/tock/tree/master/libraries/tickv#how-tickv-works)
-TicKV can store key/value pairs, not files, also it is'nt stable and on-disk
+TicKV can store key/value pairs, not files, also it isn't stable and on-disk
 format may change at any time.
 
 
