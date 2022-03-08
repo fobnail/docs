@@ -254,7 +254,7 @@ File  .text     Size Crate              Comment
 0.0%   0.5%   4.4KiB sha1               Pulled by Trussed, we don't use it.
 0.0%   1.5%   5.5KiB sha2               SHA128, SHA256
 0.0%   1.0%   3.8KiB p256_cortex_m4_sys Not used.
-0.0%   0.7%   2.4KiB poly1305           
+0.0%   0.7%   2.4KiB poly1305
 ```
 
 Another quite big thing is the `alloc` crate together with
