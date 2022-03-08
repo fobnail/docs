@@ -139,7 +139,7 @@ connector instead of USB DFU. Inside the fobnail SDK container execute:
    the pins. Execute `make erase`.
 5. Flash the nRF52840 dongle while holding the needle:
    ```
-   nrfjprog -f NRF52 --program graviton_bootloader_mbr_v1.0.1-\[nRF5_SDK_15.0.1-1.alpha_f76d012\].hex 
+   nrfjprog -f NRF52 --program graviton_bootloader_mbr_v1.0.1-\[nRF5_SDK_15.0.1-1.alpha_f76d012\].hex
    ```
 6. Unplug and plug the violet wire to dev kit's VDD. This will initiate a reset
    of the dongle (the Jlink header does not expose reset signal, only P1 header

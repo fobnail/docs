@@ -24,6 +24,25 @@ $(venv) mkdocs build
 $(venv) mkdocs serve
 ```
 
+## pre-commit hooks
+
+* [Install pre-commit](https://pre-commit.com/index.html#install)
+
+* Install hooks into repo:
+
+```
+pre-commit install
+```
+
+* Enjoy automatic checks on each `git commit` action!
+
+* (Optional) Run hooks on all files (for example, when adding new hooks or
+  configuring existing ones):
+
+```bash
+pre-commit run --all-files
+```
+
 # Contribution
 
 Please use GitHub `Pull Request` and `Issues` to collaborate.

@@ -34,7 +34,7 @@ brings following improvements
   performance
 - CDC EEM 1.0 Specification, section 2 - Management Overview
   > Unlike CDC ECM, EEM does not extend an interface across the USB bus but
-  > instead considers the USB bus to be a vehicle for moving Ethernet packets. 
+  > instead considers the USB bus to be a vehicle for moving Ethernet packets.
 - designed for local-only connection over USB emulated Ethernet,
   where ECM is designed for connecting to a real network over Ethernet-to-USB
   modem.
