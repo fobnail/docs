@@ -72,5 +72,3 @@ LittleFS. Also TickV is not a full filesystem, according to
 [TicKV README](https://github.com/tock/tock/tree/master/libraries/tickv#how-tickv-works)
 TicKV can store key/value pairs, not files, also it isn't stable and on-disk
 format may change at any time.
-
-
