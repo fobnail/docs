@@ -54,31 +54,35 @@ of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
 {
     // PCR update counter, incremented every time when some PCR gets updated.
     "update_ctr": 0,
-    // First PCR bank (named after the hash algorithm bank uses)
-    "sha1": {
-        // Bitmap of present PCRs
-        "pcrs": 0xffffffff,
-        // Array of PCR registers, each register holds hash corresponding to the
-        // type of bank.
-        // There must be as many hashes as set bits in "pcrs" field. If
-        // these don't match then RIM is considered invalid.
-        "pcr": [
-            // Size of hash is verified, if one of hashes has invalid size then
-            // entire RIM is considered invalid.
-            [ 0x00, 0x00, 0x00, 0x00, ... ],
-            ...
-        ]
-    },
-    // Another PCR bank (major 0, unsigned integer)
-    "sha2": {
-        "pcrs": 0x000000ff,
-        // major 4 (array)
-        "pcr": [
-            // major 2 (byte string)
-            [ 0x00, 0x00, 0x00, 0x00, ... ],
-            ...
-        ]
-    }
+    // Array of PCR banks (major 4)
+    "banks": [
+        // First PCR bank (named after the hash algorithm bank uses)
+        "sha1": {
+            // Bitmap of present PCRs (major 0, unsigned integer)
+            "pcrs": 0xffffffff,
+            // Array of PCR registers, each register holds hash corresponding to the
+            // type of bank.
+            // There must be as many hashes as set bits in "pcrs" field. If
+            // these don't match then RIM is considered invalid.
+            "pcr": [
+                // Size of hash is verified, whether all hashes in a bank have
+                // the same size, if these don't match then entire RIM is
+                // considered invalid
+                [ 0x00, 0x00, 0x00, 0x00, ... ],
+                ...
+            ]
+        },
+        // Another PCR bank (major 5, map)
+        "sha2": {
+            "pcrs": 0x000000ff,
+            // major 4 (array)
+            "pcr": [
+                // major 2 (byte string)
+                [ 0x00, 0x00, 0x00, 0x00, ... ],
+                ...
+            ]
+        }
+    ],
 }
 ```
 
