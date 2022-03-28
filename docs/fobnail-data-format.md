@@ -56,8 +56,10 @@ of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
     "update_ctr": 0,
     // Array of PCR banks (major 4)
     "banks": [
-        // First PCR bank (named after the hash algorithm bank uses)
-        "sha1": {
+        // First PCR bank
+        {
+            // Name of algorithm used by PCRs
+            "algo_name": "sha1",
             // Bitmap of present PCRs (major 0, unsigned integer)
             "pcrs": 0xffffffff,
             // Array of PCR registers, each register holds hash corresponding to the
@@ -73,7 +75,8 @@ of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
             ]
         },
         // Another PCR bank (major 5, map)
-        "sha2": {
+        {
+            "algo_name": "sha2",
             "pcrs": 0x000000ff,
             // major 4 (array)
             "pcr": [
