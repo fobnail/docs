@@ -58,8 +58,9 @@ of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
     "banks": [
         // First PCR bank
         {
-            // Name of algorithm used by PCRs
-            "algo_name": "sha1",
+            // Algorithm ID as used by TPMs (TPM2_ALG_* constants from libtss)
+            // (major 0, unsigned integer)
+            "algo_id": 0xb,
             // Bitmap of present PCRs (major 0, unsigned integer)
             "pcrs": 0xffffffff,
             // Array of PCR registers, each register holds hash corresponding to the
@@ -76,7 +77,7 @@ of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
         },
         // Another PCR bank (major 5, map)
         {
-            "algo_name": "sha2",
+            "algo_id": 0xb,
             "pcrs": 0x000000ff,
             // major 4 (array)
             "pcr": [
