@@ -38,6 +38,16 @@ the RIM and the product/system the RIM corresponds to. it contains a tagId
 field which is a GUID that must be equal to `ReferenceManifestGuid` in
 `TCG_Sp800-155-PlatformId_Event` from TPM Event Log of the system.
 
+> The EDK2, reference implementation of UEFI specification, does not implement
+> the `TCG_Sp800-155-PlatformId_Event` creation, only parsing the information
+> if it exists. Additionally this structure has already been deprecated in TCG
+> PC Client Platform Firmware Profile Specification for TPM 2.0. Additionally
+> the `ReferenceManifestGuid` should meet the requirements of RFC 4122 (URN
+> UUID). The PC Client Platform Firmware Profile Specification for TPM 2.0 also
+> indicates there was no use of the structure, which means it is highly
+> probable that these structures will nto be present i nevent logs of modern
+> machines.
+
 ![RIMs](/images/rim_relationship.png)
 
 SWID is followed by the
@@ -200,4 +210,7 @@ struct primary_rim {
 ```
 
 There are a lot of strings in these structures which makes the RIM impossible
-to be of fixed size. This may occur to be too spacy.
+to be of fixed size. This may occur to be too spacy. CBOR format is actually
+good for storing variable size data and is allowed by the RIM specifications.
+
+
