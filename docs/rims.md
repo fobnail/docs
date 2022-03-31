@@ -102,7 +102,7 @@ Payload:
      size: 1024
      SHA256:hash: 532eaabd9574880dbf76b9b8cc00832c20a6ec113d682299550d7a6e0f345e25
      supportRIMFormat: TPM PCR Assertions
-Signature: (Enveloped) 
+Signature: (Enveloped)
   sigAlgorithm: rsa-sha256 (MUST be a TCG listed algorithm)
   hashAlgorithm: sha256 (MUST be a TCG listed algorithm)
   keyInfo: subjectKeyIdentifier OR X509Data
@@ -162,7 +162,7 @@ struct rim_metadata {
 	char colloquialVersion[]; // the informal version of the product
 	char edition[]; // the variation of the product (e.g., “Home”, “Enterprise”, “Student”),
 	char product[]; // the base name of the product, exclusive of vendor,
-			// colloquial version, edition, etc. 
+			// colloquial version, edition, etc.
 	char revision[]; // the informal or colloquial representation of the sub-version
 			// of the product (e.g., “SP1”, “R2”, “Beta 2”)
 	char payloadType[]; // "direct", "indirect" OR "hybrid"
@@ -212,5 +212,3 @@ struct primary_rim {
 There are a lot of strings in these structures which makes the RIM impossible
 to be of fixed size. This may occur to be too spacy. CBOR format is actually
 good for storing variable size data and is allowed by the RIM specifications.
-
-
