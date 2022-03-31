@@ -53,15 +53,18 @@ this (for readability, presented as JSON).
 }
 ```
 
-Signature is generated from CBOR blob and added to metadata:
+Signature is generated from CBOR blob and a nonce:
 
 ```jsonc
 {
     // Metadata encoded in CBOR
-    "encoded_metadata": [0x42, ...],
-    // Signature created from "encoded_metadata"
+    "data": [0x42, ...],
+    // Metadata signature
     "signature": [0x20, ...],
 }
 ```
 
 This structure is again encoded with CBOR and sent to Fobnail token.
+
+> Note: Metadata and signing scheme is also described
+> [here](https://fobnail.3mdeb.com/fobnail-data-format/)
