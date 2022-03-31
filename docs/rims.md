@@ -17,7 +17,7 @@ following TCG specifications for usage with fobnail:
 
 These specifications also base on [NIST IR 8060](https://nvlpubs.nist.gov/nistpubs/ir/2016/NIST.IR.8060.pdf#%5B%7B%22num%22%3A100%2C%22gen%22%3A0%7D%2C%7B%22name%22%3A%22XYZ%22%7D%2C108%2C721%2Cnull%5D)
 
-## RIMs used by fobnail
+## RIM types
 
 There are two types of RIMs (Base RIM and Support RIM) with different payload
 types they hold, but there is always Base RIM at the beginning. Base RIM can
@@ -143,7 +143,7 @@ terminated unless stated otherwise):
 struct rim_swid {
 	char Name[]; // Product Name
 	char Version[]; // BIOS version
-	uint8_t tagId[16]; // `ReferenceManifestGuid` from TCG_Sp800-155-PlatformId_Event
+	uint8_t tagId[16]; // `ReferenceManifestGuid` from TCG_Sp800-155-PlatformId_Event or UUID
 	uint32_t tagVersion;
 }
 
