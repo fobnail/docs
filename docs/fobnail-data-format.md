@@ -5,6 +5,11 @@ from Fobnail to Attester and from Attester to Fobnail. We use subset of
 [RFC7049](https://datatracker.ietf.org/doc/html/rfc7049) (no tagging and no
 extensions).
 
+Direction of communication below is specified with regard to Attester, as it is
+CBOR server.
+
+# Output
+
 ## EK certificate
 
 EK certificate is transferred as a raw DER. We don't add any more data so there
@@ -107,5 +112,41 @@ data (without nonce) is wrapped into another CBOR object:
     "data": [0x42, ...],
     // The signature we just computed (major 2, byte array)
     "signature": [0x20, ...]
+}
+```
+
+### Exception
+
+Result of `quote` command has nonce explicitly included in returned structure.
+No additional data is appended before signing. Returned CBOR object has the same
+format as above. This (along with other mechanisms) ensures freshness of Claims,
+in addition to freshness of Evidence (see RATS architecture for description of
+those artifacts).
+
+# Input
+
+## PCR selection
+
+PCR selection is sent to Attester during attestation. Its format is similar to
+that of [RIM](#rim), but stripped out of unnecessary fields. Due to the nature
+of PCR selection parsing done by `TPM2_Quote()`, order of PCR banks matters.
+
+```json
+{
+    // Array of PCR banks (major 4)
+    "banks": [
+        // First PCR bank
+        {
+            // ID of algorithm used by PCRs (major 0)
+            "algo_id": 0x0004,
+            // Bitmap of present PCRs (major 0, unsigned integer)
+            "pcrs": 0xffffffff,
+        },
+        // Another PCR bank (major 5, map)
+        {
+            "algo_id": 0x000b,
+            "pcrs": 0x000000ff,
+        }
+    ],
 }
 ```
