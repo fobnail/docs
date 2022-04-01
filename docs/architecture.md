@@ -117,6 +117,38 @@ the decision.
 
 ![attestation](images/Fobnail-flows-attestation.png)
 
+### Default appraisal policy
+
+Appraisal policy controls what part of Evidence must match RIM, and what "match"
+means for a given element of RIM. Sometimes this is exact match (e.g. hash), for
+other data this may be value relation to reference value (e.g. component version
+same or newer than that from RIM).
+
+Default policy for Fobnail includes comparison of hashes of PCRs 0-7 and 17-18,
+for SHA256 bank. It is checked by using `TPM2_Quote()` command in order to avoid
+sending true PCR values through potentially insecure channel during attestation,
+so only hash of concatenation of those values can be intercepted during transit.
+In addition to PCR selection, Fobnail Token sends nonce that is included in
+signed response, which protects against replay attacks, and in combination with
+TPM mechanism against signing external data starting with magic number also
+proves that Claims and Evidence are fresh.
+
+Reasoning for choosing this particular set of PCRs is that PCR0-7 are used by
+pre-OS environment, and PCR17-18 are used in DRTM flow. Other registers are used
+by OS and may change after software is updated, which would require frequent
+re-provisioning of platform. SHA256 is the only algorithm commonly used - SHA1
+is deprecated and SHA384, while mandatory according to latest TPM specification,
+is not implemented by majority of available TPMs.
+
+In addition to configurable part of policy described above, there are also
+implicit assumptions:
+
+- Metadata is always checked - hash of metadata is used to generate filenames
+  for data stored in Fobnail Token.
+- AIK (and because of its relation, also EK) doesn't change - it is saved during
+  platform provisioning and never again sent by the Attester. During attestation
+  Fobnail Token checks signatures of received data against this saved copy.
+
 ---
 
 ## Keys and certificates
