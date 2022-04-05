@@ -7,7 +7,7 @@ Prepare the development environment first as described in
 
 ## nRF52840 buttons and LEDs
 
-![](images/nRF52840_dongle_buttons_leds.svg)
+![](images/nRF52840_dongle_buttons_leds.png)
 
 ## Required hardware
 
