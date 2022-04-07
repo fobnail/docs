@@ -5,6 +5,9 @@
 
 ## Building iPXE
 
+>NOTE: Prebuilded binary is available on
+[cloud.3mdeb.com](https://cloud.3mdeb.com/index.php/s/4RoyYJTCnxmZJ76)
+
 Clone 3mdem/ipxe repository and checkout to `skinit_lz` branch:
 
 ```
