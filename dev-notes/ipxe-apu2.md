@@ -22,27 +22,27 @@ $ make
 after a few minutes, you should see similar output:
 
 ```
-===========================================================                                                                                                                     
-                                                                                                                                                                                
-To create a bootable floppy, type                                                                                                                                               
-    cat bin/ipxe.dsk > /dev/fd0                                                                                                                                                 
-where /dev/fd0 is your floppy drive.  This will erase any                                                                                                                       
-data already on the disk.                                                                                                                                                       
-                                                                                                                                                                                
-To create a bootable USB key, type                                                                                                                                              
-    cat bin/ipxe.usb > /dev/sdX                                                                                                                                                 
-where /dev/sdX is your USB key, and is *not* a real hard                                                                                                                        
-disk on your system.  This will erase any data already on                                                                                                                       
-the USB key.                                                                                                                                                                    
-                                                                                                                                                                                
-To create a bootable CD-ROM, burn the ISO image                                                                                                                                 
-bin/ipxe.iso to a blank CD-ROM.                                                                                                                                                 
-                                                                                                                                                                                
-These images contain drivers for all supported cards.  You                                                                                                                      
-can build more customised images, and ROM images, using                                                                                                                         
-    make bin/<rom-name>.<output-format>                                                                                                                                         
-                                                                                                                                                                                
-===========================================================  
+===========================================================
+
+To create a bootable floppy, type
+    cat bin/ipxe.dsk > /dev/fd0
+where /dev/fd0 is your floppy drive.  This will erase any
+data already on the disk.
+
+To create a bootable USB key, type
+    cat bin/ipxe.usb > /dev/sdX
+where /dev/sdX is your USB key, and is *not* a real hard
+disk on your system.  This will erase any data already on
+the USB key.
+
+To create a bootable CD-ROM, burn the ISO image
+bin/ipxe.iso to a blank CD-ROM.
+
+These images contain drivers for all supported cards.  You
+can build more customised images, and ROM images, using
+    make bin/<rom-name>.<output-format>
+
+===========================================================
 ```
 
 Now you can see contents of `bin` folder to verify building process.
@@ -84,12 +84,12 @@ Now you can enter to the shell of second iPXE by typing again `Ctrl+B`
 
 ## Troubleshooting
 
-**Problem:** 
+**Problem:**
 
 ```
-util/zbin.c:7:10: fatal error: lzma.h: No such file or directory                        
-    7 | #include <lzma.h>  
-      |          ^~~~~~~~  
+util/zbin.c:7:10: fatal error: lzma.h: No such file or directory
+    7 | #include <lzma.h>
+      |          ^~~~~~~~
 ```
 
 **Solution:**
@@ -101,7 +101,7 @@ Install `liblzma-dev` on host machine:
 ------------------
 
 
-**Problem:** 
+**Problem:**
 
 ```
 util/genfsimg: could not find isolinux.bin
