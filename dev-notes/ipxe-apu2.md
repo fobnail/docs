@@ -1,7 +1,8 @@
-# iPXE on APU2
+# iPXE on PC Engines apu2
 
 ## Prerequisites
-- APU2 with serial connection to host PC
+
+- PC Engines apu2 with serial connection to host PC
 
 ## Building iPXE
 
@@ -60,8 +61,8 @@ Enter to the `bin` folder and run simple HTTP file server:
 
 `$ python3 -m http.server`
 
-Power on APU2 device and enter to the stock iPXE shell by typing `Ctrl+B`. Inside
-shell run:
+Power on PC Engines apu2 device and enter to the stock iPXE shell by typing
+`Ctrl+B`. Inside shell run:
 
 ```
 # dhcp
