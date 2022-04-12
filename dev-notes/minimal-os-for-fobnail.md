@@ -1,57 +1,116 @@
 # Minimal OS for Fobnail project
 
-This document contains a set of information regarding the minimal OS to be
-delivered in the Fobnail project.
+The Fobnail project aims to provide a reference architecture for building
+offline integrity measurement servers on the USB device and clients running in
+Dynamically Launched Measured Environments (DLME). It should allow the Fobnail
+owner to verify the trustworthiness of the running system before performing any
+sensitive operation.
 
-## Previous informations
+According to the information provided at TrenchBoot Summit 2021 (the fragment
+discussed here - https://youtu.be/xZoCtNV8Qs0?t=5062), the minimum OS, together
+with the connected Fobnail Token, should allow determining the state of the
+platform before the target OS is launched. As we can see in the presentation,
+`heads` would be responsible for the platform's trust control, while in this
+document, we want to present the results of research on the possibilities of
+using various operating systems.
 
-> Note: May contain links to an internal repos
+## Different OSs propositions
 
-Initial documentation with notes about minimal OS.
+The research effect is presented below. 4 systems were considered:
 
-* https://gitlab.com/3mdeb/drtmkey/presentations/-/blob/master/fobnail-nitrokey.md#fobnail-enabled-boot-flow
-  - heads with kexec then run operating system
-
-* https://gitlab.com/3mdeb/drtmkey/docs/-/blob/master/description.md#project-description
-  - description of Fobnail project
-
-For phase 8 and 9?
-
-```
-To demponstrate the capabilities of implemented solution,
-we will create the example use case that uses the TrenchBoot - our previous
-NLnet project [9], to verify the integrity of the system firmware, D-RTM
-Configuration Environment (DCE), Linux Kernel, and initrd.
-```
-
-Mention about Zephyr RTOS
-
-```
-The main use case that will be presented as a demonstration is boot
-time attestation. The Fobnail Token will be used to verify an operating system
-during boot time. We will run inside DLME [10] (Dynamically Launched Measured
-Environment) the Zephyr RTOS which will check if the measurements of the
-operating system met the reference measurements in the Fobnail Token.
-If OS is compromised the Fobnail Token warns the user and Zephyr RTOS
-prevents a platform from booting.
-```
-
-* Roadmap for phase 8 and 9
-
-Project
-doc - https://gitlab.com/3mdeb/drtmkey/docs/-/blob/master/fobnail-project-offload.md#fobnail-roadmap-eighth-phase
-
-## Proposed OSes
-
-* Zephyr RTOS
-
-* seL4
-
+* Zephyr
 * Xous
-
+* seL4
 * Linux
 
-## Questions
+Each of them has a short description, an analysis of the launch in DLME, and the
+possibilities and potential problems that will have to be addressed for the
+Fobnail Token to be functional.
 
-* Whether the supplied minimal OS is to be the target operating system or the
-  system that then boots the target system?
+### Zephyr
+
+<!--
+TBD - short overview
+-->
+
+#### Running in DLME
+
+<!--
+TBD
+-->
+
+#### Fobnail integration
+
+<!--
+TBD
+-->
+
+### Xous
+
+<!--
+TBD - short overview
+-->
+
+#### Running in DLME
+
+<!--
+TBD
+-->
+
+#### Fobnail integration
+
+<!--
+TBD
+-->
+
+### seL4
+
+<!--
+TBD - short overview
+-->
+
+#### Running in DLME
+
+<!--
+TBD
+-->
+
+#### Fobnail integration
+
+<!--
+TBD
+-->
+
+### Linux
+
+<!--
+TBD - short overview
+-->
+
+#### Running in DLME
+
+<!--
+TBD
+describe meta-fobnail, running with trenchboot
+-->
+
+#### Fobnail integration
+
+<!--
+TBD
+describe that fobnail is strongly linux depend right now
+-->
+
+## PoC test
+
+<!--
+ideas:
+* run one of the Xous/seL4/Zephyr on PC engines apu2
+*
+-->
+
+## Summarize
+
+<!--
+TBD
+-->
