@@ -206,6 +206,51 @@ Rebooting now..
 
 #### 3mdeb GRUB fork
 
+Problems so early in booting meant we needed to make some modifications to GRUB.
+To test the next build, repeat the steps in the [instructions](#instructions) -
+this time using the branch `tb-grub-3mdeb`.
+
+Compared to the previous configuration, we used the [3mdeb fork for
+GRUB](https://github.com/3mdeb/grub/tree/tpm_event_log_support) here. The Secure
+Kernel Loader on master already uses passing info via MB2 tags. TrenchBoot/GRUB
+lacks it.
+
+We was able to push the boot further but not much further though. The result was
+as follows. We can see that SKL falls into an endless loop (the observed
+`Flushing IOMMU cache` log will be printed indefinitely).
+
+```
+shasum calculated:
+0x001001dc: e5 7d 2d 07 37 2b 7e 38 ec f7 d4 52 72 c9 6d 63   .}-.7+~8...Rr.mc
+0x001001ec: 9e 52 83 76 cc cc cc cc cc cc cc cc cc cc cc cc   .R.v............
+shasum calculated:
+0x001001f0: 7f dd 92 0a 8c 39 1b 4c 76 ee 1c 31 43 a8 55 9e   .....9.Lv..1C.U.
+0x00100200: 6a 6a 41 8f d4 10 17 87 27 fd ea b9 dc d6 57 6a   jjA.....'.....Wj
+PCR extended
+IOMMU MMIO Base Address = 0xf7f00000:
+0x00000000: IOMMU_MMIO_STATUS_REGISTER
+0x00106001: IOMMU_MMIO_DEVICE_TABLE_BA
+0x00103000: IOMMU_MMIO_COMMAND_BUF_BA
+0x00105000: IOMMU_MMIO_EVENT_LOG_BA
+0x00000018: IOMMU_MMIO_STATUS_REGISTER
+INVALIDATE_IOMMU_ALL
+0x00290ad2: IOMMU_MMIO_EXTENDED_FEATURE
+0x0000000a: IOMMU_MMIO_STATUS_REGISTER
+0x0000000a: IOMMU_MMIO_STATUS_REGISTER
+Disabling SLB protection
+IOMMU MMIO Base Address = 0xf7f00000:
+0x0000000a: IOMMU_MMIO_STATUS_REGISTER
+0x00106001: IOMMU_MMIO_DEVICE_TABLE_BA
+0x00103000: IOMMU_MMIO_COMMAND_BUF_BA
+0x00105000: IOMMU_MMIO_EVENT_LOG_BA
+0x0000001a: IOMMU_MMIO_STATUS_REGISTER
+INVALIDATE_IOMMU_ALL
+0x00290ad2: IOMMU_MMIO_EXTENDED_FEATURE
+0x0000000a: IOMMU_MMIO_STATUS_REGISTER
+0x0000000a: IOMMU_MMIO_STATUS_REGISTER
+Flushing IOMMU cache..........................................................
+```
+
 #### W/A patch for SKL
 
 Link to TB issue
