@@ -418,5 +418,5 @@ The changes are merged to `main` branch.
 * At the moment, we have agreed to a satisfactory solution; the later stages of
   the project will allow us to confirm that the OS is running in DLME.
 * To start a discussion of the problems we encountered when trying to integrate
-  `Trenchboot` into PC Engines apu2, we created an issue in
-  [trenchboot-issues](ttps://github.com/TrenchBoot/trenchboot-issues/issues/6)
+  `Trenchboot` into PC Engines apu2, we created an
+  [issue](ttps://github.com/TrenchBoot/trenchboot-issues/issues/6)
