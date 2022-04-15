@@ -12,6 +12,13 @@ building an operating system running in DLME independently.
 - Host PC that meets the requirements outlined in the Yocto Project
   [documentation](https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#compatible-linux-distribution)
   (tested on Ubuntu 20.04)
+- At least 2GB USB stick to flash the image
+- `bmaptools` installed; in case of Ubuntu it can be done via the following
+  command
+
+```
+sudo apt install bmap-tools
+```
 
 ## Background
 
@@ -33,6 +40,13 @@ of:
 
 The above information was obtained from the website describing the [Trenchboot
 repositories](https://trenchboot.org/code/).
+
+It is also important that the platform run at least coreboot `v4.12.0.3`. We
+used PC Engines apu2 for which firmware can be found on
+[pcengines.github.io](https://pcengines.github.io/).
+
+Last thing is to make sure that IOMMU is enabled. For PC Engines apu2 it can be
+checked in setup choosed from boot menu.
 
 ## Building
 
@@ -120,13 +134,75 @@ $ kas-container build meta-fobnail/kas-debug.yml
 Running this command will clone every needed Yocto layer and start the build
 which last about 2 hours for the first run.
 
+6. Flash image.
+
+Firstly, you need to connect your USB stick to your PC and unmount device.
+
+```
+$ sudo fdisk -l
+
+Device     Boot   Start      End Sectors Size Id Type
+/dev/sdb1  *       2048    34815   32768  16M  c W95 FAT32 (LBA)
+/dev/sdb2         34816  2131967 2097152   1G 83 Linux
+/dev/sdb3       2131968  4229119 2097152   1G 83 Linux
+/dev/sdb4       4229120 12617727 8388608   4G 83 Linux
+
+$ sudo umount /dev/sdX*  # in this case /dev/sdb*
+```
+
+Now you can flash your image.
+
+```
+$ cd build/tmp/deploy/images/fobnail-machine
+$ sudo bmaptool copy --bmap fobnail-base-image-debug-fobnail-machine.wic.bmap \
+  fobnail-base-image-debug-fobnail-machine.wic.gz /dev/sdX # in this case /dev/sdb
+```
+
 ## Tests
 
-We checked couple configurations in order to run our minimal OS in DLME.
+We checked couple configurations in order to run our minimal OS in DLME. It is
+important to build GRUB, Linux kernel and Secure Kernel Loader in such a form
+that they can work together, which will allow us to achieve our goal. For most
+cases we want to load the following configuration with GRUB.
+
+```
+menuentry 'secure-boot'{
+  slaunch skinit
+  slaunch_module (hd0,msdos1)/skl.bin
+  linux /bzImage root=/dev/sda2 console=ttyS0,115200 earlyprintk=serial,ttyS0,115200
+}
+```
 
 ### Test of latest Trenchboot
 
-From Trenchboot sources
+At the beginning, we prepared a build containing the revisions mentioned on the
+Trenchboot website. They are listed in the [background](#background) section.
+Such an image can be built by following the steps described in the
+[instructions](#instructions) section, The only difference is that the
+meta-fobnail repository should be checked out to `tb-latest-bad-format` branch.
+
+Unfortunately, the boot failed and reset while the platfrom was still in GRUB.
+The result was as follows.
+
+```
+grub_cmd_slaunch:122: check for manufacturer
+grub_cmd_slaunch:126: check for cpuid
+grub_cmd_slaunch:136: set slaunch
+grub_cmd_slaunch_module:156: check argc
+grub_cmd_slaunch_module:161: check relocator
+grub_cmd_slaunch_module:170: open file
+grub_cmd_slaunch_module:175: get size
+grub_cmd_slaunch_module:180: allocate memory
+grub_cmd_slaunch_module:192: addr: 0x100000
+grub_cmd_slaunch_module:194: target: 0x100000
+grub_cmd_slaunch_module:196: add module
+grub_cmd_slaunch_module::205: read file
+grub_cmd_slaunch_module:215: close file
+grub_slaunch_boot_skinit:41: real_mode_target: 0x8b000
+grub_slaunch_boot_skinit:42: prot_mode_target: 0xx1000000
+grub_slaunch_boot_skinit:43: params: 0xcfe037cBad bootloader data format
+Rebooting now..
+```
 
 #### 3mdeb GRUB fork
 
