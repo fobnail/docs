@@ -22,9 +22,9 @@ sudo apt install bmap-tools
 
 ## Background
 
-In order to prepare a system that will be capable to running in DLME we want to
-use [Trenchboot](https://trenchboot.org/) project. It is a framework that allows
-to build security engines to perform launch integrity actions for their systems.
+To prepare a system that will be capable to run in DLME we want to use
+[Trenchboot](https://trenchboot.org/) project. It is a framework that allows
+building security engines to perform launch integrity actions for their systems.
 The framework builds upon Boot Integrity Technologies (BITs) that establish one
 or more Roots of Trust (RoT) from which a degree of confidence that integrity
 actions were not subverted.
@@ -41,12 +41,12 @@ of:
 The above information was obtained from the website describing the [Trenchboot
 repositories](https://trenchboot.org/code/).
 
-It is also important that the platform run at least coreboot `v4.12.0.3`. We
-used PC Engines apu2 for which firmware can be found on
+It is also crucial that the platform runs at least coreboot `v4.12.0.3`. We
+used PC Engines apu2, for which firmware can be found on
 [pcengines.github.io](https://pcengines.github.io/).
 
-Last thing is to make sure that IOMMU is enabled. For PC Engines apu2 it can be
-checked in setup choosed from boot menu.
+The last thing is to make sure that IOMMU is enabled. For PC Engines apu2 it can
+be checked in setup chosen from the boot menu.
 
 ## Building
 
@@ -59,7 +59,7 @@ reproduce our effort if only the prerequisites are met.
 
 ### Instructions
 
-To complete the build process please execute the following steps.
+To complete the build process, please execute the following steps.
 
 1. Download `kas-container` script, place it in PATH
 
@@ -136,7 +136,7 @@ which last about 2 hours for the first run.
 
 6. Flash image.
 
-Firstly, you need to connect your USB stick to your PC and unmount device.
+Firstly, you need to connect your USB stick to your PC and unmount the device.
 
 ```
 $ sudo fdisk -l
@@ -160,10 +160,10 @@ $ sudo bmaptool copy --bmap fobnail-base-image-debug-fobnail-machine.wic.bmap \
 
 ## Tests
 
-We checked couple configurations in order to run our minimal OS in DLME. It is
-important to build GRUB, Linux kernel and Secure Kernel Loader in such a form
+We checked a couple of configurations to run our minimal OS in DLME. It is
+essential to build GRUB, Linux kernel, and Secure Kernel Loader in such a form
 that they can work together, which will allow us to achieve our goal. For most
-cases we want to load the following configuration with GRUB.
+cases, we want to load the following configuration with GRUB.
 
 ```
 menuentry 'secure-boot'{
@@ -175,13 +175,13 @@ menuentry 'secure-boot'{
 
 ### Test of latest Trenchboot
 
-At the beginning, we prepared a build containing the revisions mentioned on the
+In the beginning, we prepared a build containing the revisions mentioned on the
 Trenchboot website. They are listed in the [background](#background) section.
 Such an image can be built by following the steps described in the
-[instructions](#instructions) section, The only difference is that the
+[instructions](#instructions) section. The only difference is that the
 meta-fobnail repository should be checked out to `tb-latest-bad-format` branch.
 
-Unfortunately, the boot failed and reset while the platfrom was still in GRUB.
+Unfortunately, the boot failed and reset while the platform was still in GRUB.
 The result was as follows.
 
 ```
@@ -206,18 +206,18 @@ Rebooting now..
 
 #### 3mdeb GRUB fork
 
-Problems so early in booting meant we needed to make some modifications to GRUB.
-To test the next build, repeat the steps in the [instructions](#instructions) -
-this time using the branch `tb-grub-3mdeb`.
+Problems early in booting meant we needed to make some modifications to GRUB. To
+test the next build, repeat the steps in the [instructions](#instructions) using
+the branch `tb-grub-3mdeb`.
 
 Compared to the previous configuration, we used the [3mdeb fork for
 GRUB](https://github.com/3mdeb/grub/tree/tpm_event_log_support) here. The Secure
 Kernel Loader on master already uses passing info via MB2 tags. TrenchBoot/GRUB
 lacks it.
 
-We was able to push the boot further but not much further though. The result was
-as follows. We can see that SKL falls into an endless loop (the observed
-`Flushing IOMMU cache` log will be printed indefinitely).
+We were able to push the boot further, but not much further though. The result
+was as follows. SKL falls into an endless loop (the observed `Flushing IOMMU
+cache` log will be printed indefinitely).
 
 ```
 shasum calculated:
@@ -262,7 +262,7 @@ We decided to implement the second option and add the following change into the
 SKL source code.
 
 ```
-Subject: [PATCH] main.c: IOMMU flushing inifnity loop workaround
+Subject: [PATCH] main.c: IOMMU flushing infinity loop workaround
 
 ---
  main.c | 7 ++++---
@@ -290,7 +290,9 @@ index d2c727a..d125fa6 100644
 2.25.1
 ```
 
-It helped us to go even further. The start was promising.
+It helped us to go even further. To test this changes, repeat the steps in the
+[instructions](#instructions) using the branch `tb-grub-3mdeb-iommu`. The start
+was promising.
 
 ```
 shasum calculated:
@@ -339,7 +341,7 @@ shasum calculated:
 PCR extended
 ```
 
-But unfortunately we failed to boot and the proces end with `slaunch: Error
+But unfortunately, we failed to boot, and the process ended with `slaunch: Error
 failed to find TPM event log` error.
 
 ```
@@ -391,7 +393,7 @@ Full boot log can be found in [meta-fobnail-log.cap](./meta-fobnail-log.cap).
 
 Unfortunately, we had to make a few concessions to get our system running in
 DLME. Instead of SKL, we used a landing zone, we had to replace the kernel with
-an older version (v5.8) and we had to turn off IOMMU in the platform options.
+an older version (v5.8), and we had to turn off IOMMU in the platform options.
 Ultimately, we used the following components for the build.
 
 * [GRUB](https://github.com/3mdeb/grub/commit/4dfd376a2aac1045f467d7e0d70f37b3a6d82eeb):
@@ -401,20 +403,20 @@ Ultimately, we used the following components for the build.
 * [landing-zone](https://github.com/TrenchBoot/landing-zone/commit/60bba229ae5dd12f29d205e02197313139d8ae3f):
   instead of Secure Kernel Loader from TrenchBoot
 
-By using the above, we are able to boot into a system in which we assume that we
-are in DLME. In the later stages of the project, we will add to the system
-appropriate tools to check the content of PCR17 and PCR18, which will clearly
-allow us to confirm this fact.
+Using the above, we can boot into a system for which we assume it runs in DLME.
+In the later stages of the project, we will add to the system appropriate tools
+to check the content of PCR17 and PCR18, which will allow us to confirm this
+fact. To test this build, repeat the steps in the [instructions](#instructions).
+The changes are merged to `main` branch.
 
 ## Summary
 
 * When we started working on this issue, we assumed that we would be able to run
   a minimal OS in DLME by integrating the latest revisions of `Trenchboot`
-  components in it, unfortunately we encountered some problems that may be
+  components in it; unfortunately, we encountered some problems that may be
   possible to solve together.
-* At the moment, we have agreed to a solution that is satisfactory, the later
-  stages of the project will allow us to clearly confirm that the OS is runnig
-  in DLME.
+* At the moment, we have agreed to a satisfactory solution; the later stages of
+  the project will allow us to confirm that the OS is running in DLME.
 * To start a discussion of the problems we encountered when trying to integrate
   `Trenchboot` into PC Engines apu2, we created an issue in
   [trenchboot-issues](ttps://github.com/TrenchBoot/trenchboot-issues/issues/6)
