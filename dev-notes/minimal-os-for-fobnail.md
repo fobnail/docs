@@ -29,9 +29,10 @@ Fobnail Token to be functional.
 
 ### Zephyr
 
-<!--
-TBD - short overview
--->
+Zephyr is an well-known and supported embedded RTOS with monolithic kernel
+written in C. It supports variety of devices ranging from Cortex-M to x86 CPUs
+and provides support for IPv4, CoAP and USB needed for communication with
+Fobnail Token.
 
 #### Running in DLME
 
@@ -41,9 +42,19 @@ TBD
 
 #### Fobnail integration
 
-<!--
-TBD
--->
+Zephyr provides most of the drivers needed for integration:
+
+- USB hub drivers
+- USB EEM driver
+- Network stack with IPv4 and CoAP support
+
+TPM driver is missing, however there is a fairly recent
+[PoC implementation](https://github.com/drandreas/zephyr-tpm2-poc) of TPM2
+stack.
+
+Zephyr provides good support for standard C library (newlib) which should
+simplify [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+porting.
 
 ### Xous
 
@@ -65,21 +76,37 @@ TBD
 
 ### seL4
 
-<!--
-TBD - short overview
--->
+seL4 is a secure L4 family microkernel written in C. It has strong security
+guarantees assured by [Format proofs](https://sel4.systems/Info/FAQ/proof.pml),
+however these proofs are still incomplete for x86, see
+[Supported Platforms](https://docs.sel4.systems/Hardware) for an up-to-date
+verification status. seL4 due to its microkernel nature provides higher
+isolation, breach in one of the components (like USB driver, network stack)
+wouldn't compromise entire OS contrary to monolithic kernels.
 
 #### Running in DLME
 
-<!--
-TBD
--->
+It should be runnable, however due to microkernel nature all programs run in
+unprivileged mode which may complicate booting of the target OS.
 
 #### Fobnail integration
 
-<!--
-TBD
--->
+seL4 provides virtually no drivers, except few drivers listed
+[here](https://docs.sel4.systems/projects/available-user-components.html).
+According to the page linked above `libusbdrivers` is inactive, it also lacks
+XHCI support. seL4 has a basic support for an old version of musl C library
+(v1.1.16).
+
+Using seL4 would require significant amount of work:
+- Extending USB drivers
+- Implementing USB EEM driver
+- Implementing TPM driver
+- Porting [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+
+[Genode](https://github.com/genodelabs/genode) can run on seL4 and provides
+drivers at least for some devices and a network stack. Its support for seL4 used
+to be incomplete and many components were broken, however that might have
+changed. It may be an easier way to get software running on seL4.
 
 ### Linux
 
