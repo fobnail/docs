@@ -13,6 +13,7 @@ building an operating system running in DLME independently.
   [documentation](https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#compatible-linux-distribution)
   (tested on Ubuntu 20.04)
 - At least 2GB USB stick to flash the image
+- At least 2GB SD card and SD card reader
 - `bmaptools` installed; in case of Ubuntu it can be done via the following
   command
 
@@ -402,6 +403,19 @@ Ultimately, we used the following components for the build.
   version v5.8, branch `linux-sl-5.8amd`
 * [landing-zone](https://github.com/TrenchBoot/landing-zone/commit/60bba229ae5dd12f29d205e02197313139d8ae3f):
   instead of Secure Kernel Loader from TrenchBoot
+
+In addition, we also had to give up trying to boot our system from a USB stick
+and switch to booting from a SD card. Unfortunately, after the LZ application,
+the system was unable to detect the USB device while booting. Eventually we
+loaded the following configuration into GRUB.
+
+```
+menuentry 'secure-boot'{
+  slaunch skinit
+  slaunch_module (hd0,msdos1)/lz_header.bin
+  linux /bzImage root=/dev/mmcblk0p2 console=ttyS0,115200 earlyprintk=serial,ttyS0,115200
+}
+```
 
 Using the above, we can boot into a system for which we assume it runs in DLME.
 In the later stages of the project, we will add to the system appropriate tools
