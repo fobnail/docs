@@ -147,11 +147,42 @@ them under Linux will not cause major problems.
 
 ## PoC test
 
-<!--
-ideas:
-* run one of the Xous/seL4/Zephyr on PC engines apu2
-*
--->
+Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
+support. During PoC we use GRUB from
+[here](https://github.com/3mdeb/grub/tree/tb_xen).
+
+```shell
+$ git clone https://github.com/3mdeb/grub/ --branch tb_xen
+```
+
+Prepare container for building GRUB.
+
+```shell
+$ cd grub
+$ docker run --rm -it -v $(readlink -f ..):$(readlink -f ..) -w $PWD ubuntu:18.04
+(docker)$ apt update
+(docker)$ apt install gcc-5 automake autoconf make git gettext autopoint \
+    pkg-config python bison flex
+```
+
+Build GRUB (execute from container while in GRUB directory)
+
+```shell
+(docker)$ ./bootstrap
+(docker)$ mkdir ../grub-install build
+(docker)$ env CC=gcc-5 ../configure --prefix=$(readlink -f ../../build)
+(docker)$ make -j$(nproc)
+(docker)$ make install
+```
+
+Exit container and prepare boot disk by creating MBR + FAT32 partition.
+
+```shell
+$ sudo fdisk /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0
+```
+
+
+TBD: describe more
 
 ## Summary
 
