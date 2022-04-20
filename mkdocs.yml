@@ -13,13 +13,18 @@ markdown_extensions:
     - pymdownx.keys
 nav:
     - 'Intro': index.md
-    - 'Project description': description.md
-    - 'Fobnail architecture': architecture.md
-    - 'Environment setup': environment.md
-    - 'Developing firmware on PC': local_development.md
-    - 'Flashing sample applications': flashing_samples.md
-    - 'Resources': resources.md
-    - 'Ethernet over USB research': eth-over-usb-research.md
-    - 'Implementing Ethernet over USB': implementing-eth-over-usb.md
-    - 'Run CHARRA concept on PC': charra-concept-on-pc.md
-    - 'Fobnail data format': fobnail-data-format.md
+    - 'Supported Hardware':
+        - 'Fobnail Token': fobnail_token.md
+  #     - 'NitroKey': nitrokey.md
+    - 'Development Process':
+      - 'Environment setup': environment.md
+      - 'Developing firmware on PC': local_development.md
+      - 'Flashing sample applications': flashing_samples.md
+      - 'Run CHARRA concept on PC': charra-concept-on-pc.md
+    - 'Knowledge Base':
+      - 'Detailed description': description.md
+      - 'Architecture': architecture.md
+      - 'Data format': fobnail-data-format.md
+      - 'Ethernet over USB':
+        - 'Research': eth-over-usb-research.md
+        - 'Implementation': implementing-eth-over-usb.md
