@@ -42,7 +42,7 @@ To specify TCTI commands for the TPM, set the 'CHARRA_TCTI' environment variable
 * Log trace of attester...
 
 ```shell
-$ ./bin/attester 
+$ ./bin/attester
 12:01:50 DEBUG src/attester.c:139: [attester] Attester Configuration:
 12:01:50 DEBUG src/attester.c:140: [attester]     Used local port: 5683
 12:01:50 DEBUG src/attester.c:141: [attester]     DTLS-PSK enabled: false
@@ -52,7 +52,7 @@ $ ./bin/attester
 12:01:50 INFO  src/attester.c:248: [attester] Registering CoAP resources.
 12:01:50 INFO  src/util/coap_util.c:192: [coap-util] Adding CoAP FETCH resource 'attest'.
 12:01:50 DEBUG src/attester.c:253: [attester] Entering main loop.
-12:01:57 INFO  src/attester.c:299: [attester] Resource 'attest': Received message.//<= Here we got request from verifier 
+12:01:57 INFO  src/attester.c:299: [attester] Resource 'attest': Received message.//<= Here we got request from verifier
 12:01:57 INFO  src/attester.c:313: [attester] Received data of length 52.
 12:01:57 INFO  src/attester.c:315: [attester] Received data of total length 52.
 12:01:57 INFO  src/attester.c:320: [attester] Parsing received CBOR data. //Parsing request in libcbor library
@@ -121,5 +121,3 @@ $ ./bin/attester
 - FOB3.10 The Fobnail Token MUST receive and verify the Reference Integration Measurements
 
 - FOB3.11 The Fobnail Token MUST save the RIM in the Fobnail token memory
-
-
