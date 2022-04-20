@@ -79,4 +79,3 @@ before performing sensitive operations.
 [nlnet_tb]: https://nlnet.nl/project/OpenDRTM/
 [tcg_drtm]: https://trustedcomputinggroup.org/wp-content/uploads/DRTM-Specification-Overview_June2013.pdf
 [lkrg]: https://www.openwall.com/lkrg
-

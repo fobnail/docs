@@ -27,7 +27,7 @@ detailed project description please check [here](description).
 ## Where to go next?
 
 * Read Fobnail Project [detailed description](description.md)
-* 
+*
 * [Environment setup](environment.md)
 * [Flashing sample applications](flashing_samples.md)
 * [Resources](resources.md)
@@ -42,4 +42,3 @@ detailed project description please check [here](description).
 [fobnail_fw]: https://github.com/fobnail/fobnail
 [tcg_drtm]: https://trustedcomputinggroup.org/wp-content/uploads/DRTM-Specification-Overview_June2013.pdf
 [gkerneis]: https://gabriel.kerneis.info/2021/11/local_attestation/
-
