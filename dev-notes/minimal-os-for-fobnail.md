@@ -29,16 +29,20 @@ Fobnail Token to be functional.
 
 ### Zephyr
 
-Zephyr is an well-known and supported embedded RTOS with monolithic kernel
-written in C. It supports variety of devices ranging from Cortex-M to x86 CPUs
-and provides support for IPv4, CoAP and USB needed for communication with
-Fobnail Token.
+Zephyr is a well-known and supported embedded RTOS with a monolithic kernel
+written in C. It supports various devices ranging from Cortex-M to x86 CPUs and
+provides support for IPv4, CoAP, and USB needed for communication with Fobnail
+Token.
 
 #### Running in DLME
 
-<!--
-TBD
--->
+Zephyr boots over Multiboot1, but SKL supports only Muliboot2, so either SKL
+must be extended to gain Multiboot1 support or Zephyr to gain Multiboot2. Also,
+Zephyr is not portable - some important configuration is baked into Zephyr
+during build, like LAPIC base address - the base address is set by
+`CONFIG_LOAPIC_BASE_ADDRESS`, if `IA32_APIC_BASE` MSR doesn't match, Zephyr will
+break. The same thing for xAPIC vs x2APIC mode. If Zephyr was configured to use
+xAPIC mode, it might not boot on a platform with x2APIC enabled in its firmware.
 
 #### Fobnail integration
 
@@ -52,32 +56,36 @@ TPM driver is missing, however there is a fairly recent
 [PoC implementation](https://github.com/drandreas/zephyr-tpm2-poc) of TPM2
 stack.
 
-Zephyr provides good support for standard C library (newlib) which should
+Zephyr provides good support for standard C library (newlib), which should
 simplify [fobnail-attester](https://github.com/fobnail/fobnail-attester)
 porting.
 
 ### Xous
 
-<!--
-TBD - short overview
--->
+Xous is a microkernel-based OS written in Rust, currently in Alpha state. Xous
+is used as a secure microkernel for [Betrusted](betrusted.io) device and is
+focused on RISC-V, which right now is the only architecture supported. However,
+x86 already contains
+[dummy implementation](https://github.com/betrusted-io/xous-core/blob/30b82b25b100e958790973c129dc49e1acca79ec/kernel/src/arch/x86_64.rs)
+which probably will be extended someday.
+
 
 #### Running in DLME
 
-<!--
-TBD
--->
+Xous currently cannot run on x86, and DLME on RISC-V is not covered here.
 
 #### Fobnail integration
 
-<!--
-TBD
--->
+Xous has network support but currently lacks USB host drivers and TPM support.
+Also, it lacks C interface for calling the kernel and lacks C library. Getting
+[fobnail-attester](https://github.com/fobnail/fobnail-attester) running may
+require a significant amount of work. Also, Xous needs to gain kexec-like
+abilities to chainload target OS.
 
 ### seL4
 
 seL4 is a secure L4 family microkernel written in C. It has strong security
-guarantees assured by [Format proofs](https://sel4.systems/Info/FAQ/proof.pml),
+guarantees assured by [Formal proofs](https://sel4.systems/Info/FAQ/proof.pml),
 however these proofs are still incomplete for x86, see
 [Supported Platforms](https://docs.sel4.systems/Hardware) for an up-to-date
 verification status. seL4 due to its microkernel nature provides higher
@@ -86,27 +94,32 @@ wouldn't compromise entire OS contrary to monolithic kernels.
 
 #### Running in DLME
 
-It should be runnable, however due to microkernel nature all programs run in
-unprivileged mode which may complicate booting of the target OS.
+seL4 is a secure L4 family microkernel written in C. It has strong security
+guarantees assured by [Formal proofs](https://sel4.systems/Info/FAQ/proof.pml).
+However, these proofs are still incomplete for x86, see
+[Supported Platforms](https://docs.sel4.systems/Hardware) for an up-to-date
+verification status. seL4, due to its microkernel nature, provides higher
+isolation. A breach in one of the components (like USB driver, network stack)
+wouldn't compromise the entire OS, contrary to monolithic kernels.
 
 #### Fobnail integration
 
-seL4 provides virtually no drivers, except few drivers listed
-[here](https://docs.sel4.systems/projects/available-user-components.html).
-According to the page linked above `libusbdrivers` is inactive, it also lacks
-XHCI support. seL4 has a basic support for an old version of musl C library
-(v1.1.16).
+seL4 provides virtually no drivers, except a few drivers listed here.
+According to the page linked above, `libusbdrivers` is inactive and lacks XHCI
+support. seL4 has basic support for an old version of musl C library (v1.1.16).
 
-Using seL4 would require significant amount of work:
+Using seL4 would require a significant amount of work:
 - Extending USB drivers
 - Implementing USB EEM driver
 - Implementing TPM driver
 - Porting [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+- seL4 runs all processes in unprivileged mode, so the kernel itself would have
+  to be modified to allow booting of another kernel
 
 [Genode](https://github.com/genodelabs/genode) can run on seL4 and provides
-drivers at least for some devices and a network stack. Its support for seL4 used
-to be incomplete and many components were broken, however that might have
-changed. It may be an easier way to get software running on seL4.
+drivers, at least for some devices and a network stack. Its support for seL4
+used to be incomplete, and many components were broken. However, that might have
+changed, and Genode may be an easier way to get software running on seL4.
 
 ### Linux
 
