@@ -343,4 +343,4 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 | Zephyr  | Yes              | Yes              | Yes           | PoC available | Limited        | No                      |
 | Xous    | No               | No               | Yes           | No            | Limited        | No                      |
 | seL4    | From Genode only | From Genode only | Yes           | No            | Limited        | No                      |
-| Linux   | Yes              | Yes              | Yes           | Yes           | Yes            | No                      |
+| Linux   | Yes              | Yes              | Yes           | Yes           | Yes            | Yes (kexec)             |
