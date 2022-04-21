@@ -1,20 +1,34 @@
 # Minimal OS for Fobnail project
 
-The Fobnail project aims to provide a reference architecture for building
+The Fobnail Project aims to provide a reference architecture for building
 offline integrity measurement servers on the USB device and clients running in
 Dynamically Launched Measured Environments (DLME). It should allow the Fobnail
 owner to verify the trustworthiness of the running system before performing any
 sensitive operation.
 
-According to the information provided at TrenchBoot Summit 2021 (the fragment
-discussed here - https://youtu.be/xZoCtNV8Qs0?t=5062), the minimum OS, together
-with the connected Fobnail Token, should allow determining the state of the
-platform before the target OS is launched. As we can see in the presentation,
-`heads` would be responsible for the platform's trust control, while in this
-document, we want to present the results of research on the possibilities of
-using various operating systems.
+According to the information presented at TrenchBoot Summit 2021
+[Fobnail: Attestation in Your Pocket](https://youtu.be/xZoCtNV8Qs0?t=5062),
+the minimum OS, together with the connected Fobnail Token, should allow
+determining the state of the platform before the target OS is launched. As we
+can see in the presentation, `heads` would be responsible for the platform's
+trust control, while in this document, we want to present the results of
+research on the possibilities of using various operating systems.
 
 ## Different OSs propositions
+
+We pay attention to the drivers supported by each OS. We need the following
+drivers:
+
+- TPM drivers
+- Drivers required for communicating with Fobnail Token
+  - USB host drivers
+  - USB EEM driver - emulated Ethernet driver
+  - Network stack with IPv4 support
+
+Also we pay attention to OS security, ability to run in DLME, including
+portability beetween different hardware (a single binary should be able to boot
+on all x86 platforms with support for ACPI) and ability to chainload another,
+target OS.
 
 The research effect is presented below. 4 systems were considered:
 
@@ -52,7 +66,7 @@ Some important HW-related configuration is baked into Zephyr during build:
 
 - APIC mode (xAPIC vs x2APIC) is selected when building Zephyr and cannot be
   detected at runtime. Zephyr may not boot if it has different APIC mode set
-  than firmwre has.
+  than firmware has.
 
 #### Fobnail integration
 
@@ -321,3 +335,12 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 * The description of an attempt to run Zephyr on PC Engines apu2 in order to
   verify the current state of the system to work with Fobnail Token has been
   included. The effects are described in the [PoC test](#poc-test) section.
+
+* The table below summarises all OSes features.
+
+| OS      | USB host driver  | USB EEM driver   | Network stack | TPM driver    | OS portability | Bootloader capabilities |
+| ------- | ---------------- | ---------------- | ------------- | ------------- | -------------- | ----------------------- |
+| Zephyr  | Yes              | Yes              | Yes           | PoC available | Limited        | No                      |
+| Xous    | No               | No               | Yes           | No            | Limited        | No                      |
+| seL4    | From Genode only | From Genode only | Yes           | No            | Limited        | No                      |
+| Linux   | Yes              | Yes              | Yes           | Yes           | Yes            | No                      |
