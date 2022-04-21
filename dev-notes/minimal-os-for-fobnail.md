@@ -83,16 +83,18 @@ TBD
 
 ### Linux
 
-<!--
-TBD - short overview
--->
+In the case of Linux, a minimum distribution will be prepared that meets the
+requirements of the project. [Yocto Project](https://www.yoctoproject.org/) will
+be used for this, because it gives a lot of freedom in manipulating the elements
+that make up the target system.
 
 #### Running in DLME
 
-<!--
-TBD
-describe meta-fobnail, running with trenchboot
--->
+Ensuring that the operating system works in DLME can be achieved by using the
+[TrenchBoot](https://trenchboot.org/) project. For this purpose, a Yocto
+[meta-fobnail](https://github.com/fobnail/meta-fobnail) layer has been created
+that integrates the necessary elements. The effects of the tests are presented
+in a [separate document](./).
 
 #### Fobnail integration
 
