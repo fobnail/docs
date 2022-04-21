@@ -83,7 +83,7 @@ TBD
 
 ### Linux
 
-In the case of Linux, a minimum distribution will be prepared that meets the
+In the case of Linux, a minimal distribution will be prepared that meets the
 requirements of the project. [Yocto Project](https://www.yoctoproject.org/) will
 be used for this, because it gives a lot of freedom in manipulating the elements
 that make up the target system.
@@ -94,14 +94,16 @@ Ensuring that the operating system works in DLME can be achieved by using the
 [TrenchBoot](https://trenchboot.org/) project. For this purpose, a Yocto
 [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer has been created
 that integrates the necessary elements. The effects of the tests are presented
-in a [separate document](./).
+in a [separate document](./running-os-in-dlme.md).
 
 #### Fobnail integration
 
-<!--
-TBD
-describe that fobnail is strongly linux depend right now
--->
+At this point, the [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+application is strongly dependent on Linux. Mainly due to the fact that its
+development took place on this operating system. Therefore, it is important that
+the created minimal OS also has an integrated attester application. The main
+dependencies of its operation are drivers for USB, USB EEM and TPM, but running
+them under Linux will not cause major problems.
 
 ## PoC test
 
@@ -111,8 +113,20 @@ ideas:
 *
 -->
 
-## Summarize
+## Summary
 
-<!--
-TBD
--->
+* The above report outlines four operating systems that should be considered
+  candidates for Fobnail Token interoperability.
+
+* The basic choice is Linux, the operating system based on it is created with
+  the use of Yocto Project. All achievements can be reproduced at any time using
+  the [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer.
+
+* As part of the report, the seL4, Xous and Zephyr systems were also checked.
+  The possibility of running it in DLME and the integration of the
+  [fobnail-attester](https://github.com/fobnail/fobnail-attester) application
+  was checked for each of them.
+
+* The description of an attempt to run Zephyr on PC Engines apu2 in order to
+  verify the current state of the system to work with Fobnail Token has been
+  included. The effects are described in the [PoC test](#poc-test) section.
