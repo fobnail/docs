@@ -122,9 +122,10 @@ Using seL4 would require a significant amount of work:
 - seL4 runs all processes in unprivileged mode, so the kernel itself would have
   to be modified to allow booting of another kernel
 
-[Genode](https://github.com/genodelabs/genode) can run on seL4 and provides
-drivers, at least for some devices and a network stack. Its support for seL4
-used to be incomplete, and many components were broken. However, that might have
+[Genode](https://github.com/genodelabs/genode) is an framework for creating
+custom, specialized OSes. It provides USB drivers (including `usb-net` driver
+from which should handle USB EEM) and a network stack. Its support for seL4 used
+to be incomplete, and many components were broken. However, that might have
 changed, and Genode may be an easier way to get software running on seL4.
 
 ### Linux
