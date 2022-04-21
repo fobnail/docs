@@ -30,19 +30,29 @@ Fobnail Token to be functional.
 ### Zephyr
 
 Zephyr is a well-known and supported embedded RTOS with a monolithic kernel
-written in C. It supports various devices ranging from Cortex-M to x86 CPUs and
-provides support for IPv4, CoAP, and USB needed for communication with Fobnail
-Token.
+written in C. It supports various devices ranging from Cortex-M to x86 CPUs.
+It's main benefits are IPv4, CoAP, and USB (including USB EEM) support which are
+required for communication with Fobnail token. Other benefits are listed
+[here](https://www.zephyrproject.org/benefits/).
 
 #### Running in DLME
 
-Zephyr boots over Multiboot1, but SKL supports only Muliboot2, so either SKL
-must be extended to gain Multiboot1 support or Zephyr to gain Multiboot2. Also,
-Zephyr is not portable - some important configuration is baked into Zephyr
-during build, like LAPIC base address - the base address is set by
-`CONFIG_LOAPIC_BASE_ADDRESS`, if `IA32_APIC_BASE` MSR doesn't match, Zephyr will
-break. The same thing for xAPIC vs x2APIC mode. If Zephyr was configured to use
-xAPIC mode, it might not boot on a platform with x2APIC enabled in its firmware.
+Secure launch uses a component called
+[SKL](https://github.com/TrenchBoot/secure-kernel-loader) (Secure Kernel Loader)
+which is responsible for booting OS in DLME (Zephyr in that case). Zephyr boots
+using Multiboot1 but SKL does not support it (only Multiboot2 is supported). For
+SKL to be able to boot Zephyr, either Zephyr would have to support Multiboot2 or
+SKL Multiboot1.
+
+Also, Zephyr may have trouble with running on different hardware configurations.
+Some important HW-related configuration is baked into Zephyr during build:
+
+- LAPIC base is selected by `CONFIG_LOAPIC_BASE_ADDRESS`, if target platform has
+  LAPIC remapped using `IA32_APIC_BASE` Zephyr will break.
+
+- APIC mode (xAPIC vs x2APIC) is selected when building Zephyr and cannot be
+  detected at runtime. Zephyr may not boot if it has different APIC mode set
+  than firmwre has.
 
 #### Fobnail integration
 
