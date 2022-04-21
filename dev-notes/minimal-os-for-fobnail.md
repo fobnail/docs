@@ -191,11 +191,11 @@ $ git clone https://github.com/3mdeb/grub/ --branch tb_xen
   n
   p
   1
-  
-  
+
+
   w
   EOF
-  
+
   $ sudo mkfs.vfat -F32 /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0-part1
   ```
 
