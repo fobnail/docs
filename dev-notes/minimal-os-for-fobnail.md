@@ -1,10 +1,8 @@
 # Minimal OS for Fobnail project
 
-The Fobnail Project aims to provide a reference architecture for building
-offline integrity measurement servers on the USB device and clients running in
-Dynamically Launched Measured Environments (DLME). It should allow the Fobnail
-owner to verify the trustworthiness of the running system before performing any
-sensitive operation.
+The Fobnail Projects aims to build a USB device capable of verifying
+trustworthiness of the platform it is connected to. The project is described
+more in-depth [here](../docs/index.md).
 
 According to the information presented at TrenchBoot Summit 2021
 [Fobnail: Attestation in Your Pocket](https://youtu.be/xZoCtNV8Qs0?t=5062),
