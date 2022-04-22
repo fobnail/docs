@@ -41,6 +41,7 @@ could be implemented by us.
 | TPM driver              | Required to perform attestation                                    |
 | Bootloader Capabilities | Required to boot target OS                                         |
 | C library   | [fobnail-attester](https://github.com/fobnail/fobnail-attester) is writen in C |
+| Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification |
 
 These are another features which are taken into account (soft requirements).
 
@@ -49,7 +50,17 @@ These are another features which are taken into account (soft requirements).
 | Microkernel              | Microkernels are more secure and are preferred                            |
 | OS portability           | Required to avoid rebuilding minimal OS for each device                   |
 | CPU Architecture support | OS supported architectures, mostly we consider x86, ARM, RISC-V and POWER |
-| Bootable by SKL          | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification |
+
+### OS score counting
+
+The table at the bottom of this document contains summary of features of all
+OSes together with theirs scores. Each score is computed using the following
+rules
+
+- If feature is present then +1
+- If feature is not present then 0, or if feature would be hard to implement
+  then -1
+- If this is a hard requirement then multiple result by 2
 
 ## Different OSs propositions
 
@@ -376,10 +387,10 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 | OS      | USB host driver  | USB EEM driver   | Network stack | TPM driver        | OS portability | Bootloader capabilities | C library | Microkernel | CPU Architecture support | Bootable by SKL | Score |
 | ------- | ---------------- | ---------------- | ------------- | ----------------- | -------------- | ----------------------- | --------- | ----------- | ------------------------ | --------------- | ----- |
-| Zephyr  | Yes (+1)         | Yes (+1)         | Yes (+1)      | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+1)  | No (0)      | Good (+1) [^4]           | No (0) [^6]     | 4     |
-| Xous    | No (0)           | No (0)           | Yes (+1)      | No (0)            | Limited (-1)   | No (0)                  | No (0)    | Yes (+1)    | RISC-V only (-1)         | No (0)          | 0     |
-| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+1)      | No (0)            | Limited (-1)   | No (0)                  | Yes (+1)  | Yes (+1)    | Good (+1) [^3]           | Yes (+1)        | 2     |
-| Linux   | Yes (+1)         | Yes (+1)         | Yes (+1)      | Yes (+1)          | Yes (+1)       | Yes (kexec) (+1)        | Yes (+1)  | No (0)      | Good (+1) [^5]           | Yes (+1)        | 9     |
+| Zephyr  | Yes (+2)         | Yes (+2)         | Yes (+2)      | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+2)  | No (0)      | Good (+1) [^4]           | No (0) [^6]     | 8     |
+| Xous    | No (0)           | No (0)           | Yes (+2)      | No (0)            | Limited (-1)   | No (0)                  | No (0)    | Yes (+1)    | RISC-V only (-1)         | No (0)          | 1     |
+| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+2)      | No (0)            | Limited (-1)   | No (0)                  | Yes (+2)  | Yes (+1)    | Good (+1) [^3]           | Yes (+2)        | 7     |
+| Linux   | Yes (+2)         | Yes (+2)         | Yes (+2)      | Yes (+2)          | Yes (+1)       | Yes (kexec) (+2)        | Yes (+2)  | No (0)      | Good (+1) [^5]           | Yes (+2)        | 16    |
 
 [^1]: seL4 has an old unmaintained driver with no xHCI support. Better driver is
       available only from Genode.
