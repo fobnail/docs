@@ -42,7 +42,7 @@ could be implemented by us.
 | Bootloader Capabilities | Required to boot target OS                                         |
 | C library   | [fobnail-attester](https://github.com/fobnail/fobnail-attester) is writen in C |
 
-These are another features which are taken into account.
+These are another features which are taken into account (soft requirements).
 
 | Feature                  | Description                                                               |
 | ------------------------ | ------------------------------------------------------------------------- |
@@ -119,7 +119,9 @@ which probably will be extended someday.
 
 #### Running in DLME
 
-Xous currently cannot run on x86, and DLME on RISC-V is not covered here.
+Xous currently cannot run on x86, and DLME on RISC-V is not covered here. We
+have opened an [issue](https://github.com/betrusted-io/xous-core/issues/139)
+raising the subject, among others, about x86 support.
 
 #### Fobnail integration
 
@@ -138,6 +140,9 @@ however these proofs are still incomplete for x86, see
 verification status. seL4 due to its microkernel nature provides higher
 isolation, breach in one of the components (like USB driver, network stack)
 wouldn't compromise entire OS contrary to monolithic kernels.
+
+We have opened an [issue](https://github.com/seL4/seL4/issues/832) about seL4
+usage as secure bootloader.
 
 #### Running in DLME
 
@@ -163,7 +168,9 @@ Using seL4 would require a significant amount of work:
 custom, specialized OSes. It provides USB drivers (including `usb-net` driver
 from which should handle USB EEM) and a network stack. Its support for seL4 used
 to be incomplete, and many components were broken. However, that might have
-changed, and Genode may be an easier way to get software running on seL4.
+changed, and Genode may be an easier way to get software running on seL4. We
+have opened an [issue](https://github.com/genodelabs/genode/issues/4480) here
+too.
 
 ### Linux
 
@@ -195,7 +202,8 @@ Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
 support. Currently, there is an ongoing discussion how TrenchBoot should be
 integrated into Linux. Unless this is solved no investment in TrenchBoot GRUB2
 implementation would be made. During PoC we use GRUB from
-[here](https://github.com/3mdeb/grub/tree/tb_xen).
+[here](https://github.com/3mdeb/grub/tree/tb_xen). To reproduce PoC results
+please follow the instructions below.
 
 - Clone GRUB source
 
