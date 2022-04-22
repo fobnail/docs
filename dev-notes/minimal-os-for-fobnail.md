@@ -10,18 +10,20 @@ According to the information presented at TrenchBoot Summit 2021
 [Fobnail: Attestation in Your Pocket](https://youtu.be/xZoCtNV8Qs0?t=5062),
 the minimum OS, together with the connected Fobnail Token, should allow
 determining the state of the platform before the target OS is launched. As we
-can see in the presentation, `heads` would be responsible for the platform's
-trust control, while in this document, we want to present the results of
-research on the possibilities of using various operating systems.
+can see in the presentation, [heads](https://github.com/osresearch/heads) would
+be responsible for the platform's trust control, while in this document, we want
+to present the results of research on the possibilities of using various
+operating systems.
 
-## Different OSs propositions
+## OS requirements
 
 We pay attention to the drivers supported by each OS. We need the following
 drivers:
 
 - TPM drivers
 - Drivers required for communicating with Fobnail Token
-  - USB host drivers
+  - USB host drivers - at minimum EHCI and xHCI support, however UHCI and OHCI
+    would be good to have
   - USB EEM driver - emulated Ethernet driver
   - Network stack with IPv4 support
 
@@ -29,6 +31,29 @@ Also we pay attention to OS security, ability to run in DLME, including
 portability beetween different hardware (a single binary should be able to boot
 on all x86 platforms with support for ACPI) and ability to chainload another,
 target OS.
+
+The table below summarises OS features which are a hard requirement, though they
+could be implemented by us.
+
+| Requirement             | Description                                                        |
+| ----------------------- | ------------------------------------------------------------------ |
+| USB host driver         | Required for communication with Fobnail                            |
+| USB EEM driver          | Required for communication with Fobnail                            |
+| Network Stack           | Required for communication with Fobnail                            |
+| TPM driver              | Required to perform attestation                                    |
+| Bootloader Capabilities | Required to boot target OS                                         |
+| C library   | [fobnail-attester](https://github.com/fobnail/fobnail-attester) is writen in C |
+
+These are another features which are taken into account.
+
+| Feature                  | Description                                                               |
+| ------------------------ | ------------------------------------------------------------------------- |
+| Microkernel              | Microkernels are more secure and are preferred                            |
+| OS portability           | Required to avoid rebuilding minimal OS for each device                   |
+| CPU Architecture support | OS supported architectures, mostly we consider x86, ARM, RISC-V and POWER |
+| Bootable by SKL          | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification |
+
+## Different OSs propositions
 
 The research effect is presented below. 4 systems were considered:
 
@@ -169,12 +194,16 @@ them under Linux will not cause major problems.
 ## PoC test
 
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
-support. During PoC we use GRUB from
+support. Currently, there is an ongoing discussion how TrenchBoot should be
+integrated into Linux. Unless this is solved no investment in TrenchBoot GRUB2
+implementation would be made. During PoC we use GRUB from
 [here](https://github.com/3mdeb/grub/tree/tb_xen).
 
-```shell
-$ git clone https://github.com/3mdeb/grub/ --branch tb_xen
-```
+- Clone GRUB source
+
+  ```shell
+  $ git clone https://github.com/3mdeb/grub/ --branch tb_xen
+  ```
 
 - Prepare container for building GRUB.
 
@@ -336,11 +365,26 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   verify the current state of the system to work with Fobnail Token has been
   included. The effects are described in the [PoC test](#poc-test) section.
 
-* The table below summarises all OSes features.
+* The table below summarises all OSes features described
+  [above](#os-requirements).
 
-| OS      | USB host driver  | USB EEM driver   | Network stack | TPM driver    | OS portability | Bootloader capabilities |
-| ------- | ---------------- | ---------------- | ------------- | ------------- | -------------- | ----------------------- |
-| Zephyr  | Yes              | Yes              | Yes           | PoC available | Limited        | No                      |
-| Xous    | No               | No               | Yes           | No            | Limited        | No                      |
-| seL4    | From Genode only | From Genode only | Yes           | No            | Limited        | No                      |
-| Linux   | Yes              | Yes              | Yes           | Yes           | Yes            | Yes (kexec)             |
+| OS      | USB host driver  | USB EEM driver   | Network stack | TPM driver        | OS portability | Bootloader capabilities | C library | Microkernel | CPU Architecture support | Bootable by SKL | Score |
+| ------- | ---------------- | ---------------- | ------------- | ----------------- | -------------- | ----------------------- | --------- | ----------- | ------------------------ | --------------- | ----- |
+| Zephyr  | Yes (+1)         | Yes (+1)         | Yes (+1)      | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+1)  | No (0)      | Good (+1) [^4]           | No (0) [^6]     | 4     |
+| Xous    | No (0)           | No (0)           | Yes (+1)      | No (0)            | Limited (-1)   | No (0)                  | No (0)    | Yes (+1)    | RISC-V only (-1)         | No (0)          | 0     |
+| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+1)      | No (0)            | Limited (-1)   | No (0)                  | Yes (+1)  | Yes (+1)    | Good (+1) [^3]           | Yes (+1)        | 2     |
+| Linux   | Yes (+1)         | Yes (+1)         | Yes (+1)      | Yes (+1)          | Yes (+1)       | Yes (kexec) (+1)        | Yes (+1)  | No (0)      | Good (+1) [^5]           | Yes (+1)        | 9     |
+
+[^1]: seL4 has an old unmaintained driver with no xHCI support. Better driver is
+      available only from Genode.
+
+[^2]: available from Genode only
+
+[^3]: supports x86, ARM and RISC-V
+
+[^4]: supports x86, ARM RISC-V, SPARC and MIPS
+
+[^5]: supports the most of the architectures, much more than any other OS listed
+      here
+
+[^6]: not bootable due to of lack Multiboot1 support in SKL
