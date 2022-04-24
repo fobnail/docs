@@ -30,7 +30,6 @@ detailed project description please check [here](description).
 *
 * [Environment setup](environment.md)
 * [Flashing sample applications](flashing_samples.md)
-* [Resources](resources.md)
 * How to support the project?
 
 ## Other resources
