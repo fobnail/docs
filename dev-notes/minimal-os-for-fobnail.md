@@ -276,7 +276,7 @@ please follow the instructions below.
 
   ```shell
   $ git clone https://github.com/TrenchBoot/secure-kernel-loader
-  $ secure-kernel-loader
+  $ cd secure-kernel-loader
   $ make
   $ cp skl.bin /mnt/boot/
   ```
@@ -399,9 +399,9 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 [^3]: supports x86, ARM and RISC-V
 
-[^4]: supports x86, ARM RISC-V, SPARC and MIPS
+[^4]: supports x86, ARM, RISC-V, SPARC and MIPS
 
-[^5]: supports the most of the architectures, much more than any other OS listed
+[^5]: supports most of the architectures, much more than any other OS listed
       here
 
 [^6]: not bootable due to of lack Multiboot1 support in SKL
