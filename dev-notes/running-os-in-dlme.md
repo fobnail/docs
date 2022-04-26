@@ -423,10 +423,10 @@ to check the content of PCR17 and PCR18, which will allow us to confirm this
 fact. To test this build, repeat the steps in the [instructions](#instructions).
 The changes are merged to `main` branch.
 
-After login to shell, we can run `tpm2_pcrread` to verify PCR17 and PCR18
-values. If these registers are not empty (or equal to 0xFFFF...), we can conclude
-that the device is running in DLME. The output of PCR registers dump should look
-similar to this:
+> Update: Since v0.1. after login to shell, we can run `tpm2_pcrread` to verify
+  PCR17 and PCR18 values. If these registers are not empty (or equal to
+  0xFFFF...), we can conclude that the device is running in DLME. The output of
+  PCR registers dump should look similar to this:
 
 ```
 # tpm2_pcrread
