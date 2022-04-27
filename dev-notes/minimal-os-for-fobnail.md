@@ -8,10 +8,11 @@ According to the information presented at TrenchBoot Summit 2021
 [Fobnail: Attestation in Your Pocket](https://youtu.be/xZoCtNV8Qs0?t=5062),
 the minimum OS, together with the connected Fobnail Token, should allow
 determining the state of the platform before the target OS is launched. As we
-can see in the presentation, [heads](https://github.com/osresearch/heads) could
-be responsible for the platform's trust control. But in this document, we want
-to present the results of research on the possibilities of using various
-operating systems running as DLME that will perform the same function.
+can see in the presentation, [heads](https://github.com/osresearch/heads) (here
+presented as a coreboot payload) could be responsible for the platform's trust
+control. But in this document, we want to present the results of research on the
+possibilities of using various operating systems running as DLME that will
+perform the same function.
 
 ## OS requirements
 
