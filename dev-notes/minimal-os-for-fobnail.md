@@ -137,20 +137,24 @@ raising the subject, among others, about x86 support.
 #### Fobnail integration
 
 Xous has network support but currently lacks USB host drivers and TPM support.
-Also, it lacks C interface for calling the kernel and lacks C library. Getting
+Also, it lacks C interface for calling the kernel and lacks C library. This
+should not be a serious problem because needed support may be added by writing
+the userland code in Rust (which is preffered) or C bindings to the Rust code.
+It means that getting
 [fobnail-attester](https://github.com/fobnail/fobnail-attester) running may
-require a significant amount of work. Also, Xous needs to gain kexec-like
+require a some amount of work. Also, Xous needs to gain kexec-like
 abilities to chainload target OS.
 
 ### seL4
 
 seL4 is a secure L4 family microkernel written in C. It has strong security
-guarantees assured by [Formal proofs](https://sel4.systems/Info/FAQ/proof.pml),
-however these proofs are still incomplete for x86, see
+guarantees assured by [formal proofs](https://sel4.systems/Info/FAQ/proof.pml).
+However these proofs are still incomplete for x86; see
 [Supported Platforms](https://docs.sel4.systems/Hardware) for an up-to-date
-verification status. seL4 due to its microkernel nature provides higher
-isolation, breach in one of the components (like USB driver, network stack)
-wouldn't compromise entire OS contrary to monolithic kernels.
+verification status. Due to its microkernel nature, seL4 provides stronger
+isolation. A breach in one of the components (such as a USB driver or the
+network stack) wouldn't compromise the entire OS (contrary to monolithic
+kernels).
 
 We have opened an [issue](https://github.com/seL4/seL4/issues/832) about seL4
 usage as secure bootloader.
