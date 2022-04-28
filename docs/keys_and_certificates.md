@@ -181,7 +181,7 @@ ST                     = State
 CN                     = Platform Owner root CA certificate
 
 [v3_ext]
-basicConstraints       = critical, CA:TRUE, pathlen:0
+basicConstraints       = critical, CA:TRUE, pathlen:3
 keyUsage               = critical, keyCertSign, cRLSign
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always
@@ -205,8 +205,8 @@ This is similar to creating root CA with two small but important differences:
 Command:
 
 ```shell
-openssl req -newkey rsa:2048 -nodes -keyout $CA_PRIV -days 365 \
-        -out $CA_CSR -config $CA_CONFIG
+openssl req -newkey rsa:2048 -nodes -keyout $CA_PRIV -out $CA_CSR \
+        -config $CA_CONFIG
 ```
 
 - `CA_PRIV` (out) - newly created private intermediate/issuer CA key. Keep it
@@ -242,11 +242,16 @@ subject impacts not only devices provisioned by issuer, but also every device
 with the same root CA. This is one of the reasons for limiting maximum path
 length of certificate chains.
 
+> `openssl ca` can also be used for this purpose, but `openssl x509` is easier
+to use for single use. On the other hand, `openssl ca` better suits the needs of
+CA after configuration and may do more checks in semi-automatic process than
+`openssl x509`.
+
 Command:
 
 ```shell
 openssl x509 -req -in $SUBJECT_CSR -CA $AUTHORITY_CERT -CAkey $AUTHORITY_PRIV \
-        -CAcreateserial -extfile $SUBJECT_EXT -out $SUBJECT_CERT
+        -CAcreateserial -days 365 -extfile $SUBJECT_EXT -out $SUBJECT_CERT
 ```
 
 - `SUBJECT_CSR` (in) - sent by lower-level CA.
@@ -256,7 +261,8 @@ earlier.
 - `SUBJECT_EXT` (in) - file describing certificate extensions, e.g.:
 
 ```
-basicConstraints       = critical, CA:TRUE
+# pathlen = 2 for intermediate, 1 for issuer certificate
+basicConstraints       = critical, CA:TRUE, pathlen:2
 keyUsage               = critical, keyCertSign, cRLSign
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always
