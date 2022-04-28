@@ -46,18 +46,18 @@ be created by another entity; this is outside of scope of Fobnail architecture.
 The purpose of provisioning is to provide a controlled process for an
 individual to take ownership and configure the Fobnail. During
 the provisioning process the token should provide the following information
-to the provisioner:
+to the provisioner in the form of Certificate Signing Request (CSR):
 
-* A public key to use for generating an identity certificate
-* A public key to use for generating an encryption certificate
+* A public key to use for generating a certificate
 * Metadata about the token, e.g. model, serial number, etc
 
 A token will consider itself provisioned when it is in an unprovisioned state
-and a provisioner sends it the following information:
-
-* A certificate chain for the provisioner
-* An identity certificate containing the public key the token generated
-* An encryption certificate containing the public key the token generated
+and a provisioner sends it the certificate containing the public key the token
+generated. `keyUsage` field in that certificate depends on the actual use case,
+for example it may be used as an authentication certificate by platform when
+connecting with a server (e.g. SSH or mTLS). In that use case the platform
+doesn't know the private key, Fobnail Token performs the initial encryption
+during handshake.
 
 Either during provisioning or post provisioning a provisioner may send the
 following information,
