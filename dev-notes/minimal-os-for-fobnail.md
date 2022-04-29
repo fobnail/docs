@@ -432,7 +432,9 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   included. The effects are described in the [PoC test](#poc-test) section.
 
 * The table below summarises all OSes features described
-  [above](#os-requirements).
+  [above](#os-requirements). Please note that when comparing driver support we
+  take into account not only drivers which are part of the kernel, but also
+  available userspace drivers.
 
 | OS      | USB host driver  | USB EEM driver   | Network stack     | TPM driver        | OS portability | Bootloader capabilities | C library    | Microkernel | CPU Architecture support | Bootable by SKL | Score |
 | ------- | ---------------- | ---------------- | ----------------- | ----------------- | -------------- | ----------------------- | -------------| ----------- | ------------------------ | --------------- | ----- |
