@@ -212,6 +212,50 @@ the created minimal OS also has an integrated attester application. The main
 dependencies of its operation are drivers for USB, USB EEM and TPM, but running
 them under Linux will not cause major problems.
 
+### Little Kernel / Trusted Little Kernel
+
+Little Kernel is a small, embedded monolithic kernel that runs on x86, ARM and
+RISC-V among others, provides a custom very basic libc. LK focuses on ARM
+platforms and lacks drivers for devices typically found in x86 platforms. LK has
+been used as a base for aboot (Android bootloader) and
+[Fuchsia OS](https://fuchsia.dev/).
+
+Trusted Little Kernel (available at
+`https://nv-tegra.nvidia.com/r/3rdparty/ote_partner/tlk.git`, not accessible
+through web browser - must be cloned with `git`) is a fork of LK intended to be
+run as TEE OS. It is developed by NVIDIA for Tegra platforms, support for all
+other platforms has been removed.
+
+#### Running in DLME
+
+LK boots over Multiboot 1 which is not supported by SKL. The problem is similar
+to that with Zephyr (see [Zephyr](#running-in-dlme) section for detail). However
+Multiboot2 support could be easily added.
+
+#### Fobnail integration
+
+Running [fobnail-attester](https://github.com/fobnail/fobnail-attester) on LK
+would be problematic to say the last:
+
+- LK lacks most drivers including USB host drivers (UHCI, OHCI, EHCI, XHCI),
+  USB EEM driver and TPM drivers.
+
+- Lack of cryptographic library in LK. TLK does provide one (potentially could be).
+
+- Default C library is too much constrained - provides only most basic API like
+  string operations, printing, etc. Lacks anything more complex, including
+  networking support. There is a LK's
+  [fork](https://github.com/littlekernel/newlib) of Newlib, however of unknown
+  quality.
+
+- TCP/IP is provided by `minip` library (which is part of LK). Attester depends
+  on `libcoap3` which either would have to be ported to `minip` or `minip` would
+  have to be integrated with `newlib`.
+
+- LK has no suitable bootloader capabilities.
+  [lkboot](https://github.com/littlekernel/lk/tree/master/app/lkboot) could
+  serve as reference to develop custom bootloader.
+
 ## PoC test
 
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
@@ -390,12 +434,13 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 * The table below summarises all OSes features described
   [above](#os-requirements).
 
-| OS      | USB host driver  | USB EEM driver   | Network stack | TPM driver        | OS portability | Bootloader capabilities | C library | Microkernel | CPU Architecture support | Bootable by SKL | Score |
-| ------- | ---------------- | ---------------- | ------------- | ----------------- | -------------- | ----------------------- | --------- | ----------- | ------------------------ | --------------- | ----- |
-| Zephyr  | Yes (+2)         | Yes (+2)         | Yes (+2)      | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+2)  | No (0)      | Good (+1) [^4]           | No (0) [^6]     | 8     |
-| Xous    | No (0)           | No (0)           | Yes (+2)      | No (0)            | Limited (-1)   | No (0)                  | No (0)    | Yes (+1)    | RISC-V only (-1)         | No (0)          | 1     |
-| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+2)      | No (0)            | Limited (-1)   | No (0)                  | Yes (+2)  | Yes (+1)    | Good (+1) [^3]           | Yes (+2)        | 7     |
-| Linux   | Yes (+2)         | Yes (+2)         | Yes (+2)      | Yes (+2)          | Yes (+1)       | Yes (kexec) (+2)        | Yes (+2)  | No (0)      | Good (+1) [^5]           | Yes (+2)        | 16    |
+| OS      | USB host driver  | USB EEM driver   | Network stack     | TPM driver        | OS portability | Bootloader capabilities | C library    | Microkernel | CPU Architecture support | Bootable by SKL | Score |
+| ------- | ---------------- | ---------------- | ----------------- | ----------------- | -------------- | ----------------------- | -------------| ----------- | ------------------------ | --------------- | ----- |
+| Zephyr  | Yes (+2)         | Yes (+2)         | Yes (+2)          | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+2)     | No (0)      | Good (+1) [^4]           | No (0) [^6]     | 8     |
+| Xous    | No (0)           | No (0)           | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | No (0)       | Yes (+1)    | RISC-V only (-1)         | No (0)          | 1     |
+| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | Yes (+2)     | Yes (+1)    | Good (+1) [^3]           | Yes (+2)        | 7     |
+| Linux   | Yes (+2)         | Yes (+2)         | Yes (+2)          | Yes (+2)          | Yes (+1)       | Yes (kexec) (+2)        | Yes (+2)     | No (0)      | Good (+1) [^5]           | Yes (+2)        | 16    |
+| LK      | No (0)           | No (0)           | Limited (-2) [^7] | No (0)            | Yes (+1)       | No (0)                  | Limited (-2) | No (0)      | Good (+1) [^8]           | No (0)          | -2    |
 
 [^1]: seL4 has an old unmaintained driver with no xHCI support. Better driver is
       available only from Genode.
@@ -410,3 +455,8 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
       here
 
 [^6]: not bootable due to of lack Multiboot1 support in SKL
+
+[^7]: uses custom library, no integration with libc which complicates using it
+      with `libcoap3`
+
+[^8]: supports x86, ARM, RISC-V and MIPS
