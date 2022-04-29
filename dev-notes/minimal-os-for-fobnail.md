@@ -256,6 +256,48 @@ would be problematic to say the last:
   [lkboot](https://github.com/littlekernel/lk/tree/master/app/lkboot) could
   serve as reference to develop custom bootloader.
 
+### Fuchsia (Zircon)
+
+[Fuchsia](https://fuchsia.dev) is a general-purpose OS developed by Google. Its
+purpose is to replace GNU/Linux in Google products (like Android, Chrome OS)
+with Zircon microkernel (used to be known as Magenta) and custom userland.
+Fuchsia runs on x86-64 and ARM64. There used to be an
+[unofficial](https://github.com/slavaim/riscv-magenta) RISC-V port, however it
+has been unmaintained for years. Support for 32-bit architectures was dropped
+some time ago.
+
+Zircon is based on LK, however similarities between these two are small and
+constantly decreasing. LK is a kernel intended for embedded usage, while Zircon
+is a general-purpose microkernel that could compete with Linux.
+
+#### Running in DLME
+
+Historically Zircon used Multiboot 1 for booting. Now it uses ZBI with a UEFI
+bootloader called Gigaboot. Multiboot 1 support is still present, but SKL
+doesn't support it anyway. See [Zephyr](#running-in-dlme) section above for
+details.
+
+#### Fobnail integration
+
+Fuchsia provides a Unix-like environment with musl C library. Network is
+available but is no EEM driver, and only XHCI host driver is supported. Since
+EHCI is still widely used, this is a major limitation. TPM driver is available
+but without `libtss2`.
+
+Zircon has a kexec-like capability which allows to boot another Zircon instance.
+This is known as `mexec`.
+
+Following things would have to be done:
+
+- Bring `libtss2` stack to Zircon.
+
+- Bring EEM driver. There is ECM driver available, which could serve as
+  reference.
+
+- Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
+
+- Figure out how to use `mexec` to boot Linux.
+
 ## PoC test
 
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
@@ -443,6 +485,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 | seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | Yes (+2)     | Yes (+1)    | Good (+1) [^3]           | Yes (+2)        | 7     |
 | Linux   | Yes (+2)         | Yes (+2)         | Yes (+2)          | Yes (+2)          | Yes (+1)       | Yes (kexec) (+2)        | Yes (+2)     | No (0)      | Good (+1) [^5]           | Yes (+2)        | 16    |
 | LK      | No (0)           | No (0)           | Limited (-2) [^7] | No (0)            | Yes (+1)       | No (0)                  | Limited (-2) | No (0)      | Good (+1) [^8]           | No (0)          | -2    |
+| Fuchsia | Limited (0) [^9] | No (0)           | Yes (+2)          | Limited (0) [^10] | Yes (+1)       | Yes (mexec) (+2)        | Yes (+2)     | Yes (+1)    | Good (+1) [^11]          | No (0)          | 7     |
 
 [^1]: seL4 has an old unmaintained driver with no xHCI support. Better driver is
       available only from Genode.
@@ -458,7 +501,14 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 [^6]: not bootable due to of lack Multiboot1 support in SKL
 
-[^7]: uses custom library, no integration with libc which complicates using it
+[^7]: uses custom library, no integration with libc, which complicates using it
       with `libcoap3`
 
 [^8]: supports x86, ARM, RISC-V and MIPS
+
+[^9]: supports XHCI only
+
+[^10]: TPM driver is present but there is no `libtss2` support
+
+[^11]: supports 64-bit x86 and ARM. Support for 32-bit architectures has been
+       dropped a while ago and is not coming back
