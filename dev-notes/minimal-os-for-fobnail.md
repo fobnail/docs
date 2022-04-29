@@ -34,15 +34,15 @@ target OS.
 The table below summarises OS features which are a hard requirement, though they
 could be implemented by us.
 
-| Requirement             | Description                                                        |
-| ----------------------- | ------------------------------------------------------------------ |
-| USB host driver         | Required for communication with Fobnail                            |
-| USB EEM driver          | Required for communication with Fobnail                            |
-| Network Stack           | Required for communication with Fobnail                            |
-| TPM driver              | Required to perform attestation                                    |
-| Bootloader Capabilities | Required to boot target OS                                         |
-| C library   | [fobnail-attester](https://github.com/fobnail/fobnail-attester) is writen in C |
-| Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification |
+| Requirement             | Description                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| USB host driver         | Required for communication with Fobnail                                        |
+| USB EEM driver          | Required for communication with Fobnail                                        |
+| Network Stack           | Required for communication with Fobnail                                        |
+| TPM driver              | Required to perform attestation                                                |
+| Bootloader Capabilities | Required to boot target OS                                                     |
+| C library               | [fobnail-attester](https://github.com/fobnail/fobnail-attester) is writen in C |
+| Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification      |
 
 These are another features which are taken into account (soft requirements).
 
