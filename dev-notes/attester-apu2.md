@@ -23,7 +23,7 @@ Entering main loop.
 ```
 
 3. Connect fobnail token to apu2. If device is detected properly system should
-print these information:
+print this information:
 
 ```
 usb 2-2: new full-speed USB device number 11 using xhci_hcd
@@ -53,10 +53,8 @@ Serial Number >1373268<
 Received message: quote
 ```
 
-5. Attestation was finished successfully when green LED blink on fobnail token -
-see image bellow:
-
-<!-- ![LEDs on fobnail token](img/token-led.png) -->
+5. Attestation was finished successfully when green LED blinked on fobnail token
+- see image below:
 
 <img src="img/token-led.png" width="80%" />
 
@@ -65,6 +63,6 @@ see image bellow:
 ### Reset fobnail token
 
 Is possible to reset provisioning data on fobnail token and reuse it again on
-different platform. Connect it to any USB (token must be powered) and press
-button (here is only one button) for the 10 seconds. After that, green led
+a different platform. Connect it to any USB (token must be powered) and press
+the button (here is only one button) for 10 seconds. After that, the green led
 should blink three times.
