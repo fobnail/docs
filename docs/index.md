@@ -1,28 +1,43 @@
-# What is Fobnail?
+# What is Fobnail Project?
 
-The Fobnail Token is a tiny open-source hardware USB device that provides
-a means for a user/administrator/enterprise to determine the integrity of
-a system. To make this determination, Fobnail functions as an attestor capable
-of validating attestation assertions made by the system. As an independent
-device, Fobnail provides a high degree of assurance that an infected system
-cannot influence Fobnail as it inspects the attestations made by the system.
+Fobnail Project provide resources to create axiomatically trustworthy
+[device][mccune] and simple user interface to attest platform state. For
+detailed project description please check [here](description).
 
-Fobnail software is an open-source implementation of the iTurtle security
-architecture concept presented at HotSec07; in addition, it will leverage
-industry standards like TCG D-RTM trusted execution environment and IEFT
-RATS. The Fobnail project aims to provide a reference architecture for
-building offline integrity measurement servers on the USB device and clients
-running in Dynamically Launched Measured Environments (DLME). It allows the
-Fobnail owner to verify the trustworthiness of the running system before
-performing any sensitive operation. Fobnail does not need an Internet
-connection what makes it immune to the network stack and remote infrastructure
-attacks. It brings the power of solid system integrity validation to the
-individual in a privacy-preserving solution.
+* [Fobnail firmware][fobnail_fw] is an open-source implementation of the
+  [iTurtle][mmcune] security architecture concept presented at HotSec07; in addition, it
+  will leverage industry standards like [TCG D-RTM][tcg_drtm] trusted execution environment
+  and IEFT RATS. The Fobnail project aims to provide a reference architecture
+  for building offline integrity measurement servers on the USB device and
+  clients running in Dynamically Launched Measured Environments (DLME). It
+  allows the Fobnail owner to verify the trustworthiness of the running system
+  before performing any sensitive operation. Fobnail does not need an Internet
+  connection what makes it immune to the network stack and remote
+  infrastructure attacks. It brings the power of solid system integrity
+  validation to the individual in a privacy-preserving solution.
+* [The Fobnail Token](fobnail_token) is a tiny open-source hardware reference
+  design of USB device that provides a means for a
+  user/administrator/enterprise to determine the integrity of a system. To make
+  this determination, Fobnail Token leverage [Fobnail firmware][fobnail_fw],
+  which act as an attestor capable of validating attestation assertions made by
+  the system. As an independent device, Fobnail Token provides a high degree of
+  assurance that an infected system cannot influence Fobnail Token as it
+  inspects the attestations made by the system.
 
-## Table of content
+## Where to go next?
 
-* [Project description](description.md)
-* [Fobnail architecture](architecture.md)
+* Read Fobnail Project [detailed description](description.md)
+*
 * [Environment setup](environment.md)
 * [Flashing sample applications](flashing_samples.md)
-* [Resources](resources.md)
+* How to support the project?
+
+## Other resources
+
+* [TPM remote attestation over Bluetooth][gkerneis] blog post by Gabriel
+  Kerneis where he mention Fobnail project.
+
+[mccune]: https://www.usenix.org/legacy/event/hotsec07/tech/full_papers/mccune/mccune_html/index.html
+[fobnail_fw]: https://github.com/fobnail/fobnail
+[tcg_drtm]: https://trustedcomputinggroup.org/wp-content/uploads/DRTM-Specification-Overview_June2013.pdf
+[gkerneis]: https://gabriel.kerneis.info/2021/11/local_attestation/
