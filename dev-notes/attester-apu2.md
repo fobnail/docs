@@ -53,8 +53,8 @@ Serial Number >1373268<
 Received message: quote
 ```
 
-5. Attestation was finished successfully when green LED blinked on fobnail token
-- see image below:
+5. Attestation was finished successfully when green LED blinked on fobnail
+token - see image below:
 
 <img src="img/token-led.png" width="80%" />
 
