@@ -1,9 +1,18 @@
 # Keys and certificates
 
 Many different keys and certificates are used by all of Fobnail's components.
-Most of them are created by the code, but some must be provided externally.
+Most of them are automatically generated, but some must be provided by user.
 
 ## List of keys and certificates used
+
+Refer to [architecture doc](architecture.md) for description of actors and
+phases listed below. List items have the following format:
+
+- **Name of key or certificate**
+    - **Phase during which it is obtained, received or used**
+    - **Other details, if any**
+
+Note that this list includes possible usages that may not be implemented yet.
 
 ### Platform Owner
 
@@ -46,7 +55,6 @@ Most of them are created by the code, but some must be provided externally.
 
 - root CA certificate for EK certificate chain
     - local platform provisioning
-    - possibly along with whole chain
 - root CA for Platform Owner certificate chain
     - Fobnail provisioning
 
@@ -72,11 +80,9 @@ Most of them are created by the code, but some must be provided externally.
 
 - Fobnail Identity key (signing and encryption)
     - Fobnail provisioning
-    - used for TLS
     - key and certificate signed by Platform Owner is stored for later use
 - Fobnail Encryption key (encryption)
     - Fobnail provisioning
-    - used for storage encryption
 
 ### Platform
 
@@ -84,8 +90,8 @@ Most of them are created by the code, but some must be provided externally.
 
 - root CA for Platform Owner certificate chain
     - remote platform provisioning
-    - local platform provisioning and attestation - Fobnail Identity key is signed
-    by Platform Owner, so Platform needs a way of verifying trust chain
+    - local platform provisioning and attestation - Fobnail Identity key is
+    signed by Platform Owner, so Platform needs a way of verifying trust chain
 - Endorsement Key (encryption)
     - remote and local platform provisioning
     - for this project may be considered immutable persistent key unique to TPM
@@ -114,9 +120,9 @@ Most of them are created by the code, but some must be provided externally.
 
 ## Platform Owner certificate chain
 
-Platform owner certificate is used during Fobnail provisioning. Its root CA
+Platform Owner certificate is used during Fobnail provisioning. Its root CA
 certificate must be preinstalled on Fobnail Token. Due to limited hardware
-capabilities of Fobnail Token, some restrictions apply.
+capabilities of Fobnail Token, following restrictions apply.
 
 ### Maximum certificate chain length
 
@@ -148,6 +154,16 @@ that, validity period and certificate revocation cannot be tested. Only proper
 chain and attributes of certificates are validated.
 
 ## Creating Platform Owner certificate chain with OpenSSL
+
+This section describes how to create a certificate chain that conforms to
+restrictions mentioned earlier. This is just a minimal example showing all
+required configuration options and commands used in the process, fields listed
+here may be extended or modified, but should not be removed.
+
+Note that root CA doesn't have to be under Platform Owner's control, but it must
+issue a certificate that is (either directly or through intermediate issuer). In
+such cases the issuer may use other form of certificate request or additional
+mechanisms of proving the identity of the requester than those used by OpenSSL.
 
 ### Root CA
 

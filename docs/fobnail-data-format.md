@@ -21,7 +21,7 @@ bigger.
 ```json
 {
     // Array of certificates in DER format (major 4)
-    "banks": [
+    "certs": [
         // CA immediately under root (major 2)
         [ 0x30, 0x82, 0x03, 0x8b, ... ],
         // Intermediate CAs, if any
