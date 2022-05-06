@@ -1,15 +1,15 @@
-# Attestation process on PCengines apu2
+# Attestation process on PC Engines apu2
 
 ## Prerequirements
 
 - System image from [meta-fobnail](https://github.com/fobnail/meta-fobnail)
   repository flashed on SD card
-- TPM module connected to apu2
+- TPM module connected to PC Engines apu2
 - Fobnail Token with Fobnail Firmware from
   [fobnail-apu-test](https://github.com/fobnail/fobnail/tree/fobnail-apu-test)
   branch
 
-## Attestatinon workflow
+## Attestation workflow
 
 1. Boot [meta-fobnail](https://github.com/fobnail/meta-fobnail) image in DLME -
    this was described [here](running-os-in-dlme.md).
