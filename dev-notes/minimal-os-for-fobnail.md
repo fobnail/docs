@@ -292,7 +292,25 @@ Following things would have to be done:
 - Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
 - Figure out how to use `mexec` to boot Linux.
 
-## PoC test
+### Xen
+
+Xen is a bare-metal hypervisor available on x86 and ARM. It is able to run Linux
+in a paravirtualized environment. Xen contains only drivers absolutely necessary
+for hypervisor and VM to boot. Control over most of the hardware is handed to
+the first VM known as [Dom0](https://wiki.xenproject.org/wiki/Dom0). Usuallly
+Linux runs in Dom0, there are other OSes which also support running in Dom0
+(BSD, Solaris), however there is no advantage of using them over Linux.
+
+#### Running in DLME
+
+Xen is supported by Trenchboot's GRUB and can run without any modifications.
+See [xen-in-dlme.md](xen-in-dlme.md) for demo.
+
+#### Integration with Fobnail
+
+TBD
+
+## Zephyr PoC test
 
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
 support. Currently, there is an ongoing discussion how TrenchBoot should be
