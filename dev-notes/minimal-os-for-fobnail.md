@@ -230,7 +230,7 @@ other platforms has been removed.
 
 LK boots over Multiboot 1 which is not supported by SKL. The problem is similar
 to that with Zephyr (see [Zephyr](#running-in-dlme) section for detail). However
-Multiboot2 support could be easily added.
+Multiboot2 support could be added.
 
 #### Fobnail integration
 
@@ -239,19 +239,15 @@ would be problematic to say the last:
 
 - LK lacks most drivers including USB host drivers (UHCI, OHCI, EHCI, XHCI),
   USB EEM driver and TPM drivers.
-
 - Lack of cryptographic library in LK. TLK does provide one (potentially could be).
-
 - Default C library is too much constrained - provides only most basic API like
   string operations, printing, etc. Lacks anything more complex, including
   networking support. There is a LK's
   [fork](https://github.com/littlekernel/newlib) of Newlib, however of unknown
   quality.
-
 - TCP/IP is provided by `minip` library (which is part of LK). Attester depends
   on `libcoap3` which either would have to be ported to `minip` or `minip` would
   have to be integrated with `newlib`.
-
 - LK has no suitable bootloader capabilities.
   [lkboot](https://github.com/littlekernel/lk/tree/master/app/lkboot) could
   serve as reference to develop custom bootloader.
@@ -273,9 +269,10 @@ is a general-purpose microkernel that could compete with Linux.
 #### Running in DLME
 
 Historically Zircon used Multiboot 1 for booting. Now it uses ZBI with a UEFI
-bootloader called Gigaboot. Multiboot 1 support is still present, but SKL
-doesn't support it anyway. See [Zephyr](#running-in-dlme) section above for
-details.
+bootloader called
+[Gigaboot](https://fuchsia.googlesource.com/fuchsia/+/refs/heads/main/src/firmware/gigaboot/).
+Multiboot 1 support is still present, but SKL doesn't support it anyway. See
+[Zephyr](#running-in-dlme) section above for details.
 
 #### Fobnail integration
 
@@ -290,20 +287,23 @@ This is known as `mexec`.
 Following things would have to be done:
 
 - Bring `libtss2` stack to Zircon.
-
 - Bring EEM driver. There is ECM driver available, which could serve as
   reference.
-
 - Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
-
 - Figure out how to use `mexec` to boot Linux.
 
 ## PoC test
 
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
 support. Currently, there is an ongoing discussion how TrenchBoot should be
-integrated into Linux. Unless this is solved no investment in TrenchBoot GRUB2
-implementation would be made. During PoC we use GRUB from
+integrated into Linux - see the following links:
+
+- https://groups.google.com/g/trenchboot-devel/c/-RxTtan5H3I/m/vU-yp5kHAgAJ
+- https://groups.google.com/g/trenchboot-devel/c/QLMg0r4XTcs/m/YrN2bX3PDQAJ
+- https://groups.google.com/g/trenchboot-devel/c/6ilwQUkwt9w/m/dpyriBCHAgAJ
+
+Unless this is solved no investment in TrenchBoot GRUB2 implementation would be
+made. During PoC we use GRUB from
 [here](https://github.com/3mdeb/grub/tree/tb_xen). To reproduce PoC results
 please follow the instructions below.
 
