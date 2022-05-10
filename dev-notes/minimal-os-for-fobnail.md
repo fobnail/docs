@@ -188,6 +188,40 @@ changed, and Genode may be an easier way to get software running on seL4. We
 have opened an [issue](https://github.com/genodelabs/genode/issues/4480) here
 too.
 
+CAmkES provides tools for writing seL4-native components, it also has VMM
+support for running virtual machines. See the section below for more details.
+
+### seL4 + CAmkES
+
+CAmkES provides tools and libraries for quickly writing seL4-native components.
+Contrary to `seL4_libs` CAmkES is planned to be formally verified (verification
+is in progress).
+
+#### Running in DLME
+
+Since CAmkES is based on seL4, the same restrictions apply. See the section
+above for details.
+
+#### Fobnail integration
+
+CAmkES also does not provide many drivers. However it does provide VMM for
+virtual machines. Features:
+
+- support for booting Linux kernel
+- according to [camkes-vm](https://docs.sel4.systems/projects/camkes-vm/)
+  documentation, only 32-bit VMs are supported.
+  > The first step is to install ubuntu natively on the cma34cr. It’s currently
+  > required that guests of the camkes vm run in 32-bit mode, so install 32-bit
+  > ubuntu.
+- there is support for hardware passthrough, however it is severely limited and
+  it requires manual configuration, including IO port assignment, memory
+  mapping, interrupts setup. This is completely not portable and cannot be used
+  in this form. Normally, VM config is written in CAmkES specific language, it
+  is unknown whether such a config can be generated at runtime or only during
+  build.
+- seL4 has no support for AMD-V. Until this is implemented there is no
+  virtualization on AMD CPUs.
+
 ### Linux
 
 In the case of Linux, a minimal distribution will be prepared that meets the
