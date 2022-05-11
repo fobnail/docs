@@ -27,7 +27,7 @@ drivers:
   - Network stack with IPv4 support
 
 Also we pay attention to OS security, ability to run in DLME, including
-portability beetween different hardware (a single binary should be able to boot
+portability between different hardware (a single binary should be able to boot
 on all x86 platforms with support for ACPI) and ability to chainload another,
 target OS.
 
@@ -114,9 +114,9 @@ Zephyr provides most of the drivers needed for integration:
 - USB EEM driver
 - Network stack with IPv4 and CoAP support
 
-TPM driver is missing, however there is a fairly recent
+TPM driver is missing, there is a fairly recent
 [PoC implementation](https://github.com/drandreas/zephyr-tpm2-poc) of TPM2
-stack.
+stack, but it is intended for embedded devices and supports SPI only.
 
 Zephyr provides good support for standard C library (newlib), which should
 simplify [fobnail-attester](https://github.com/fobnail/fobnail-attester)
