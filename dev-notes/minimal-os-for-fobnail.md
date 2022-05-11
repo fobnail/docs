@@ -90,8 +90,11 @@ Secure launch uses a component called
 [SKL](https://github.com/TrenchBoot/secure-kernel-loader) (Secure Kernel Loader)
 which is responsible for booting OS in DLME (Zephyr in that case). Zephyr boots
 using Multiboot1 but SKL does not support it (only Multiboot2 is supported). For
-SKL to be able to boot Zephyr, either Zephyr would have to support Multiboot2 or
-SKL Multiboot1.
+SKL to be able to boot Zephyr, Zephyr must gain Multiboot2 support.
+
+Multiboot1 is hard measure due to its tags being scattered around in memory. To
+properly measure Multiboot1, SKL would have to know and parse every tag as most
+of them contain pointers to other structures. This is not going to happen.
 
 Also, Zephyr may have trouble with running on different hardware configurations.
 Some important HW-related configuration is baked into Zephyr during build:
