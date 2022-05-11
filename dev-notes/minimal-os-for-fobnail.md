@@ -92,9 +92,9 @@ which is responsible for booting OS in DLME (Zephyr in that case). Zephyr boots
 using Multiboot1 but SKL does not support it (only Multiboot2 is supported). For
 SKL to be able to boot Zephyr, Zephyr must gain Multiboot2 support.
 
-Multiboot1 is hard measure due to its tags being scattered around in memory. To
-properly measure Multiboot1, SKL would have to know and parse every tag as most
-of them contain pointers to other structures. This is not going to happen.
+Multiboot1 is hard to measure due to its tags being scattered around in memory.
+To properly measure Multiboot1, SKL would have to know and parse every tag as
+most of them contain pointers to other structures. This is not going to happen.
 
 Also, Zephyr may have trouble with running on different hardware configurations.
 Some important HW-related configuration is baked into Zephyr during build:
@@ -507,8 +507,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   [Multiboot2](https://github.com/3mdeb/grub/blob/tb_xen/grub-core/loader/multiboot.c#L192)
   but Zephyr has support only for Multiboot1.
 
-- Booting Zephyr in DLME would require updating `slaunch` support in GRUB and
-  bringing Multiboot1 support to SKL.
+- Booting Zephyr in DLME would require extending it with Multiboot2 support.
 
 ## Summary
 
