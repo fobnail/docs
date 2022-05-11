@@ -183,16 +183,42 @@ Using seL4 would require a significant amount of work:
 - seL4 runs all processes in unprivileged mode, so the kernel itself would have
   to be modified to allow booting of another kernel
 
-[Genode](https://github.com/genodelabs/genode) is an framework for creating
-custom, specialized OSes. It provides USB drivers (including `usb-net` driver
-from which should handle USB EEM) and a network stack. Its support for seL4 used
-to be incomplete, and many components were broken. However, that might have
-changed, and Genode may be an easier way to get software running on seL4. We
-have opened an [issue](https://github.com/genodelabs/genode/issues/4480) here
-too.
+[Genode](https://github.com/genodelabs/genode) can provide many of the required
+drivers. See the section below for details.
 
 CAmkES provides tools for writing seL4-native components, it also has VMM
-support for running virtual machines. See the section below for more details.
+support for running virtual machines. Contrary to Genode CAmkES does not provide
+drivers, but VMs may provide them. However this requires virtualization and seL4
+currently supports it only on Intel CPUs. See the section below for more details.
+
+### Genode
+
+[Genode](https://github.com/genodelabs/genode) is a framework for creating
+custom, specialized OSes. It can work on various kernels/hypervisors, including
+seL4 and Linux. It provides many drivers, including USB drivers (including
+`usb-net` driver which should handle USB EEM) and a network stack. When running
+on Linux all components are sandboxed with seccomp, however it should be noted
+that Linux drivers are used. For other kernels Genode provides sandboxed
+drivers.
+
+#### Running in DLME
+
+Whether Genode can run in DLME depends on the choosen kernel, however we are
+interested mainly in seL4. Please see seL4 section above for details.
+
+#### Fobnail integration
+
+TPM driver would have to be ported Genode. Underlying kernel must have kexec
+abilities and Genode must have component capable of invoking kexec. USB and
+EEM drivers should work out-of-the-box.
+
+Genode's seL4 support is considered to be in healthly state (see
+[this](https://github.com/genodelabs/genode/issues/4480#issuecomment-1108525737)
+comment). But it should be noted Genode with seL4 has not been used outside the
+lab so far.
+
+Also, it should be noted that Genode license (AGPLv3) is very restrictive and it
+could be a problem for Fobnail.
 
 ### seL4 + CAmkES
 
@@ -566,3 +592,11 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 [^11]: supports 64-bit x86 and ARM. Support for 32-bit architectures has been
        dropped a while ago and is not coming back
+
+## KUDOS
+
+- Andrew Cooper ([@andyhhp](https://github.com/andyhhp))
+- Marek Marczykowski-Górecki ([@marmarek](https://github.com/marmarek))
+- Demi Marie Obenour ([@DemiMarie](https://github.com/DemiMarie))
+- Daniel P. Smith ([@dpsmith](https://github.com/dpsmith))
+- Sid Hussmann ([@sidhussmann](https://github.com/sidhussmann))
