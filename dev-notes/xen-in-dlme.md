@@ -1,5 +1,11 @@
 # Running Xen in DLME
 
+During test we are using [meta-fobnail](https://github.com/fobnail/meta-fobnail)
+which is our custom Yocto layer. meta-fobnail has been described more in-depth
+in [Running OS in DLME](running-os-in-dlme.md). Here we are using Yocto as a
+base OS because it already provides TrenchBoot's GRUB and Landing Zone which are
+required to boot Xen and Linux itself to test whether Xen is working.
+
 Build Yocto image and flash it to SDcard.
 
 ```shell
