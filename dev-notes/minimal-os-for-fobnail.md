@@ -14,6 +14,13 @@ control. But in this document, we want to present the results of research on the
 possibilities of using various operating systems running as DLME that will
 perform the same function.
 
+Also it should be possible to launch minimal OS from an already running target
+OS, this is called late launch as opposed to early launch described above.
+Minimal OS would communicate with Fobnail Token, perform attestation in order
+to determine platform state, and then hand the control back to the main OS.
+Currently, only early launch will be supported, late launch is planned as a
+future improvement.
+
 ## OS requirements
 
 We pay attention to the drivers supported by each OS. We need the following
