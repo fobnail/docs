@@ -282,6 +282,51 @@ the created minimal OS also has an integrated attester application. The main
 dependencies of its operation are drivers for USB, USB EEM and TPM, but running
 them under Linux will not cause major problems.
 
+### Linux with Busybox userspace
+
+The main advantage of Busybox based userspace is its small size. Also booting
+time would be significantly faster than userspace with fully-featured init
+system. With Busybox, init system can be replaced by a simple shell script.
+
+#### Running in DLME
+
+Since we are still running Linux, there are no problems here.
+
+#### Fobnail integration
+
+Since busybox based userspace doesn't have big expectation of Linux feature set,
+kernel can be reduced. Busybox can be compiled with only those features we need.
+Currently, `fobnail-attester` depends on another program to configure Fobnail
+network interface. This is `systemd-networkd`, but in Busybox userspace it would
+have to be something else. It should be noted that configuration should be done
+on hotplug event, simply using `ifconfig` may be unreliable:
+
+- it won't work if Fobnail isn't already plugged in
+- it won't work if Fobnail is plugged out and back in
+
+Hotplug detection and interface setup could be implemented in `fobnail-attester`
+through Netlink.
+
+### Linux with Go userspace
+
+[u-root](https://github.com/u-root/u-root) provides an easy way to deploy Go
+programs as standalone initramfs images. It is used by LinuxBoot project for
+creating small Linux distro that acts as bootloader for other OSes (through
+kexec).
+
+#### Running in DLME
+
+Since we are still running Linux, there are no problems here.
+
+#### Fobnail integration
+
+[fobnail-attester](https://github.com/fobnail/fobnail-attester) is written in C,
+and it rather doesn't make to integrate it. Also, it should be noted that
+`u-root` built initramfs contains only executable - all Go modules are linked
+into a single binary. Unless we want to rewrite `fobnail-attester` there is no
+point in using userspace that was designed be Go-only. Rewriting
+`fobnail-attester` in Go may give benefits of producing less vurnelable code.
+
 ### Little Kernel / Trusted Little Kernel
 
 Little Kernel is a small, embedded monolithic kernel that runs on x86, ARM and
