@@ -178,7 +178,9 @@ usage as secure bootloader.
 
 It should be runnable, however due to microkernel nature all programs run in
 unprivileged mode which complicates booting of the target OS. seL4 would have to
-gain kexec-like abilities.
+gain kexec-like abilities. seL4 developers are
+[willing](https://github.com/seL4/seL4/issues/832#issuecomment-1114385689) to
+add kexec support.
 
 #### Fobnail integration
 
@@ -256,11 +258,14 @@ virtual machines. Features:
 - there is support for hardware passthrough, however it is severely limited and
   it requires manual configuration, including IO port assignment, memory
   mapping, interrupts setup. This is completely not portable and cannot be used
-  in this form. Normally, VM config is written in CAmkES specific language, it
-  is unknown whether such a config can be generated at runtime or only during
-  build.
+  in this form. Normally, VM config is written in CAmkES specific language,
+  which is processed during build. VM config cannot be generated at runtime
+  making robust HW passthrough impossible.
 - seL4 has no support for AMD-V. Until this is implemented there is no
   virtualization on AMD CPUs.
+- we expect some of these limitations to be fixed by the
+  [Makatea](https://trustworthy.systems/projects/TS/makatea) project, which aims
+  at creating a [Qubes](https://www.qubes-os.org/)-like OS on top of seL4.
 
 If CAmkES had good enough virtualization we could take the following approach to
 build secure OS for running
