@@ -1,6 +1,6 @@
-# Minimal OS for Fobnail project
+# Minimal OS for Fobnail Project
 
-The Fobnail Projects aims to build a USB device capable of verifying
+The Fobnail Project aims to build a USB device capable of verifying
 trustworthiness of the platform it is connected to. The project is described
 more in-depth [here](../docs/index.md).
 
@@ -43,12 +43,12 @@ could be implemented by us.
 
 | Requirement             | Description                                                                    |
 | ----------------------- | ------------------------------------------------------------------------------ |
-| USB host driver         | Required for communication with Fobnail                                        |
-| USB EEM driver          | Required for communication with Fobnail                                        |
-| Network Stack           | Required for communication with Fobnail                                        |
+| USB host driver         | Required for communication with Fobnail Token                                  |
+| USB EEM driver          | Required for communication with Fobnail Token                                  |
+| Network Stack           | Required for communication with Fobnail Token                                  |
 | TPM driver              | Required to perform attestation                                                |
 | Bootloader Capabilities | Required to boot target OS                                                     |
-| C library               | [fobnail-attester](https://github.com/fobnail/fobnail-attester) is writen in C |
+| C library               | [Fobnail Attester](https://github.com/fobnail/fobnail-attester) is writen in C |
 | Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification      |
 
 These are another features which are taken into account (soft requirements).
@@ -72,12 +72,16 @@ rules
 
 ## Different OSs propositions
 
-The research effect is presented below. 4 systems were considered:
+The research effect is presented below. 8 systems were considered:
 
 * Zephyr
 * Xous
-* seL4
+* seL4 (with and without CAmkES)
+* Genode
 * Linux
+* Little Kernel / Trusted Little Kernel
+* Fuchsia
+* Xen
 
 Each of them has a short description, an analysis of the launch in DLME, and the
 possibilities and potential problems that will have to be addressed for the
@@ -88,7 +92,7 @@ Fobnail Token to be functional.
 Zephyr is a well-known and supported embedded RTOS with a monolithic kernel
 written in C. It supports various devices ranging from Cortex-M to x86 CPUs.
 It's main benefits are IPv4, CoAP, and USB (including USB EEM) support which are
-required for communication with Fobnail token. Other benefits are listed
+required for communication with Fobnail Token. Other benefits are listed
 [here](https://www.zephyrproject.org/benefits/).
 
 #### Running in DLME
@@ -126,7 +130,7 @@ TPM driver is missing, there is a fairly recent
 stack, but it is intended for embedded devices and supports SPI only.
 
 Zephyr provides good support for standard C library (newlib), which should
-simplify [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+simplify [Fobnail Attester](https://github.com/fobnail/fobnail-attester)
 porting.
 
 ### Xous
@@ -152,7 +156,7 @@ Also, it lacks C interface for calling the kernel and lacks C library. This
 should not be a serious problem because needed support may be added by writing
 the userland code in Rust (which is preffered) or C bindings to the Rust code.
 It means that getting
-[fobnail-attester](https://github.com/fobnail/fobnail-attester) running may
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester) running may
 require a some amount of work. Also, Xous needs to gain kexec-like
 abilities to chainload target OS.
 
@@ -186,7 +190,7 @@ Using seL4 would require a significant amount of work:
 - Extending USB drivers
 - Implementing USB EEM driver
 - Implementing TPM driver
-- Porting [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+- Porting [Fobnail Attester](https://github.com/fobnail/fobnail-attester)
 - seL4 runs all processes in unprivileged mode, so the kernel itself would have
   to be modified to allow booting of another kernel
 
@@ -225,7 +229,7 @@ comment). But it should be noted Genode with seL4 has not been used outside the
 lab so far.
 
 Also, it should be noted that Genode license (AGPLv3) is very restrictive and it
-could be a problem for Fobnail.
+could be a problem for the Fobnail Project.
 
 ### seL4 + CAmkES
 
@@ -259,16 +263,17 @@ virtual machines. Features:
   virtualization on AMD CPUs.
 
 If CAmkES had good enough virtualization we could take the following approach to
-build secure OS for running `fobnail-attester`:
+build secure OS for running
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester):
 
-- `fobnail-attester` would have to be split into 2 parts: part that communicates
+- Fobnail Attester would have to be split into 2 parts: part that communicates
   with Fobnail Token through network and a separate part called secure component
 - secure component would be a program running natively under microkernel and it
   would be responsible for
   - early during minimal OS startup loading next stage OS into RAM (disk drivers
     would be located in Linux VM) and extending PCRs.
-  - starting `fobnail-attester` in Linux
-  - acting as a proxy between `fobnail-attester` and TPM - only operations
+  - starting Fobnail Attester in Linux
+  - acting as a proxy between Fobnail Attester and TPM - only operations
     required to perform platform provisioning/attestation like TPM quote,
     reading EK certificate, etc.
   - this must be a minimal component providing only the most basic set of
@@ -284,7 +289,7 @@ when compromised VM performs successful attestation but boots something else.
 Also, it could be possible to use Rump kernels instead of Linux VM. Rump is a
 library kernel capable of running unmodified Netbsd drivers. Usually it is used
 in Netbsd to test drivers in userspace, however it has been used before to
-provide drivers for other kernels through
+provide drivers for other kernels through the
 [Rumprun](https://github.com/rumpkernel/rumprun) project. Please note that it is
 unikernel which is intended to run in VM, but Rump itself (theoretically) could
 be adapted to run as CAmkES/seL4 component, eliminating the need for VM.
@@ -292,9 +297,10 @@ be adapted to run as CAmkES/seL4 component, eliminating the need for VM.
 ### Linux
 
 In the case of Linux, a minimal distribution will be prepared that meets the
-requirements of the project. [Yocto Project](https://www.yoctoproject.org/) will
-be used for this, because it gives a lot of freedom in manipulating the elements
-that make up the target system.
+requirements of the Fobnail Project.
+[Yocto Project](https://www.yoctoproject.org/) will be used for this, because it
+gives a lot of freedom in manipulating the elements that make up the target
+system.
 
 #### Running in DLME
 
@@ -306,7 +312,7 @@ in a [separate document](./running-os-in-dlme.md).
 
 #### Fobnail integration
 
-At this point, the [fobnail-attester](https://github.com/fobnail/fobnail-attester)
+At this point, the [Fobnail Attester](https://github.com/fobnail/fobnail-attester)
 application is strongly dependent on Linux. Mainly due to the fact that its
 development took place on this operating system. Therefore, it is important that
 the created minimal OS also has an integrated attester application. The main
@@ -327,23 +333,24 @@ Since we are still running Linux, there are no problems here.
 
 Since busybox based userspace doesn't have big expectation of Linux feature set,
 kernel can be reduced. Busybox can be compiled with only those features we need.
-Currently, `fobnail-attester` depends on another program to configure Fobnail
-network interface. This is `systemd-networkd`, but in Busybox userspace it would
-have to be something else. It should be noted that configuration should be done
-on hotplug event, simply using `ifconfig` may be unreliable:
+Currently, Fobnail Attester depends on another program to configure network
+interface created by Fobnail Token. This is `systemd-networkd`, but in Busybox
+userspace it would have to be something else. It should be noted that
+configuration should be done on hotplug event, simply using `ifconfig` may be
+unreliable:
 
-- it won't work if Fobnail isn't already plugged in
-- it won't work if Fobnail is plugged out and back in
+- it won't work if Fobnail Token isn't already plugged in
+- it won't work if Fobnail Token is plugged out and back in
 
-Hotplug detection and interface setup could be implemented in `fobnail-attester`
-through Netlink.
+Hotplug detection and interface setup could be implemented in
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester) through Netlink.
 
 ### Linux with Go userspace
 
 [u-root](https://github.com/u-root/u-root) provides an easy way to deploy Go
-programs as standalone initramfs images. It is used by LinuxBoot project for
-creating small Linux distro that acts as bootloader for other OSes (through
-kexec).
+programs as standalone initramfs images. It is used by the
+[LinuxBoot](https://www.linuxboot.org/) project for creating small Linux distro
+that acts as bootloader for other OSes (through kexec).
 
 #### Running in DLME
 
@@ -351,12 +358,13 @@ Since we are still running Linux, there are no problems here.
 
 #### Fobnail integration
 
-[fobnail-attester](https://github.com/fobnail/fobnail-attester) is written in C,
-and it rather doesn't make to integrate it. Also, it should be noted that
-`u-root` built initramfs contains only executable - all Go modules are linked
-into a single binary. Unless we want to rewrite `fobnail-attester` there is no
-point in using userspace that was designed be Go-only. Rewriting
-`fobnail-attester` in Go may give benefits of producing less vurnelable code.
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester) is written in C,
+and it rather doesn't make sense to integrate it with Go userland. Also, it
+should be noted that `u-root` built initramfs contains only executable - all Go
+modules are linked into a single binary. Unless we want to rewrite Fobnail
+Attester there is no point in using userspace that was designed be Go-only.
+Rewriting Fobnail Attester in Go may give benefits of producing less vurnelable
+code.
 
 ### Little Kernel / Trusted Little Kernel
 
@@ -380,7 +388,7 @@ Multiboot2 support could be added.
 
 #### Fobnail integration
 
-Running [fobnail-attester](https://github.com/fobnail/fobnail-attester) on LK
+Running [Fobnail Attester](https://github.com/fobnail/fobnail-attester) on LK
 would be problematic to say the last:
 
 - LK lacks most drivers including USB host drivers (UHCI, OHCI, EHCI, XHCI),
@@ -458,9 +466,9 @@ See [xen-in-dlme.md](xen-in-dlme.md) for demo.
 
 Domain 0 less mode eliminates need for trusted VM. Also, since Xen itself is
 responsible for booting multiple VMs there is no need for tools that manage Xen
-(which don't work on any OS). `fobnail-attester` could be integrated in a
-similar way that with CAmkES based VM (see CAmkES section above for details).
-The main difference would be that the secure component would be a separate VM.
+(which don't work on any OS). Fobnail Attester could be integrated in a similar
+way that with CAmkES based VM (see CAmkES section above for details). The main
+difference would be that the secure component would be a separate VM.
 
 Unfortunatelly, Xen is bloated and it doesn't meet the "minimal" requirement.
 This is a major problem.
@@ -629,16 +637,17 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 ## Summary
 
-* The above report outlines four operating systems that should be considered
+* The above report outlines 8 operating systems that should be considered
   candidates for Fobnail Token interoperability.
 
 * The basic choice is Linux, the operating system based on it is created with
-  the use of Yocto Project. All achievements can be reproduced at any time using
-  the [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer.
+  the use of [Yocto Project](https://www.yoctoproject.org/). All achievements
+  can be reproduced at any time using the
+  [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer.
 
 * As part of the report, the seL4, Xous and Zephyr systems were also checked.
   The possibility of running it in DLME and the integration of the
-  [fobnail-attester](https://github.com/fobnail/fobnail-attester) application
+  [Fobnail Attester](https://github.com/fobnail/fobnail-attester) application
   was checked for each of them.
 
 * The description of an attempt to run Zephyr on PC Engines apu2 in order to
