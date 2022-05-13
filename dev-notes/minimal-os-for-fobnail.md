@@ -258,6 +258,37 @@ virtual machines. Features:
 - seL4 has no support for AMD-V. Until this is implemented there is no
   virtualization on AMD CPUs.
 
+If CAmkES had good enough virtualization we could take the following approach to
+build secure OS for running `fobnail-attester`:
+
+- `fobnail-attester` would have to be split into 2 parts: part that communicates
+  with Fobnail Token through network and a separate part called secure component
+- secure component would be a program running natively under microkernel and it
+  would be responsible for
+  - early during minimal OS startup loading next stage OS into RAM (disk drivers
+    would be located in Linux VM) and extending PCRs.
+  - starting `fobnail-attester` in Linux
+  - acting as a proxy between `fobnail-attester` and TPM - only operations
+    required to perform platform provisioning/attestation like TPM quote,
+    reading EK certificate, etc.
+  - this must be a minimal component providing only the most basic set of
+    features. It must be verified that it has no exploitable bugs.
+- secure component would be responsible for booting target OS after attestation
+  is successful
+
+With this approach, even if VM got compromised it wouldn't break attestation.
+Linux VM can't boot another OS, it can only signal secure component to boot the
+exact OS that has been loaded earlier and nothing more. We avoid a situation
+when compromised VM performs successful attestation but boots something else.
+
+Also, it could be possible to use Rump kernels instead of Linux VM. Rump is a
+library kernel capable of running unmodified Netbsd drivers. Usually it is used
+in Netbsd to test drivers in userspace, however it has been used before to
+provide drivers for other kernels through
+[Rumprun](https://github.com/rumpkernel/rumprun) project. Please note that it is
+unikernel which is intended to run in VM, but Rump itself (theoretically) could
+be adapted to run as CAmkES/seL4 component, eliminating the need for VM.
+
 ### Linux
 
 In the case of Linux, a minimal distribution will be prepared that meets the
@@ -414,7 +445,9 @@ in a paravirtualized environment. Xen contains only drivers absolutely necessary
 for hypervisor and VM to boot. Control over most of the hardware is handed to
 the first VM known as [Dom0](https://wiki.xenproject.org/wiki/Dom0). Usuallly
 Linux runs in Dom0, there are other OSes which also support running in Dom0
-(BSD, Solaris), however there is no advantage of using them over Linux.
+(BSD, Solaris), however there is no advantage of using them over Linux. Xen also
+has ability to run in dom0-less mode - bootloader provides VM images and Xen
+starts VMs on their own (see section below for details).
 
 #### Running in DLME
 
@@ -423,7 +456,14 @@ See [xen-in-dlme.md](xen-in-dlme.md) for demo.
 
 #### Integration with Fobnail
 
-TBD
+Domain 0 less mode eliminates need for trusted VM. Also, since Xen itself is
+responsible for booting multiple VMs there is no need for tools that manage Xen
+(which don't work on any OS). `fobnail-attester` could be integrated in a
+similar way that with CAmkES based VM (see CAmkES section above for details).
+The main difference would be that the secure component would be a separate VM.
+
+Unfortunatelly, Xen is bloated and it doesn't meet the "minimal" requirement.
+This is a major problem.
 
 ## Zephyr PoC test
 
@@ -647,8 +687,11 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 ## KUDOS
 
+We want to thank the people listed below for their help in this research (listed
+alphabetically).
+
 - Andrew Cooper ([@andyhhp](https://github.com/andyhhp))
+- Sid Hussmann ([@sidhussmann](https://github.com/sidhussmann))
 - Marek Marczykowski-Górecki ([@marmarek](https://github.com/marmarek))
 - Demi Marie Obenour ([@DemiMarie](https://github.com/DemiMarie))
 - Daniel P. Smith ([@dpsmith](https://github.com/dpsmith))
-- Sid Hussmann ([@sidhussmann](https://github.com/sidhussmann))
