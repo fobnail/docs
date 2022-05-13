@@ -153,12 +153,12 @@ raising the subject, among others, about x86 support.
 
 Xous has network support but currently lacks USB host drivers and TPM support.
 Also, it lacks C interface for calling the kernel and lacks C library. This
-should not be a serious problem because needed support may be added by writing
-the userland code in Rust (which is preffered) or C bindings to the Rust code.
-It means that getting
+should not be a serious problem and may be solved by rewriting
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester) in Rust or by
+adding required C bindings to Rust code. It means that getting
 [Fobnail Attester](https://github.com/fobnail/fobnail-attester) running may
-require a some amount of work. Also, Xous needs to gain kexec-like
-abilities to chainload target OS.
+require some amount of work. Also, Xous needs to gain kexec-like abilities to
+chainload target OS.
 
 ### seL4
 
