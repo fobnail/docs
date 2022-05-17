@@ -5,11 +5,11 @@ Fobnail Project provide resources to create axiomatically trustworthy
 detailed project description please check [here](description).
 
 * [Fobnail firmware][fobnail_fw] is an open-source implementation of the
-  [iTurtle][mmcune] security architecture concept presented at HotSec07; in addition, it
+  [iTurtle][mccune] security architecture concept presented at HotSec07; in addition, it
   will leverage industry standards like [TCG D-RTM][tcg_drtm] trusted execution environment
   and IEFT RATS. The Fobnail project aims to provide a reference architecture
-  for building offline integrity measurement servers on the USB device and
-  clients running in Dynamically Launched Measured Environments (DLME). It
+  for building offline integrity measurement verifiers on the USB device and
+  attesters running in Dynamically Launched Measured Environments (DLME). It
   allows the Fobnail owner to verify the trustworthiness of the running system
   before performing any sensitive operation. Fobnail does not need an Internet
   connection what makes it immune to the network stack and remote
@@ -27,7 +27,6 @@ detailed project description please check [here](description).
 ## Where to go next?
 
 * Read Fobnail Project [detailed description](description.md)
-*
 * [Environment setup](environment.md)
 * [Flashing sample applications](flashing_samples.md)
 * How to support the project?
