@@ -72,7 +72,7 @@ rules
 
 ## Different OSs propositions
 
-The research effect is presented below. 8 systems were considered:
+The research effect is presented below. 8 systems were considered
 
 * Zephyr
 * Xous
@@ -108,7 +108,7 @@ To properly measure Multiboot1, SKL would have to know and parse every tag as
 most of them contain pointers to other structures. This is not going to happen.
 
 Also, Zephyr may have trouble with running on different hardware configurations.
-Some important HW-related configuration is baked into Zephyr during build:
+Some important HW-related configuration is baked into Zephyr during build
 
 - LAPIC base is selected by `CONFIG_LOAPIC_BASE_ADDRESS`, if target platform has
   LAPIC remapped using `IA32_APIC_BASE` Zephyr will break.
@@ -119,7 +119,7 @@ Some important HW-related configuration is baked into Zephyr during build:
 
 #### Fobnail integration
 
-Zephyr provides most of the drivers needed for integration:
+Zephyr provides most of the drivers needed for integration
 
 - USB hub drivers
 - USB EEM driver
@@ -184,11 +184,12 @@ add kexec support.
 
 #### Fobnail integration
 
-seL4 provides virtually no drivers, except a few drivers listed here.
+seL4 provides virtually no drivers, except a few drivers listed
+[here](https://docs.sel4.systems/projects/available-user-components.html#device-drivers).
 According to the page linked above, `libusbdrivers` is inactive and lacks XHCI
 support. seL4 has basic support for an old version of musl C library (v1.1.16).
 
-Using seL4 would require a significant amount of work:
+Using seL4 would require a significant amount of work
 - Extending USB drivers
 - Implementing USB EEM driver
 - Implementing TPM driver
@@ -221,7 +222,7 @@ interested mainly in seL4. Please see seL4 section above for details.
 
 #### Fobnail integration
 
-TPM driver would have to be ported Genode. Underlying kernel must have kexec
+TPM driver would have to be ported to Genode. Underlying kernel must have kexec
 abilities and Genode must have component capable of invoking kexec. USB and
 EEM drivers should work out-of-the-box.
 
@@ -247,42 +248,42 @@ above for details.
 #### Fobnail integration
 
 CAmkES also does not provide many drivers. However it does provide VMM for
-virtual machines. Features:
+virtual machines. Features
 
 - support for booting Linux kernel
 - according to [camkes-vm](https://docs.sel4.systems/projects/camkes-vm/)
-  documentation, only 32-bit VMs are supported.
-  > The first step is to install ubuntu natively on the cma34cr. It’s currently
+  documentation, only 32-bit VMs are supported
+  > The first step is to install Ubuntu natively on the cma34cr. It’s currently
   > required that guests of the camkes vm run in 32-bit mode, so install 32-bit
-  > ubuntu.
+  > Ubuntu.
 - there is support for hardware passthrough, however it is severely limited and
   it requires manual configuration, including IO port assignment, memory
   mapping, interrupts setup. This is completely not portable and cannot be used
   in this form. Normally, VM config is written in CAmkES specific language,
   which is processed during build. VM config cannot be generated at runtime
-  making robust HW passthrough impossible.
+  making robust HW passthrough impossible
 - seL4 has no support for AMD-V. Until this is implemented there is no
-  virtualization on AMD CPUs.
+  virtualization on AMD CPUs
 - we expect some of these limitations to be fixed by the
   [Makatea](https://trustworthy.systems/projects/TS/makatea) project, which aims
-  at creating a [Qubes](https://www.qubes-os.org/)-like OS on top of seL4.
+  at creating a [Qubes](https://www.qubes-os.org/)-like OS on top of seL4
 
 If CAmkES had good enough virtualization we could take the following approach to
 build secure OS for running
-[Fobnail Attester](https://github.com/fobnail/fobnail-attester):
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester)
 
 - Fobnail Attester would have to be split into 2 parts: part that communicates
   with Fobnail Token through network and a separate part called secure component
 - secure component would be a program running natively under microkernel and it
   would be responsible for
   - early during minimal OS startup loading next stage OS into RAM (disk drivers
-    would be located in Linux VM) and extending PCRs.
+    would be located in Linux VM) and extending PCRs
   - starting Fobnail Attester in Linux
   - acting as a proxy between Fobnail Attester and TPM - only operations
     required to perform platform provisioning/attestation like TPM quote,
     reading EK certificate, etc.
   - this must be a minimal component providing only the most basic set of
-    features. It must be verified that it has no exploitable bugs.
+    features, it must be verified that it has no exploitable bugs
 - secure component would be responsible for booting target OS after attestation
   is successful
 
@@ -342,7 +343,7 @@ Currently, Fobnail Attester depends on another program to configure network
 interface created by Fobnail Token. This is `systemd-networkd`, but in Busybox
 userspace it would have to be something else. It should be noted that
 configuration should be done on hotplug event, simply using `ifconfig` may be
-unreliable:
+unreliable
 
 - it won't work if Fobnail Token isn't already plugged in
 - it won't work if Fobnail Token is plugged out and back in
@@ -394,22 +395,23 @@ Multiboot2 support could be added.
 #### Fobnail integration
 
 Running [Fobnail Attester](https://github.com/fobnail/fobnail-attester) on LK
-would be problematic to say the last:
+would be problematic to say the last
 
 - LK lacks most drivers including USB host drivers (UHCI, OHCI, EHCI, XHCI),
-  USB EEM driver and TPM drivers.
-- Lack of cryptographic library in LK. TLK does provide one (potentially could be).
+  USB EEM driver and TPM drivers
+- Lack of cryptographic library in LK. TLK does provide one (potentially could
+  be)
 - Default C library is too much constrained - provides only most basic API like
-  string operations, printing, etc. Lacks anything more complex, including
-  networking support. There is a LK's
+  string operations, printing, etc. lacks anything more complex, including
+  networking support, there is a LK's
   [fork](https://github.com/littlekernel/newlib) of Newlib, however of unknown
-  quality.
-- TCP/IP is provided by `minip` library (which is part of LK). Attester depends
+  quality
+- TCP/IP is provided by `minip` library (which is part of LK), attester depends
   on `libcoap3` which either would have to be ported to `minip` or `minip` would
-  have to be integrated with `newlib`.
-- LK has no suitable bootloader capabilities.
+  have to be integrated with `newlib`
+- LK has no suitable bootloader capabilities
   [lkboot](https://github.com/littlekernel/lk/tree/master/app/lkboot) could
-  serve as reference to develop custom bootloader.
+  serve as reference to develop custom bootloader
 
 ### Fuchsia (Zircon)
 
@@ -436,20 +438,20 @@ Multiboot 1 support is still present, but SKL doesn't support it anyway. See
 #### Fobnail integration
 
 Fuchsia provides a Unix-like environment with musl C library. Network is
-available but is no EEM driver, and only XHCI host driver is supported. Since
-EHCI is still widely used, this is a major limitation. TPM driver is available
-but without `libtss2`.
+available but there is no EEM driver, and only XHCI host driver is supported.
+Since EHCI is still widely used, this is a major limitation. TPM driver is
+available but without `libtss2`.
 
 Zircon has a kexec-like capability which allows to boot another Zircon instance.
 This is known as `mexec`.
 
-Following things would have to be done:
+Following things would have to be done
 
-- Bring `libtss2` stack to Zircon.
+- Bring `libtss2` stack to Zircon
 - Bring EEM driver. There is ECM driver available, which could serve as
-  reference.
+  reference
 - Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
-- Figure out how to use `mexec` to boot Linux.
+- Figure out how to use `mexec` to boot Linux
 
 ### Xen
 
@@ -480,9 +482,13 @@ This is a major problem.
 
 ## Zephyr PoC test
 
+In addition to conducting the theoretical analysis, it was decided to include a
+test report of one of the operating systems in order to verify the information
+presented. The choice fell on Zephyr.
+
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
 support. Currently, there is an ongoing discussion how TrenchBoot should be
-integrated into Linux - see the following links:
+integrated into Linux - see the following links
 
 - https://groups.google.com/g/trenchboot-devel/c/-RxTtan5H3I/m/vU-yp5kHAgAJ
 - https://groups.google.com/g/trenchboot-devel/c/QLMg0r4XTcs/m/YrN2bX3PDQAJ
@@ -493,13 +499,13 @@ made. During PoC we use GRUB from
 [here](https://github.com/3mdeb/grub/tree/tb_xen). To reproduce PoC results
 please follow the instructions below.
 
-- Clone GRUB source
+* Clone GRUB source.
 
   ```shell
   $ git clone https://github.com/3mdeb/grub/ --branch tb_xen
   ```
 
-- Prepare container for building GRUB.
+* Prepare container for building GRUB.
 
   ```shell
   $ cd grub
@@ -509,7 +515,7 @@ please follow the instructions below.
       pkg-config python bison flex
   ```
 
-- Build GRUB (execute from container while in GRUB directory)
+* Build GRUB (execute from container while in GRUB directory).
 
   ```shell
   (docker)$ ./bootstrap
@@ -520,7 +526,7 @@ please follow the instructions below.
   (docker)$ make install
   ```
 
-- Exit container and prepare boot disk by creating MBR + FAT32 partition.
+* Exit container and prepare boot disk by creating MBR + FAT32 partition
 
   ```shell
   $ sudo fdisk /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0 <<EOF
@@ -536,8 +542,8 @@ please follow the instructions below.
   $ sudo mkfs.vfat -F32 /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0-part1
   ```
 
-- Install GRUB onto target device. This will a complete GRUB into target
-  devices, including MBR, GRUB, and its modules.
+* Install GRUB onto target device, this will put a complete GRUB into target
+  device, including MBR, GRUB, and its modules.
 
   ```shell
   $ sudo mkdir /mnt/boot
@@ -548,7 +554,7 @@ please follow the instructions below.
       /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0
   ```
 
-- Build SKL (Secure Kernel Loader) from TrenchBoot and copy it to boot
+* Build SKL (Secure Kernel Loader) from TrenchBoot and copy it to boot
   partition.
 
   ```shell
@@ -561,7 +567,7 @@ please follow the instructions below.
 Setup Zephyr build environment. Instructions below are based on Zephyr
 [Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
 
-- Install required packages. Ubuntu has too old packages so we have to use
+* Install required packages, Ubuntu has too old packages so we have to use
   KitWare repo.
 
   ```shell
@@ -574,7 +580,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   $ pip3 install --user -U west
   ```
 
-- Obtain Zephyr toolchain
+* Obtain Zephyr toolchain.
 
   ```shell
   $ wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.1/zephyr-sdk-0.14.1_linux-x86_64.tar.gz
@@ -583,7 +589,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   $ ~/.local/zephyr-sdk-0.14.1/setup.sh -c
   ```
 
-- Fetch Zephyr source code.
+* Fetch Zephyr source code.
 
   ```shell
   $ west init zephyr
@@ -591,7 +597,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   $ west update
   ```
 
-- Install required packages, use virtual environment to avoid conflict with
+* Install required packages, use virtual environment to avoid conflict with
   user/system packages.
 
   ```shell
@@ -599,7 +605,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   $ pip3 install -r zephyr/scripts/requirements.txt
   ```
 
-- Build Zephyr, we use Qemu as the target, but it works on APU (without DLME).
+* Build Zephyr, we use QEMU as the target, but it works on APU (without DLME).
 
   ```shell
   $ cd zephyr
@@ -607,7 +613,7 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   $ sudo cp build/zephyr/zephyr.elf /mnt/boot/
   ```
 
-- Configure GRUB, create '/mnt/boot/grub/grub.cfg` with the following contents.
+* Configure GRUB, create '/mnt/boot/grub/grub.cfg` with the following contents.
 
   ```shell
   default 0
@@ -621,24 +627,25 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   }
   ```
 
-- Umount disk and sync before unplugging it. There were some problems with
-  obtaining working binary, so before booting Zephyr on target platform please
-  check whether it boots in Qemu (without DLME). When booting Zephyr you should
-  see `Hello World` message on serial console, if Zephyr doesn't output anything
-  or if it stuck at `Booting Zephyr` message then something went wrong.
+* Umount disk and sync before unplugging it.
+  > There were some problems with obtaining working binary, so before booting
+    Zephyr on target platform please check whether it boots in QEMU (without
+    DLME). When booting Zephyr you should see `Hello World` message on serial
+    console, if Zephyr doesn't output anything or if it stuck at
+    `Booting Zephyr` message then something went wrong.
 
   ```shell
   $ qemu-system-x86_64 -nographic -serial mon:stdio -m 512M -cpu qemu64 \
     -drive format=raw,file=/dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0
   ```
 
-- Zephyr should normally boot on APU. If DLME variant (from boot menu) is used
-  Zephyr will also boot normally. That is because TrenchBoot GRUB executes SKL
+* Zephyr should normally boot on APU, if DLME variant (from boot menu) is used
+  Zephyr will also boot normally - that is because TrenchBoot GRUB executes SKL
   only when using
   [Multiboot2](https://github.com/3mdeb/grub/blob/tb_xen/grub-core/loader/multiboot.c#L192)
   but Zephyr has support only for Multiboot1.
 
-- Booting Zephyr in DLME would require extending it with Multiboot2 support.
+* Booting Zephyr in DLME would require extending it with Multiboot2 support.
 
 ## Summary
 
@@ -650,8 +657,8 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   can be reproduced at any time using the
   [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer.
 
-* As part of the report, the seL4, Xous and Zephyr systems were also checked.
-  The possibility of running it in DLME and the integration of the
+* As part of the report, other systems were also checked. The possibility of
+  running them in DLME and the integration of the
   [Fobnail Attester](https://github.com/fobnail/fobnail-attester) application
   was checked for each of them.
 
