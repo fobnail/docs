@@ -137,6 +137,9 @@ capabilities of Fobnail Token, following restrictions apply.
     Owner generates one additional certificate for Token, but this final
     certificate doesn't allow for use as a CA.
 
+    This limit comes from hardware limitations (in terms of available memory)
+    aggravated by chosen library (Trussed) and its [limitations](https://github.com/fobnail/docs/blob/main/dev-notes/trussed-problems.md#low-quality-and-inconsistent-apis).
+
 - File format
 
     Certificates are concatenated to a single PEM file. Order of concatenation
@@ -155,11 +158,19 @@ capabilities of Fobnail Token, following restrictions apply.
 
 #### Temporal checks
 
-Reference Fobnail Token (nRF52840 dongle) has neither timekeeping nor trusted
-networking capabilities. Because of that, validity period and recent (i.e. one
-that happened after last firmware update) certificate revocation cannot be
-tested without adding another party that Fobnail Token trusts, or by using
-another dongle for Fobnail Token.
+- Validity period
+
+Reference Fobnail Token (nRF52840 dongle) has no timekeeping capabilities.
+Because of that, validity period cannot be tested without adding another party
+that Fobnail Token trusts, or by using another dongle for Fobnail Token.
+
+- Certificate revocation
+
+Fobnail Token doesn't have trusted network connection, so it can't access recent
+(i.e. one that happened after last firmware update) certificate revocation list
+at run time. Revocations can only by applied during flashing/update, which
+should be done by Platform Owner. During that process, attempt to use revoked
+certificates should result in failed provisioning.
 
 ## Creating Platform Owner certificate chain with OpenSSL
 
