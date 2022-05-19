@@ -26,12 +26,12 @@ future improvement.
 We pay attention to the drivers supported by each OS. We need the following
 drivers:
 
-- TPM drivers
-- Drivers required for communicating with Fobnail Token
+* TPM drivers
+* Drivers required for communicating with Fobnail Token:
   - USB host drivers - at minimum EHCI and xHCI support, however UHCI and OHCI
     would be good to have
   - USB EEM driver - emulated Ethernet driver
-  - Network stack with IPv4 support
+  - network stack with IPv4 support
 
 Also we pay attention to OS security, ability to run in DLME, including
 portability between different hardware (a single binary should be able to boot
@@ -59,29 +59,18 @@ These are another features which are taken into account (soft requirements).
 | OS portability           | Required to avoid rebuilding minimal OS for each device                   |
 | CPU Architecture support | OS supported architectures, mostly we consider x86, ARM, RISC-V and POWER |
 
-### OS score counting
-
-The table at the bottom of this document contains summary of features of all
-OSes together with theirs scores. Each score is computed using the following
-rules
-
-- If feature is present then +1
-- If feature is not present then 0, or if feature would be hard to implement
-  then -1
-- If this is a hard requirement then multiple result by 2
-
 ## Different OSs propositions
 
 The research effect is presented below. 8 systems were considered
 
-* Zephyr
-* Xous
-* seL4 (with and without CAmkES)
-* Genode
-* Linux
-* Little Kernel / Trusted Little Kernel
-* Fuchsia
-* Xen
+* [Zephyr](#zephyr)
+* [Xous](#xous)
+* [seL4](#sel4) (with and without CAmkES)
+* [Genode](#genode)
+* [Linux](#linux)
+* [Little Kernel / Trusted Little Kernel](#little-kernel--trusted-little-kernel)
+* [Fuchsia](#fuchsia-zircon)
+* [Xen](#xen)
 
 Each of them has a short description, an analysis of the launch in DLME, and the
 possibilities and potential problems that will have to be addressed for the
@@ -108,22 +97,22 @@ To properly measure Multiboot1, SKL would have to know and parse every tag as
 most of them contain pointers to other structures. This is not going to happen.
 
 Also, Zephyr may have trouble with running on different hardware configurations.
-Some important HW-related configuration is baked into Zephyr during build
+Some important HW-related configuration is baked into Zephyr during build:
 
-- LAPIC base is selected by `CONFIG_LOAPIC_BASE_ADDRESS`, if target platform has
+* LAPIC base is selected by `CONFIG_LOAPIC_BASE_ADDRESS`, if target platform has
   LAPIC remapped using `IA32_APIC_BASE` Zephyr will break.
 
-- APIC mode (xAPIC vs x2APIC) is selected when building Zephyr and cannot be
+* APIC mode (xAPIC vs x2APIC) is selected when building Zephyr and cannot be
   detected at runtime. Zephyr may not boot if it has different APIC mode set
   than firmware has.
 
 #### Fobnail integration
 
-Zephyr provides most of the drivers needed for integration
+Zephyr provides most of the drivers needed for integration:
 
-- USB hub drivers
-- USB EEM driver
-- Network stack with IPv4 and CoAP support
+* USB hub drivers,
+* USB EEM driver,
+* Network stack with IPv4 and CoAP support.
 
 TPM driver is missing, there is a fairly recent
 [PoC implementation](https://github.com/drandreas/zephyr-tpm2-poc) of TPM2
@@ -141,7 +130,6 @@ focused on RISC-V, which right now is the only architecture supported. However,
 x86 already contains
 [dummy implementation](https://github.com/betrusted-io/xous-core/blob/30b82b25b100e958790973c129dc49e1acca79ec/kernel/src/arch/x86_64.rs)
 which probably will be extended someday.
-
 
 #### Running in DLME
 
@@ -189,21 +177,23 @@ seL4 provides virtually no drivers, except a few drivers listed
 According to the page linked above, `libusbdrivers` is inactive and lacks XHCI
 support. seL4 has basic support for an old version of musl C library (v1.1.16).
 
-Using seL4 would require a significant amount of work
-- Extending USB drivers
-- Implementing USB EEM driver
-- Implementing TPM driver
-- Porting [Fobnail Attester](https://github.com/fobnail/fobnail-attester)
-- seL4 runs all processes in unprivileged mode, so the kernel itself would have
-  to be modified to allow booting of another kernel
+Using seL4 would require a significant amount of work:
+
+* Extending USB drivers,
+* Implementing USB EEM driver,
+* Implementing TPM driver,
+* Porting [Fobnail Attester](https://github.com/fobnail/fobnail-attester),
+* seL4 runs all processes in unprivileged mode, so the kernel itself would have
+  to be modified to allow booting of another kernel.
 
 [Genode](https://github.com/genodelabs/genode) can provide many of the required
 drivers. See the section below for details.
 
-CAmkES provides tools for writing seL4-native components, it also has VMM
-support for running virtual machines. Contrary to Genode CAmkES does not provide
-drivers, but VMs may provide them. However this requires virtualization and seL4
-currently supports it only on Intel CPUs. See the section below for more details.
+[CAmkES](https://docs.sel4.systems/projects/camkes/) provides tools for writing
+seL4-native components, it also has VMM support for running virtual machines.
+Contrary to Genode CAmkES does not provide drivers, but VMs may provide them.
+However this requires virtualization and seL4 currently supports it only on
+Intel CPUs. See the section below for more details.
 
 ### Genode
 
@@ -218,7 +208,8 @@ drivers.
 #### Running in DLME
 
 Whether Genode can run in DLME depends on the choosen kernel, however we are
-interested mainly in seL4. Please see seL4 section above for details.
+interested mainly in seL4. Please see seL4 [section](#running-in-dlme-2) above
+for details.
 
 #### Fobnail integration
 
@@ -242,50 +233,52 @@ is in progress).
 
 #### Running in DLME
 
-Since CAmkES is based on seL4, the same restrictions apply. See the section
-above for details.
+Since CAmkES is based on seL4, the same restrictions apply. See the
+[section](#running-in-dlme-2) above for details.
 
 #### Fobnail integration
 
 CAmkES also does not provide many drivers. However it does provide VMM for
-virtual machines. Features
+virtual machines. Features:
 
-- support for booting Linux kernel
-- according to [camkes-vm](https://docs.sel4.systems/projects/camkes-vm/)
-  documentation, only 32-bit VMs are supported
+* Support for booting Linux kernel.
+* Support only for 32-bit VMs, according to
+  [camkes-vm](https://docs.sel4.systems/projects/camkes-vm/) documentation.
   > The first step is to install Ubuntu natively on the cma34cr. It’s currently
-  > required that guests of the camkes vm run in 32-bit mode, so install 32-bit
+  > required that guests of the camkes-vm run in 32-bit mode, so install 32-bit
   > Ubuntu.
-- there is support for hardware passthrough, however it is severely limited and
-  it requires manual configuration, including IO port assignment, memory
-  mapping, interrupts setup. This is completely not portable and cannot be used
-  in this form. Normally, VM config is written in CAmkES specific language,
-  which is processed during build. VM config cannot be generated at runtime
-  making robust HW passthrough impossible
-- seL4 has no support for AMD-V. Until this is implemented there is no
-  virtualization on AMD CPUs
-- we expect some of these limitations to be fixed by the
-  [Makatea](https://trustworthy.systems/projects/TS/makatea) project, which aims
-  at creating a [Qubes](https://www.qubes-os.org/)-like OS on top of seL4
+* Support for hardware passthrough, however it is severely limited and it
+  requires manual configuration, including IO port assignment, memory mapping,
+  interrupts setup. This is completely not portable and cannot be used in this
+  form. Normally, VM config is written in CAmkES specific language, which is
+  processed during build. VM config cannot be generated at runtime making robust
+  HW passthrough impossible.
+* Lack of support for AMD-V. Until this is implemented there is no
+  virtualization on AMD CPUs.
+
+We expect some of these limitations to be fixed by the
+[Makatea](https://trustworthy.systems/projects/TS/makatea) project, which aims
+at creating a [Qubes](https://www.qubes-os.org/)-like OS on top of seL4.
 
 If CAmkES had good enough virtualization we could take the following approach to
 build secure OS for running
-[Fobnail Attester](https://github.com/fobnail/fobnail-attester)
+[Fobnail Attester](https://github.com/fobnail/fobnail-attester):
 
-- Fobnail Attester would have to be split into 2 parts: part that communicates
-  with Fobnail Token through network and a separate part called secure component
-- secure component would be a program running natively under microkernel and it
-  would be responsible for
-  - early during minimal OS startup loading next stage OS into RAM (disk drivers
-    would be located in Linux VM) and extending PCRs
-  - starting Fobnail Attester in Linux
-  - acting as a proxy between Fobnail Attester and TPM - only operations
+* Fobnail Attester would have to be split into 2 parts: part that communicates
+  with Fobnail Token through network and a separate part called secure
+  component.
+* Secure component would be a program running natively under microkernel and it
+  would be responsible for:
+  - Loading next stage OS into RAM (disk drivers would be located in Linux VM)
+    and extending PCRs early during minimal OS startup.
+  - Starting Fobnail Attester in Linux.
+  - Acting as a proxy between Fobnail Attester and TPM - only operations
     required to perform platform provisioning/attestation like TPM quote,
-    reading EK certificate, etc.
-  - this must be a minimal component providing only the most basic set of
-    features, it must be verified that it has no exploitable bugs
-- secure component would be responsible for booting target OS after attestation
-  is successful
+    reading EK certificate, etc. (this must be a minimal component providing
+    only the most basic set of features, it must be verified that it has no
+    exploitable bugs)
+* Secure component would be responsible for booting target OS after attestation
+  is successful.
 
 With this approach, even if VM got compromised it wouldn't break attestation.
 Linux VM can't boot another OS, it can only signal secure component to boot the
@@ -343,10 +336,10 @@ Currently, Fobnail Attester depends on another program to configure network
 interface created by Fobnail Token. This is `systemd-networkd`, but in Busybox
 userspace it would have to be something else. It should be noted that
 configuration should be done on hotplug event, simply using `ifconfig` may be
-unreliable
+unreliable because:
 
-- it won't work if Fobnail Token isn't already plugged in
-- it won't work if Fobnail Token is plugged out and back in
+* It won't work if Fobnail Token isn't already plugged in.
+* It won't work if Fobnail Token is plugged out and back in.
 
 Hotplug detection and interface setup could be implemented in
 [Fobnail Attester](https://github.com/fobnail/fobnail-attester) through Netlink.
@@ -395,23 +388,23 @@ Multiboot2 support could be added.
 #### Fobnail integration
 
 Running [Fobnail Attester](https://github.com/fobnail/fobnail-attester) on LK
-would be problematic to say the last
+would be problematic to say the last and the reasons for that are:
 
-- LK lacks most drivers including USB host drivers (UHCI, OHCI, EHCI, XHCI),
-  USB EEM driver and TPM drivers
-- Lack of cryptographic library in LK. TLK does provide one (potentially could
-  be)
-- Default C library is too much constrained - provides only most basic API like
+* LK lacks most drivers including USB host drivers (UHCI, OHCI, EHCI, XHCI),
+  USB EEM driver and TPM drivers.
+* Lack of cryptographic library in LK. TLK does provide one (potentially could
+  be).
+* Default C library is too much constrained - provides only most basic API like
   string operations, printing, etc. lacks anything more complex, including
   networking support, there is a LK's
   [fork](https://github.com/littlekernel/newlib) of Newlib, however of unknown
-  quality
-- TCP/IP is provided by `minip` library (which is part of LK), attester depends
+  quality.
+* TCP/IP is provided by `minip` library (which is part of LK), attester depends
   on `libcoap3` which either would have to be ported to `minip` or `minip` would
-  have to be integrated with `newlib`
-- LK has no suitable bootloader capabilities
+  have to be integrated with `newlib`.
+* LK has no suitable bootloader capabilities
   [lkboot](https://github.com/littlekernel/lk/tree/master/app/lkboot) could
-  serve as reference to develop custom bootloader
+  serve as reference to develop custom bootloader.
 
 ### Fuchsia (Zircon)
 
@@ -445,13 +438,13 @@ available but without `libtss2`.
 Zircon has a kexec-like capability which allows to boot another Zircon instance.
 This is known as `mexec`.
 
-Following things would have to be done
+Following things would have to be done:
 
-- Bring `libtss2` stack to Zircon
-- Bring EEM driver. There is ECM driver available, which could serve as
-  reference
-- Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
-- Figure out how to use `mexec` to boot Linux
+* Bring `libtss2` stack to Zircon.
+* Bring EEM driver. There is ECM driver available, which could serve as
+  reference.
+* Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
+* Figure out how to use `mexec` to boot Linux.
 
 ### Xen
 
@@ -488,11 +481,11 @@ presented. The choice fell on Zephyr.
 
 Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
 support. Currently, there is an ongoing discussion how TrenchBoot should be
-integrated into Linux - see the following links
+integrated into Linux - see the following links:
 
-- https://groups.google.com/g/trenchboot-devel/c/-RxTtan5H3I/m/vU-yp5kHAgAJ
-- https://groups.google.com/g/trenchboot-devel/c/QLMg0r4XTcs/m/YrN2bX3PDQAJ
-- https://groups.google.com/g/trenchboot-devel/c/6ilwQUkwt9w/m/dpyriBCHAgAJ
+* https://groups.google.com/g/trenchboot-devel/c/-RxTtan5H3I/m/vU-yp5kHAgAJ,
+* https://groups.google.com/g/trenchboot-devel/c/QLMg0r4XTcs/m/YrN2bX3PDQAJ,
+* https://groups.google.com/g/trenchboot-devel/c/6ilwQUkwt9w/m/dpyriBCHAgAJ.
 
 Unless this is solved no investment in TrenchBoot GRUB2 implementation would be
 made. During PoC we use GRUB from
@@ -666,10 +659,17 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
   verify the current state of the system to work with Fobnail Token has been
   included. The effects are described in the [PoC test](#poc-test) section.
 
-* The table below summarises all OSes features described
-  [above](#os-requirements). Please note that when comparing driver support we
-  take into account not only drivers which are part of the kernel, but also
-  available userspace drivers.
+* The table below contains summary of features of all OSes together with theirs
+  scores. Please note that when comparing driver support we take into account
+  not only drivers which are part of the kernel, but also available userspace
+  drivers. Each score is computed using the following rules:
+
+  - if feature is present then +1,
+  - if feature is not present then 0, or if feature would be hard to implement
+    then -1,
+  - if this is a hard requirement then multiple result by 2.
+
+Definition of requirements can be found [here](#os-requirements).
 
 | OS      | USB host driver  | USB EEM driver   | Network stack     | TPM driver        | OS portability | Bootloader capabilities | C library    | Microkernel | CPU Architecture support | Bootable by SKL | Score |
 | ------- | ---------------- | ---------------- | ----------------- | ----------------- | -------------- | ----------------------- | -------------| ----------- | ------------------------ | --------------- | ----- |
