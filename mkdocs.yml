@@ -24,6 +24,7 @@ nav:
     - 'Knowledge Base':
       - 'Detailed description': description.md
       - 'Architecture': architecture.md
+      - 'Keys and certificates': keys_and_certificates.md
       - 'Data format': fobnail-data-format.md
       - 'Ethernet over USB':
         - 'Research': eth-over-usb-research.md
