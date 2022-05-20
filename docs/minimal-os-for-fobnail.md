@@ -41,16 +41,16 @@ target OS.
 The table below summarises OS features which are a hard requirement, though they
 could be implemented by us.
 
-| Requirement             | Description                                                                    |
-| ----------------------- | ------------------------------------------------------------------------------ |
-| USB host driver         | Required for communication with Fobnail Token                                  |
-| USB EEM driver          | Required for communication with Fobnail Token                                  |
-| Network Stack           | Required for communication with Fobnail Token                                  |
-| TPM driver              | Required to perform attestation                                                |
-| Bootloader Capabilities | Required to boot target OS                                                     |
-| C library               | [Fobnail Attester](https://github.com/fobnail/fobnail-attester) is writen in C |
-| Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification      |
-| License                 | Whether given OS is open sourced can be fully used on embedded devices         |
+| Requirement             | Description                                                                                |
+| ----------------------- | ------------------------------------------------------------------------------------------ |
+| USB host driver         | Required for communication with Fobnail Token                                              |
+| USB EEM driver          | Required for communication with Fobnail Token                                              |
+| Network Stack           | Required for communication with Fobnail Token                                              |
+| TPM driver              | Required to perform attestation                                                            |
+| Bootloader Capabilities | Required to boot target OS                                                                 |
+| C library               | [Fobnail Attester](https://github.com/fobnail/fobnail-attester) is writen in C             |
+| Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification                  |
+| License                 | Whether OS use open-source license, and if licese used is applicable for embedded market   |
 
 These are another features which are taken into account (soft requirements).
 
