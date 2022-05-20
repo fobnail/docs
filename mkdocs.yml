@@ -29,7 +29,7 @@ nav:
       - 'Ethernet over USB':
         - 'Research': eth-over-usb-research.md
         - 'Implementation': implementing-eth-over-usb.md
-      - 'Minimal OSes for Fobnail Token'
+      - 'Minimal OSes for Fobnail Token':
         - 'Research': minimal-os-for-fobnail.md
         - 'meta-fobnail PoC': meta-fobnail-in-dlme.md
         - 'Zephyr PoC': zephyr-in-dlme.md
