@@ -50,6 +50,7 @@ could be implemented by us.
 | Bootloader Capabilities | Required to boot target OS                                                     |
 | C library               | [Fobnail Attester](https://github.com/fobnail/fobnail-attester) is writen in C |
 | Bootable by SKL         | Whether OS can be loaded by TrenchBoot SKL without SKL or OS modification      |
+| License                 | Whether given OS is open sourced can be fully used on embedded devices         |
 
 These are another features which are taken into account (soft requirements).
 
@@ -106,6 +107,10 @@ Some important HW-related configuration is baked into Zephyr during build:
   detected at runtime. Zephyr may not boot if it has different APIC mode set
   than firmware has.
 
+As part of the PoC tests, the possibility of using Zephyr as a minimum OS
+running in DLME was checked. The results are described
+[here](./zephyr-in-dlme.md).
+
 #### Fobnail integration
 
 Zephyr provides most of the drivers needed for integration:
@@ -121,6 +126,11 @@ stack, but it is intended for embedded devices and supports SPI only.
 Zephyr provides good support for standard C library (newlib), which should
 simplify [Fobnail Attester](https://github.com/fobnail/fobnail-attester)
 porting.
+
+#### License
+
+Basically runs under GPLv2 License but more information can be found
+[here](https://docs.zephyrproject.org/latest/LICENSING.html).
 
 ### Xous
 
@@ -147,6 +157,12 @@ adding required C bindings to Rust code. It means that getting
 [Fobnail Attester](https://github.com/fobnail/fobnail-attester) running may
 require some amount of work. Also, Xous needs to gain kexec-like abilities to
 chainload target OS.
+
+#### License
+
+The Xous microkernel runs under
+[Apache 2.0](https://github.com/betrusted-io/xous-core/blob/main/LICENSES/Apache-2.0.txt)
+license.
 
 ### seL4
 
@@ -195,6 +211,11 @@ Contrary to Genode CAmkES does not provide drivers, but VMs may provide them.
 However this requires virtualization and seL4 currently supports it only on
 Intel CPUs. See the section below for more details.
 
+#### License
+
+The [documentation](https://sel4.systems/Info/license.pml) shows that the seL4
+kernel itself and most of its proof is licensed under GPL Version 2.
+
 ### Genode
 
 [Genode](https://github.com/genodelabs/genode) is a framework for creating
@@ -222,8 +243,10 @@ Genode's seL4 support is considered to be in healthly state (see
 comment). But it should be noted Genode with seL4 has not been used outside the
 lab so far.
 
-Also, it should be noted that Genode license (AGPLv3) is very restrictive and it
-could be a problem for the Fobnail Project.
+#### License
+
+Genode license (AGPLv3) is very restrictive and it could be a problem for the
+Fobnail Project.
 
 ### seL4 + CAmkES
 
@@ -293,6 +316,12 @@ provide drivers for other kernels through the
 unikernel which is intended to run in VM, but Rump itself (theoretically) could
 be adapted to run as CAmkES/seL4 component, eliminating the need for VM.
 
+#### License
+
+In case of `CAmkES` we can verify the licenses by checking
+[LICENSE](https://github.com/seL4/camkes/blob/master/LICENSE.md#license)
+document on the project repository. It uses standard open source licenses.
+
 ### Linux
 
 In the case of Linux, a minimal distribution will be prepared that meets the
@@ -317,6 +346,11 @@ development took place on this operating system. Therefore, it is important that
 the created minimal OS also has an integrated attester application. The main
 dependencies of its operation are drivers for USB, USB EEM and TPM, but running
 them under Linux will not cause major problems.
+
+#### License
+
+The Linux Kernel runs under GPL-2.0 License which can be checked in
+[documentation](https://www.kernel.org/doc/html/latest/process/license-rules.html#linux-kernel-licensing-rules).
 
 ### Linux with Busybox userspace
 
@@ -406,6 +440,11 @@ would be problematic to say the last and the reasons for that are:
   [lkboot](https://github.com/littlekernel/lk/tree/master/app/lkboot) could
   serve as reference to develop custom bootloader.
 
+#### License
+
+Little Kernel uses
+[MIT License](https://github.com/littlekernel/lk/blob/master/LICENSE).
+
 ### Fuchsia (Zircon)
 
 [Fuchsia](https://fuchsia.dev) is a general-purpose OS developed by Google. Its
@@ -446,6 +485,13 @@ Following things would have to be done:
 * Bring at least USB EHCI driver, ideally should support UHCI and OHCI too.
 * Figure out how to use `mexec` to boot Linux.
 
+#### License
+
+Information can be checked
+[here](https://fuchsia.dev/fuchsia-src/contribute/governance/policy/open-source-licensing-policies).
+Basically, we will be using here components under MIT, BSD and Apache 2.0
+licenses.
+
 ### Xen
 
 Xen is a bare-metal hypervisor available on x86 and ARM. It is able to run Linux
@@ -454,8 +500,10 @@ for hypervisor and VM to boot. Control over most of the hardware is handed to
 the first VM known as [Dom0](https://wiki.xenproject.org/wiki/Dom0). Usuallly
 Linux runs in Dom0, there are other OSes which also support running in Dom0
 (BSD, Solaris), however there is no advantage of using them over Linux. Xen also
-has ability to run in dom0-less mode - bootloader provides VM images and Xen
-starts VMs on their own (see section below for details).
+has ability to run in
+[dom0-less](https://xenbits.xen.org/docs/unstable/features/dom0less.html) mode -
+bootloader provides VM images and Xen starts VMs on their own (see section below
+for details).
 
 #### Running in DLME
 
@@ -467,203 +515,39 @@ See [xen-in-dlme.md](xen-in-dlme.md) for demo.
 Domain 0 less mode eliminates need for trusted VM. Also, since Xen itself is
 responsible for booting multiple VMs there is no need for tools that manage Xen
 (which don't work on any OS). Fobnail Attester could be integrated in a similar
-way that with CAmkES based VM (see CAmkES section above for details). The main
-difference would be that the secure component would be a separate VM.
+way that with CAmkES based VM (see CAmkES section above for
+[details](#fobnail-integration-4)). The main difference would be that the secure
+component would be a separate VM.
 
-Unfortunatelly, Xen is bloated and it doesn't meet the "minimal" requirement.
-This is a major problem.
+So it look like we could use Xen while we talk about early launch but in late
+launch scenarios it makes no sense. And this is one of key reasons why Xen does
+not meet the minimal OS requirements, because implementing late launch scenarios
+is definitelly something that we would like to achive with the OS.
 
-## Zephyr PoC test
+#### License
 
-In addition to conducting the theoretical analysis, it was decided to include a
-test report of one of the operating systems in order to verify the information
-presented. The choice fell on Zephyr.
-
-Running DLME requires GRUB from TrenchBoot as mainline doesn't have DLME
-support. Currently, there is an ongoing discussion how TrenchBoot should be
-integrated into Linux - see the following links:
-
-* https://groups.google.com/g/trenchboot-devel/c/-RxTtan5H3I/m/vU-yp5kHAgAJ,
-* https://groups.google.com/g/trenchboot-devel/c/QLMg0r4XTcs/m/YrN2bX3PDQAJ,
-* https://groups.google.com/g/trenchboot-devel/c/6ilwQUkwt9w/m/dpyriBCHAgAJ.
-
-Unless this is solved no investment in TrenchBoot GRUB2 implementation would be
-made. During PoC we use GRUB from
-[here](https://github.com/3mdeb/grub/tree/tb_xen). To reproduce PoC results
-please follow the instructions below.
-
-* Clone GRUB source.
-
-  ```shell
-  $ git clone https://github.com/3mdeb/grub/ --branch tb_xen
-  ```
-
-* Prepare container for building GRUB.
-
-  ```shell
-  $ cd grub
-  $ docker run --rm -it -v $(readlink -f ..):$(readlink -f ..) -w $PWD ubuntu:18.04
-  (docker)$ apt update
-  (docker)$ apt install gcc-5 automake autoconf make git gettext autopoint \
-      pkg-config python bison flex
-  ```
-
-* Build GRUB (execute from container while in GRUB directory).
-
-  ```shell
-  (docker)$ ./bootstrap
-  (docker)$ mkdir ../grub-install build
-  (docker)$ cd build
-  (docker)$ env CC=gcc-5 CFLAGS=-Wno-error=vla ../configure --prefix=$(readlink -f ../../grub-install)
-  (docker)$ make -j$(nproc)
-  (docker)$ make install
-  ```
-
-* Exit container and prepare boot disk by creating MBR + FAT32 partition
-
-  ```shell
-  $ sudo fdisk /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0 <<EOF
-  o
-  n
-  p
-  1
-
-
-  w
-  EOF
-
-  $ sudo mkfs.vfat -F32 /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0-part1
-  ```
-
-* Install GRUB onto target device, this will put a complete GRUB into target
-  device, including MBR, GRUB, and its modules.
-
-  ```shell
-  $ sudo mkdir /mnt/boot
-  $ sudo mount /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0-part1 /mnt/boot
-  $ cd grub-install
-  $ sudo sbin/grub-install --target=i386-pc --modules "part_msdos fat" \
-      --boot-directory=/mnt/boot \
-      /dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0
-  ```
-
-* Build SKL (Secure Kernel Loader) from TrenchBoot and copy it to boot
-  partition.
-
-  ```shell
-  $ git clone https://github.com/TrenchBoot/secure-kernel-loader
-  $ cd secure-kernel-loader
-  $ make
-  $ cp skl.bin /mnt/boot/
-  ```
-
-Setup Zephyr build environment. Instructions below are based on Zephyr
-[Getting Started Guide](https://docs.zephyrproject.org/latest/develop/getting_started/index.html).
-
-* Install required packages, Ubuntu has too old packages so we have to use
-  KitWare repo.
-
-  ```shell
-  $ wget https://apt.kitware.com/kitware-archive.sh
-  $ sudo bash kitware-archive.sh
-  $ sudo apt install --no-install-recommends git cmake ninja-build gperf \
-    ccache dfu-util device-tree-compiler wget \
-    python3-dev python3-pip python3-setuptools python3-tk python3-wheel xz-utils file \
-    make gcc gcc-multilib g++-multilib libsdl2-dev python3-venv
-  $ pip3 install --user -U west
-  ```
-
-* Obtain Zephyr toolchain.
-
-  ```shell
-  $ wget https://github.com/zephyrproject-rtos/sdk-ng/releases/download/v0.14.1/zephyr-sdk-0.14.1_linux-x86_64.tar.gz
-  $ tar xf zephyr-sdk-0.14.1_linux-x86_64.tar.gz -C ~/.local
-  $ rm zephyr-sdk-0.14.1_linux-x86_64.tar.gz
-  $ ~/.local/zephyr-sdk-0.14.1/setup.sh -c
-  ```
-
-* Fetch Zephyr source code.
-
-  ```shell
-  $ west init zephyr
-  $ cd zephyr
-  $ west update
-  ```
-
-* Install required packages, use virtual environment to avoid conflict with
-  user/system packages.
-
-  ```shell
-  $ python3 -m venv .env
-  $ pip3 install -r zephyr/scripts/requirements.txt
-  ```
-
-* Build Zephyr, we use QEMU as the target, but it works on APU (without DLME).
-
-  ```shell
-  $ cd zephyr
-  $ west build -p auto -b qemu_x86_64 samples/userspace/hello_world_user/
-  $ sudo cp build/zephyr/zephyr.elf /mnt/boot/
-  ```
-
-* Configure GRUB, create '/mnt/boot/grub/grub.cfg` with the following contents.
-
-  ```shell
-  default 0
-  menuentry "Zephyr (DLME)" {
-    slaunch skinit
-    slaunch_module /skl.bin
-    multiboot /zephyr.elf
-  }
-  menuentry "Zephyr (no DLME)" {
-    multiboot /zephyr.elf
-  }
-  ```
-
-* Umount disk and sync before unplugging it.
-  > There were some problems with obtaining working binary, so before booting
-    Zephyr on target platform please check whether it boots in QEMU (without
-    DLME). When booting Zephyr you should see `Hello World` message on serial
-    console, if Zephyr doesn't output anything or if it stuck at
-    `Booting Zephyr` message then something went wrong.
-
-  ```shell
-  $ qemu-system-x86_64 -nographic -serial mon:stdio -m 512M -cpu qemu64 \
-    -drive format=raw,file=/dev/disk/by-id/usb-TS-RDF5_SD_Transcend_000000000039-0\:0
-  ```
-
-* Zephyr should normally boot on APU, if DLME variant (from boot menu) is used
-  Zephyr will also boot normally - that is because TrenchBoot GRUB executes SKL
-  only when using
-  [Multiboot2](https://github.com/3mdeb/grub/blob/tb_xen/grub-core/loader/multiboot.c#L192)
-  but Zephyr has support only for Multiboot1.
-
-* Booting Zephyr in DLME would require extending it with Multiboot2 support.
+Xen Project is developed under [GPL-2.0
+License](https://xenproject.org/about-us/).
 
 ## Summary
 
 * The above report outlines 8 operating systems that should be considered
   candidates for Fobnail Token interoperability.
-
 * The basic choice is Linux, the operating system based on it is created with
   the use of [Yocto Project](https://www.yoctoproject.org/). All achievements
   can be reproduced at any time using the
   [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer.
-
 * As part of the report, other systems were also checked. The possibility of
   running them in DLME and the integration of the
   [Fobnail Attester](https://github.com/fobnail/fobnail-attester) application
   was checked for each of them.
-
 * The description of an attempt to run Zephyr on PC Engines apu2 in order to
   verify the current state of the system to work with Fobnail Token has been
   included. The effects are described in the [PoC test](#poc-test) section.
-
 * The table below contains summary of features of all OSes together with theirs
   scores. Please note that when comparing driver support we take into account
   not only drivers which are part of the kernel, but also available userspace
   drivers. Each score is computed using the following rules:
-
   - if feature is present then +1,
   - if feature is not present then 0, or if feature would be hard to implement
     then -1,
@@ -671,14 +555,14 @@ Setup Zephyr build environment. Instructions below are based on Zephyr
 
 Definition of requirements can be found [here](#os-requirements).
 
-| OS      | USB host driver  | USB EEM driver   | Network stack     | TPM driver        | OS portability | Bootloader capabilities | C library    | Microkernel | CPU Architecture support | Bootable by SKL | Score |
-| ------- | ---------------- | ---------------- | ----------------- | ----------------- | -------------- | ----------------------- | -------------| ----------- | ------------------------ | --------------- | ----- |
-| Zephyr  | Yes (+2)         | Yes (+2)         | Yes (+2)          | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+2)     | No (0)      | Good (+1) [^4]           | No (0) [^6]     | 8     |
-| Xous    | No (0)           | No (0)           | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | No (0)       | Yes (+1)    | RISC-V only (-1)         | No (0)          | 1     |
-| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | Yes (+2)     | Yes (+1)    | Good (+1) [^3]           | Yes (+2)        | 7     |
-| Linux   | Yes (+2)         | Yes (+2)         | Yes (+2)          | Yes (+2)          | Yes (+1)       | Yes (kexec) (+2)        | Yes (+2)     | No (0)      | Good (+1) [^5]           | Yes (+2)        | 16    |
-| LK      | No (0)           | No (0)           | Limited (-2) [^7] | No (0)            | Yes (+1)       | No (0)                  | Limited (-2) | No (0)      | Good (+1) [^8]           | No (0)          | -2    |
-| Fuchsia | Limited (0) [^9] | No (0)           | Yes (+2)          | Limited (0) [^10] | Yes (+1)       | Yes (mexec) (+2)        | Yes (+2)     | Yes (+1)    | Good (+1) [^11]          | No (0)          | 7     |
+| OS      | USB host driver  | USB EEM driver   | Network stack     | TPM driver        | OS portability | Bootloader capabilities | C library    | Microkernel | CPU Architecture support | Bootable by SKL | License | Score |
+| ------- | ---------------- | ---------------- | ----------------- | ----------------- | -------------- | ----------------------- | -------------| ----------- | ------------------------ | --------------- | ------- | ----- |
+| Zephyr  | Yes (+2)         | Yes (+2)         | Yes (+2)          | PoC available (0) | Limited (-1)   | No (0)                  | Yes (+2)     | No (0)      | Good (+1) [^4]           | No (0) [^6]     |  OK  | 8     |
+| Xous    | No (0)           | No (0)           | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | No (0)       | Yes (+1)    | RISC-V only (-1)         | No (0)          |  OK  | 1     |
+| seL4    | No (0) [^1]      | No (0) [^2]      | Yes (+2)          | No (0)            | Limited (-1)   | No (0)                  | Yes (+2)     | Yes (+1)    | Good (+1) [^3]           | Yes (+2)        | OK (but problematic with Genode) | 7     |
+| Linux   | Yes (+2)         | Yes (+2)         | Yes (+2)          | Yes (+2)          | Yes (+1)       | Yes (kexec) (+2)        | Yes (+2)     | No (0)      | Good (+1) [^5]           | Yes (+2)        |   OK  | 16    |
+| LK      | No (0)           | No (0)           | Limited (-2) [^7] | No (0)            | Yes (+1)       | No (0)                  | Limited (-2) | No (0)      | Good (+1) [^8]           | No (0)          |  OK  | -2    |
+| Fuchsia | Limited (0) [^9] | No (0)           | Yes (+2)          | Limited (0) [^10] | Yes (+1)       | Yes (mexec) (+2)        | Yes (+2)     | Yes (+1)    | Good (+1) [^11]          | No (0)          |  OK  | 7     |
 
 [^1]: seL4 has an old unmaintained driver with no xHCI support. Better driver is
       available only from Genode.
