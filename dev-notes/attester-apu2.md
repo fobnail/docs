@@ -12,7 +12,7 @@
 ## Attestation workflow
 
 1. Boot [meta-fobnail](https://github.com/fobnail/meta-fobnail) image in DLME -
-   this was described [here](running-os-in-dlme.md).
+   this was described [here](../docs/meta-fobnail-in-dlme.md).
 
 2. Run attestation server
 

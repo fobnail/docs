@@ -388,7 +388,8 @@ failed to find TPM event log` error.
 [    4.236170] ---[ end Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b ]---
 ```
 
-Full boot log can be found in [meta-fobnail-log.cap](./meta-fobnail-log.cap).
+Full boot log can be found in
+[meta-fobnail-log.cap](https://github.com/fobnail/docs/blob/main/dev-notes/meta-fobnail-log.cap).
 
 ### Working solution
 
