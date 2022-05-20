@@ -1,6 +1,6 @@
 # Running Zephyr in DLME
 
-In addition to conducting the theoretical [analysis](./running-os-in-dlme.md),
+In addition to conducting the theoretical [analysis](./meta-fobnail-in-dlme.md),
 it was decided to include a test report of one of the operating systems in order
 to verify the information presented. The choice fell on Zephyr.
 

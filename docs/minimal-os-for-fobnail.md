@@ -2,7 +2,7 @@
 
 The Fobnail Project aims to build a USB device capable of verifying
 trustworthiness of the platform it is connected to. The project is described
-more in-depth [here](../docs/index.md).
+more in-depth [here](./index.md).
 
 According to the information presented at TrenchBoot Summit 2021
 [Fobnail: Attestation in Your Pocket](https://youtu.be/xZoCtNV8Qs0?t=5062),
@@ -336,7 +336,7 @@ Ensuring that the operating system works in DLME can be achieved by using the
 [TrenchBoot](https://trenchboot.org/) project. For this purpose, a Yocto
 [meta-fobnail](https://github.com/fobnail/meta-fobnail) layer has been created
 that integrates the necessary elements. The effects of the tests are presented
-in a [separate document](./running-os-in-dlme.md).
+in a [separate document](./meta-fobnail-in-dlme.md).
 
 #### Fobnail integration
 
@@ -508,7 +508,7 @@ for details).
 #### Running in DLME
 
 Xen is supported by Trenchboot's GRUB and can run without any modifications.
-See [xen-in-dlme.md](xen-in-dlme.md) for demo.
+See [xen-in-dlme.md](./xen-in-dlme.md) for demo.
 
 #### Integration with Fobnail
 
