@@ -168,7 +168,7 @@ that Fobnail Token trusts, or by using another dongle for Fobnail Token.
 
 Fobnail Token doesn't have trusted network connection, so it can't access recent
 (i.e. one that happened after last firmware update) certificate revocation list
-at run time. Revocations can only by applied during flashing/update, which
+at run time. Revocations can only be applied during flashing/update, which
 should be done by Platform Owner. During that process, attempt to use revoked
 certificates should result in failed provisioning.
 
