@@ -514,8 +514,8 @@ See [xen-in-dlme.md](xen-in-dlme.md) for demo.
 
 Domain 0 less mode eliminates need for trusted VM. Also, since Xen itself is
 responsible for booting multiple VMs there is no need for tools that manage Xen
-(which don't work on any OS). Fobnail Attester could be integrated in a similar
-way that with CAmkES based VM (see CAmkES section above for
+(which don't work on any OS besides Linux). Fobnail Attester could be integrated
+in a similar way that with CAmkES based VM (see CAmkES section above for
 [details](#fobnail-integration-4)). The main difference would be that the secure
 component would be a separate VM.
 
