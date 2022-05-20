@@ -135,9 +135,9 @@ Basically runs under GPLv2 License but more information can be found
 ### Xous
 
 Xous is a microkernel-based OS written in Rust, currently in Alpha state. Xous
-is used as a secure microkernel for [Betrusted](betrusted.io) device and is
-focused on RISC-V, which right now is the only architecture supported. However,
-x86 already contains
+is used as a secure microkernel for [Betrusted](https://betrusted.io/) device
+and is focused on RISC-V, which right now is the only architecture supported.
+However, x86 already contains
 [dummy implementation](https://github.com/betrusted-io/xous-core/blob/30b82b25b100e958790973c129dc49e1acca79ec/kernel/src/arch/x86_64.rs)
 which probably will be extended someday.
 
