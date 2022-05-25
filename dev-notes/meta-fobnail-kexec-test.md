@@ -7,7 +7,7 @@ reinitialization) of destination system after successful attestation.
 ## Requirements
 - To work with `kexec` you need to have installed `kexec-tools` on the system
 image and enabled `CONFIG_KEXEC` in the kernel configuration. It was introduced
-in 0.1.3 `meta-fobnail` version.
+in 0.2.0 `meta-fobnail` version.
 
 - Pendrive with Ubuntu 22.04 LTS plugged to apu2
 
