@@ -405,6 +405,16 @@ Ultimately, we used the following components for the build.
 * [landing-zone](https://github.com/TrenchBoot/landing-zone/commit/60bba229ae5dd12f29d205e02197313139d8ae3f):
   instead of Secure Kernel Loader from TrenchBoot
 
+> Update: Since v0.2.2 we managed to use latest versions of GRUB and kernel as
+  well as the Secure Kernel Loader instead of landing-zone. We neede the
+  following revisions/versions
+
+  * [GRUB](https://github.com/TrenchBoot/grub/pull/4)
+  * [kernel](https://github.com/TrenchBoot/linux/commit/7fe9bb33721975fc796e4114b7370bed9afefffe)
+  * [SKL](https://github.com/TrenchBoot/secure-kernel-loader/commit/3432f4398652727f402b710c2fea4e3f1efecce6)
+    with reverted changes from [IOMMU: Shrink the size of the command
+    buffer](https://github.com/TrenchBoot/secure-kernel-loader/commit/266dfcfa6fcfae2a184d0ff840b447308e8e82d0)
+
 In addition, we also had to give up trying to boot our system from a USB stick
 and switch to booting from a SD card. Unfortunately, after the LZ application,
 the system was unable to detect the USB device while booting. Eventually we
@@ -418,13 +428,15 @@ menuentry 'secure-boot'{
 }
 ```
 
+> Update: Since v0.2.2 we use here skl.bin file instead of lz_header.bin.
+
 Using the above, we can boot into a system for which we assume it runs in DLME.
 In the later stages of the project, we will add to the system appropriate tools
 to check the content of PCR17 and PCR18, which will allow us to confirm this
 fact. To test this build, repeat the steps in the [instructions](#instructions).
 The changes are merged to `main` branch.
 
-> Update: Since v0.1. after login to shell, we can run `tpm2_pcrread` to verify
+> Update: Since v0.1.1 after login to shell, we can run `tpm2_pcrread` to verify
   PCR17 and PCR18 values. If these registers are not empty (or equal to
   0xFFFF...), we can conclude that the device is running in DLME. The output of
   PCR registers dump should look similar to this:
@@ -494,3 +506,9 @@ sha256:
 * To start a discussion of the problems we encountered when trying to integrate
   `Trenchboot` into PC Engines apu2, we created an
   [issue](https://github.com/TrenchBoot/trenchboot-issues/issues/6)
+
+### Update
+
+* As proved in previous section, we managed to run latest version of SKL, and
+  solve the
+  [issue](https://github.com/TrenchBoot/trenchboot-issues/issues/6#issuecomment-1148230965)
