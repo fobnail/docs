@@ -42,8 +42,9 @@ of:
 The above information was obtained from the website describing the [Trenchboot
 repositories](https://trenchboot.org/code/).
 
-It is also crucial that the platform runs at least coreboot `v4.12.0.3`. We
-used PC Engines apu2, for which firmware can be found on
+It is also crucial that the platform used for this test is PC Engines apu2 that
+runs at least coreboot `v4.12.0.3`. Other platforms with coreboot does not
+reserve memory for DRTM event log. The firmware can be found on
 [pcengines.github.io](https://pcengines.github.io/).
 
 The last thing is to make sure that IOMMU is enabled. For PC Engines apu2 it can
@@ -406,8 +407,8 @@ Ultimately, we used the following components for the build.
   instead of Secure Kernel Loader from TrenchBoot
 
 > Update: Since v0.2.2 we managed to use latest versions of GRUB and kernel as
-  well as the Secure Kernel Loader instead of landing-zone. We neede the
-  following revisions/versions
+  well as the Secure Kernel Loader instead of landing-zone. The system now
+  starts with IOMMU turned on. We needed the following revisions/versions
 
   * [GRUB](https://github.com/TrenchBoot/grub/pull/4)
   * [kernel](https://github.com/TrenchBoot/linux/commit/7fe9bb33721975fc796e4114b7370bed9afefffe)
