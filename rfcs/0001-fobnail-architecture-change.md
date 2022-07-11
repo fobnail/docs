@@ -41,16 +41,15 @@ Instead we propose the following protocol:
    its firmware. If verification is succesful, Fobnail generates
    Identity/Encryption keypair and responds with Certificate Signing Request.
    Otherwise an error is returned.
-3. Platform Owner responds with certificate.
-4. Fobnail Token verifies and saves certificate to its internal memory. It sends
-   status to Platform Owner.
-5. At this point Platform Owner configures Fobnail, like default appraisal
+3. At this point Platform Owner configures Fobnail, like default appraisal
    policy. This step is optional, if skipped, defaults will be used.
-6. When configuration is complete, Platform Owner requests Fobnail Token to lock
-   its configuration.
-7. Fobnail Token locks configuration which finalizes provisioning process. Token
-   can be unlocked only by reset, which wipes out all configuration, provisioned
-   platforms and all keys.
+4. Platform finalizes configuration by sending certificate generated from
+   previously provided CSR.
+5. Fobnail Token verifies and saves certificate and provided configuration to
+   its internal memory, then locks configuration and sends status to Platform
+   Owner, finalizing provisioning process.
+6. Token can be unlocked only by reset, which wipes out all configuration,
+   provisioned platforms and all keys.
 
 ## Local platform provisioning
 
