@@ -96,7 +96,11 @@ client connectivity.
 
 ## Remote platform provisioning
 
-TBD
+During remote platform provisioning Platform Owner is responsible for
+communicating with platform's TPM, verifying TPM (EK certification and AIK
+challenge), receiving and verifying RIMs. Fobnail's sole responsibility is to
+accept configuration provided by Platform Owner which completes provisioning
+process.
 
 ## Platform attestation
 
