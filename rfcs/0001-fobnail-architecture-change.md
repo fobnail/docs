@@ -80,11 +80,11 @@ connectivity.
 4. Fobnail Token responds with AIK challenge and AIK object ID.
 5. Attester performs Credential Activation using the provided challenge and
    sends results to Fobnail Token with EK object ID and AIK object ID.
-6. Fobnail Token verifies results of Credential Activation. If verification is
-   successful, AIK is marked as trusted, and Fobnail Token creates Provisioning
-   Context and sends its ID (PC ID) to the client.
-7. Attester signs and sends its metadata to Fobnail, together with PC ID,
-   Fobnail Token verifies metadata signature against AIK bound to specified
+6. Fobnail Token verifies the results of Credential Activation. If verification
+   is successful, AIK is marked as trusted, and Fobnail Token creates
+   Provisioning Context and sends its ID (PC ID) to the client.
+7. Attester signs and sends its metadata to the Fobnail Token, together with PC
+   ID. Fobnail Token verifies metadata signature against AIK bound to specified
    Provisioning Context.
 8. Fobnail Token verifies metadata and returns status. Metadata is bound to the
    specified Provisioning Context.
@@ -101,7 +101,7 @@ connectivity.
 ## Remote platform provisioning
 
 During remote platform provisioning, the Platform Owner is responsible for
-communicating with the TPM, verifying TPM (EK certification and AIK challenge),
+communicating with the TPM, verifying TPM (EK certificate and AIK challenge),
 and receiving and verifying RIMs. Fobnail's sole responsibility is to accept the
 configuration provided by the Platform Owner, which completes the provisioning
 process.
