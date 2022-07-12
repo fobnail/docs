@@ -74,26 +74,26 @@ Each object is temporary and is kept at most as long as the client is connected
 to the server. Server regularly issues CoAP ping requests to check client
 connectivity.
 
-1. Platform starts provisioning by sending its EK certificate chain.
+1. Attester starts provisioning by sending its EK certificate chain.
 2. Fobnail Token verifies certificate chain and sends EK object ID in response.
-3. Platform generates and sends AIK together with EK object ID.
+3. Attester generates and sends AIK together with EK object ID.
 4. Fobnail Token responds with AIK challenge and AIK object ID.
-5. Platform performs Credential Activation using the provided challenge and
+5. Attester performs Credential Activation using the provided challenge and
    sends results to Fobnail Token with EK object ID and AIK object ID.
 6. Fobnail Token verifies results of Credential Activation. If verification is
    successful, AIK is marked as trusted, and Fobnail Token creates Provisioning
    Context and sends its ID (PC ID) to the client.
-7. Platform signs and sends its metadata to Fobnail, together with PC ID,
+7. Attester signs and sends its metadata to Fobnail, together with PC ID,
    Fobnail Token verifies metadata signature against AIK bound to specified
    Provisioning Context.
 8. Fobnail Token verifies metadata and returns status. Metadata is bound to the
    specified Provisioning Context.
-9. Platform sends RIMs.
+9. Attester sends RIMs.
 10. Fobnail verifies RIMs and returns status. RIMs are bound to the Provisioning
     Context.
 11. At this point, additional calls may be issued to send more data. This
     feature is left for future provisioning extensions.
-12. Platform finalizes provisioning by sending a special request.
+12. Attester finalizes platform provisioning by sending a special request.
 13. Fobnail verifies all the data bound to the Provisioning Context (AIK and
     RIMs currently), saves it to flash, and sends the final status.
 14. Platform is provisioned now.
@@ -113,13 +113,15 @@ After plugging Fobnail Token into USB, the attestation must start and complete
 within a defined amount of time. Otherwise, Fobnail Token will consider the
 Platform untrustworthy.
 
-1. Platform starts attestation by sending signed metadata to Fobnail Token.
+1. Attester starts attestation by sending signed platform metadata to Fobnail
+   Token.
 2. Fobnail Token verifies metadata and returns Attestation Context ID together
    with PCR selection and nonce.
-3. Platform does TPM quote with its AIK, Fobnail Token provided PCR selection
-   and nonce. Result sent to Fobnail Token, to appropriate Attestation Context.
+3. Attester does TPM quote with its AIK, Fobnail Token provided PCR selection
+   and nonce. Result is sent to Fobnail Token, to appropriate Attestation
+   Context.
 4. Fobnail Token performs Evidence Appraisal and returns trust decision to the
-   Platform.
+   Attester.
 5. Fobnail Token unlocks access to keys stored in the flash.
 
 # Fobnail Token services
