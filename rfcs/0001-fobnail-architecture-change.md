@@ -106,6 +106,24 @@ and receiving and verifying RIMs. Fobnail's sole responsibility is to accept the
 configuration provided by the Platform Owner, which completes the provisioning
 process.
 
+Fobnail Token is inserted into Platform Owner during provisioning, and the
+provisioned Platform is remote. Provisioning must always be performed in a
+secure, internal network. For establishing a secure connection, SSH or VPN may
+be used. The provisioning process must be initiated from the target Platform by
+connecting to it remotely over SSH and manually triggering provisioning.
+
+1. Attester starts provisioning by sending its EK certificate chain.
+2. Platform Owner verifies certificate chain and sends EK object ID in response.
+3. Attester generates and sends AIK together with EK object ID.
+4. Attester responds with AIK challenge and AIK object ID. Platform Owner
+   verifies the results of Credential Activation. If verification is successful,
+   AIK is marked as trusted, and the Platform Owner creates Provisioning Context
+   and sends its ID (PC ID) to the client.
+5. Attester signs and sends its metadata to the Fobnail Token, together with PC
+   ID. Platform Owner verifies metadata signature against AIK bound to specified
+   Provisioning Context.
+6. **TBD**
+
 ## Platform attestation
 
 Since Fobnail Token is a server, the attestation must be requested by Attester.
