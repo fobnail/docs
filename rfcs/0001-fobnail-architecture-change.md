@@ -12,12 +12,7 @@ performing provisioning and attestation. We are not capable of sending requests
 to Fobnail Token, which severely limits the amount of configuration possible,
 e.g., a once provisioned platform can not be unprovisioned without resetting
 Fobnail Token into factory state. Fobnail Token configuration cannot be changed
-without resetting and going once again through the provisioning process. It is
-also not possible to expose any services from Fobnail Token to Attester, such as
-access to symmetric cryptographic keys or performing cryptographic operations on
-behalf of attester in case of asymmetric cryptography. This is a must for
-features like disk encryption or Fobnail-based authentication to services, like
-VPN.
+without resetting and going once again through the provisioning process.
 
 It is also not possible to expose any services from Fobnail Token to Attester,
 such as access to symmetric cryptographic keys or performing cryptographic
@@ -103,16 +98,17 @@ connectivity.
 ## Remote platform provisioning
 
 During remote platform provisioning, the Platform Owner is responsible for
-communicating with the TPM, verifying TPM (EK certificate and AIK challenge),
-and receiving and verifying RIMs. Fobnail's sole responsibility is to accept the
-configuration provided by the Platform Owner, which completes the provisioning
-process.
+communicating with provisioned Platform, verifying TPM (EK certificate and AIK
+challenge), and receiving and verifying RIMs. Fobnail's sole responsibility is
+to accept the configuration provided by the Platform Owner, which completes the
+provisioning process.
 
 Fobnail Token is inserted into Platform Owner during provisioning, and the
 provisioned Platform is remote. Provisioning must always be performed in a
 secure, internal network. For establishing a secure connection, SSH or VPN may
-be used. The provisioning process must be initiated from the target Platform by
-connecting to it remotely over SSH and manually triggering provisioning.
+be used. To initiate the provisioning process, one must connect to the target
+Platform over SSH and manually trigger provisioning by connecting to Platform
+Owner's CoAP server.
 
 1. Attester starts provisioning by sending its EK certificate chain.
 2. Platform Owner verifies certificate chain and sends EK object ID in response.
