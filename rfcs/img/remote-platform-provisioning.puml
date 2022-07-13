@@ -1,9 +1,21 @@
-@startuml Fobnail Local Platform Provisioning
+@startuml Fobnail Remote Platform Provisioning
 
+skinparam LegendBorderThickness 0
+skinparam LegendBackgroundColor #white
 skinparam style strictuml
 participant "Platform"
 participant "Fobnail Token" as FT
 participant "Platform Owner" as PO
+
+legend top left
+    K<sub>priv</sub>(X) - Sign X with P<sub>priv</sub> key
+    EK<sub>chain</sub> - Endorsement Key Certificate chain
+    AIK<sub>priv,pub</sub> - Attestation Identity key
+    A<sub>meta</sub> Platform metadata (product name, serial number, MAC)
+    AIK<sub>ID</sub> - AIK object ID
+    PC<sub>ID</sub> - Provisioning Context ID
+    RIM - Reference Integrity Measurement
+endlegend
 
 activate Platform
 activate PO

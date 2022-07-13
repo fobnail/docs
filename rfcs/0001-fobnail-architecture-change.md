@@ -45,14 +45,12 @@ Instead, we propose the following protocol:
 2. Fobnail verifies certificate chain against trusted certificate embedded into
    its firmware. If verification is succesful, Fobnail generates
    Identity/Encryption keypair and responds with a Certificate Signing Request.
-3. At this point Platform Owner configures Fobnail, like default appraisal
-   policy. This step is optional and if skipped, defaults will be used.
-4. Platform Owner finalizes configuration by sending certificate generated from
+3. Platform Owner finalizes configuration by sending certificate generated from
    previously provided CSR.
-5. Fobnail Token verifies and saves certificate and provided configuration to
+4. Fobnail Token verifies and saves certificate and provided configuration to
    its internal memory, then locks configuration and sends status to Platform
    Owner, finalizing provisioning process.
-6. Token can be unlocked only by reset, which wipes out all configuration,
+5. Token can be unlocked only by reset, which wipes out all configuration,
    provisioned platforms and all keys.
 
 ![](img/remote-platform-provisioning.svg)
@@ -158,7 +156,7 @@ connecting to it remotely over SSH and manually triggering provisioning.
 26. Platform is provisioned now.
 
 Remote attestation doesn't differ in anything from the Attester's point of view,
-and the protocol is exactly the safe as if Attester has spoken directly to the
+and the protocol is exactly the same as if Attester has spoken directly to the
 Fobnail Token.
 
 ## Platform attestation
