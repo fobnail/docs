@@ -1,0 +1,52 @@
+@startuml Fobnail Local Platform Provisioning
+
+skinparam style strictuml
+participant "Platform"
+participant "Fobnail Token" as FT
+participant "Platform Owner" as PO
+
+activate Platform
+activate PO
+
+Platform -> PO: Send EK certificate chain\nEK<sub>chain</sub>
+PO -> PO: Verify EK<sub>chain</sub>
+PO --> Platform: EK<sub>ID</sub>
+Platform <- Platform: Generate AIK<sub>Priv,Pub</sub>
+Platform -> PO: EK<sub>ID</sub>, AIK<sub>Pub</sub>
+PO -> PO: Make Credential
+PO --> Platform: AIK<sub>ID</sub>,\nChallenge (EK, AIK, secret)
+Platform <- Platform: Activate Credential
+Platform -> PO: EK<sub>ID</sub>, AIK<sub>ID</sub>, secret
+PO -> PO: Mark AIK as trusted
+PO --> Platform: PC<sub>ID</sub>
+Platform <- Platform: Obtain A<sub>meta</sub>
+Platform -> FT: AIK<sub>priv</sub>(A<sub>meta</sub>), PC<sub>ID</sub>
+PO -> PO: Verify A<sub>meta</sub>
+PO --> Platform: Status
+Platform <- Platform: Obtain RIM
+Platform -> PO: AIK<sub>priv</sub>(RIM), PC<sub>ID</sub>
+PO -> PO: Verify RIM
+PO --> Platform: Status
+Platform -> PO: Finish provisioning
+
+deactivate Platform
+activate FT
+
+PO -> FT: PO<sub>chain</sub>
+FT -> FT: Verify PO<sub>chain</sub>
+FT --> PO: PC<sub>ID</sub>
+PO -> FT: PO<sub>priv</sub>(A<sub>meta</sub>)
+FT --> PO: Status
+PO -> FT: PO<sub>priv</sub>(RIM)
+FT --> PO: Status
+PO -> FT: PO<sub>priv</sub>(Policy)
+PO -> FT: Finish provisioning
+FT -> FT: Verify all data attached\nto the Provisioning Context
+FT -> FT: Save data to Flash
+FT --> PO: Status
+
+deactivate FT
+
+PO --> Platform: Send provisioning status
+
+@enduml

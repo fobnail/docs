@@ -1,0 +1,31 @@
+@startuml Fobnail Attestation
+
+skinparam LegendBorderThickness 0
+skinparam LegendBackgroundColor #white
+skinparam style strictuml
+participant "Platform"
+participant "Fobnail Token" as FT
+participant "Platform Owner" as PO
+
+legend top left
+    K<sub>priv</sub>(X) - Sign X with P<sub>priv</sub> key
+    AIK<sub>priv,pub</sub> - Attestation Identity key
+    A<sub>meta</sub> Platform metadata (product name, serial number, MAC)
+    AC<sub>ID</sub> - Attestation Context ID
+endlegend
+
+activate FT
+activate Platform
+
+Platform -> FT: Send platform metadata\nAIK<sub>priv</sub>(A<sub>meta</sub>)
+FT -> FT: Verify A<sub>meta</sub> hash
+FT -> FT: Verify A<sub>meta</sub> signature
+FT -> Platform: AC<sub>id</sub>, nonce, PCR selection
+Platform <- Platform: TPM<sub>quote</sub>(AIK, PCRs, nonce)
+Platform -> FT: AC<sub>id</sub>, AIK<sub>priv</sub>(Evidence)
+FT <- FT: Verify Evidence
+FT <- FT: Evidence Appraisal\n(Nonce, Evidence, RIM)
+FT <- FT: Unlock access to\nFobnail Token Services
+FT --> Platform: Trust decision
+
+@enduml

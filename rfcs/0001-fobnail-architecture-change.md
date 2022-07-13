@@ -55,6 +55,8 @@ Instead, we propose the following protocol:
 6. Token can be unlocked only by reset, which wipes out all configuration,
    provisioned platforms and all keys.
 
+![](img/remote-platform-provisioning.svg)
+
 ## Local platform provisioning
 
 Platform provisioning doesn't change much, except that the process is initiated
@@ -98,6 +100,8 @@ connectivity.
     RIMs currently), saves it to flash, and sends the final status.
 14. Platform is provisioned now.
 
+![](img/local-platform-provisioning.svg)
+
 ## Remote platform provisioning
 
 During remote platform provisioning, the Platform Owner is responsible for
@@ -115,14 +119,47 @@ connecting to it remotely over SSH and manually triggering provisioning.
 1. Attester starts provisioning by sending its EK certificate chain.
 2. Platform Owner verifies certificate chain and sends EK object ID in response.
 3. Attester generates and sends AIK together with EK object ID.
-4. Attester responds with AIK challenge and AIK object ID. Platform Owner
-   verifies the results of Credential Activation. If verification is successful,
-   AIK is marked as trusted, and the Platform Owner creates Provisioning Context
-   and sends its ID (PC ID) to the client.
-5. Attester signs and sends its metadata to the Fobnail Token, together with PC
+4. Platform Owner responds with AIK challenge and AIK object ID.
+5. Attester performs Credential Activation using the provided challenge and
+   sends results to Platform Owner with EK object ID and AIK object ID.
+6. Platform Owner verifies the results of Credential Activation. If verification
+   is successful, AIK is marked as trusted, and the Platform Owner creates
+   Provisioning Context and sends its ID (PC ID) to the client.
+7. Attester signs and sends its metadata to the Fobnail Token, together with PC
    ID. Platform Owner verifies metadata signature against AIK bound to specified
    Provisioning Context.
-6. **TBD**
+8. Platform Owner verifies metadata and returns status. Metadata is bound to the
+   specified Provisioning Context.
+9. Attester sends RIMs.
+10. Platform Owner verifies RIMs and returns status. RIMs are bound to the
+    Provisioning Context.
+11. At this point, additional calls may be issued to send more data. This
+    feature is left for future provisioning extensions.
+12. Attester finalizes platform provisioning by sending a special request.
+13. Platform Owner verifies all the data bound to the Provisioning Context (AIK
+    and RIMs currently)
+14. Platform Owner sends its certificate chain to Fobnail Token.
+15. Fobnail Token verifies certificate chain and returns Provisioning Context
+    ID.
+16. Platform Owner signs the Platform metadata with private matching the leaf
+    certificate (sent as part of the chain in the previous step) and sends
+    signed Platform metadata to Fobnail Token.
+17. Fobnail Token verifies metadata signature and sends status.
+18. Platform Owner sends signed RIMs to Fobnail Token.
+19. Fobnail Token verifies RIMs signature and responds with status.
+20. Platform Owner sends (signed) policy to Fobnail Token.
+21. Fobnail Token verifies policy and responds with status.
+22. At this point Platform Owner may issue additional calls to send more data.
+    This feature is left for future provisioning extensions.
+23. Platform Owner completes provisioning by sending a special request.
+24. Fobnail verifies all the data bound to the Provisioning Context (AIK and
+    RIMs currently), saves it to flash, and sends status.
+25. Platform Owner sends the final status to the provisioned Platform.
+26. Platform is provisioned now.
+
+Remote attestation doesn't differ in anything from the Attester's point of view,
+and the protocol is exactly the safe as if Attester has spoken directly to the
+Fobnail Token.
 
 ## Platform attestation
 
@@ -141,6 +178,8 @@ Platform untrustworthy.
 4. Fobnail Token performs Evidence Appraisal and returns trust decision to the
    Attester.
 5. Fobnail Token unlocks access to keys stored in the flash.
+
+![](img/attestation.svg)
 
 # Fobnail Token services
 

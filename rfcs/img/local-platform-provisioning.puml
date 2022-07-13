@@ -1,0 +1,48 @@
+@startuml Fobnail Local Platform Provisioning
+
+skinparam LegendBorderThickness 0
+skinparam LegendBackgroundColor #white
+skinparam style strictuml
+participant "Platform"
+participant "Fobnail Token" as FT
+participant "Platform Owner" as PO
+
+
+legend top left
+    K<sub>priv</sub>(X) - Sign X with P<sub>priv</sub> key
+    EK<sub>chain</sub> - Endorsement Key Certificate chain
+    AIK<sub>priv,pub</sub> - Attestation Identity key
+    A<sub>meta</sub> Platform metadata (product name, serial number, MAC)
+    AIK<sub>ID</sub> - AIK object ID
+    PC<sub>ID</sub> - Provisioning Context ID
+    RIM - Reference Integrity Measurement
+endlegend
+
+activate Platform
+activate FT
+
+Platform -> FT: Send EK certificate chain\nEK<sub>chain</sub>
+FT -> FT: Verify EK<sub>chain</sub>
+FT --> Platform: EK<sub>ID</sub>
+Platform <- Platform: Generate AIK<sub>Priv,Pub</sub>
+Platform -> FT: EK<sub>ID</sub>, AIK<sub>Pub</sub>
+FT -> FT: Make Credential
+FT --> Platform: AIK<sub>ID</sub>,\nChallenge (EK, AIK, secret)
+Platform <- Platform: Activate Credential
+Platform -> FT: EK<sub>ID</sub>, AIK<sub>ID</sub>, secret
+FT -> FT: Mark AIK as trusted
+FT --> Platform: PC<sub>ID</sub>
+Platform <- Platform: Obtain A<sub>meta</sub>
+Platform -> FT: AIK<sub>priv</sub>(A<sub>meta</sub>), PC<sub>ID</sub>
+FT -> FT: Verify A<sub>meta</sub>
+FT --> Platform: Status
+Platform <- Platform: Obtain RIM
+Platform -> FT: AIK<sub>priv</sub>(RIM), PC<sub>ID</sub>
+FT -> FT: Verify RIM
+FT --> Platform: Status
+Platform -> FT: Finish provisioning
+FT -> FT: Verify all data attached\nto the Provisioning Context
+FT -> FT: Save data to Flash
+FT --> Platform: Status
+
+@enduml
