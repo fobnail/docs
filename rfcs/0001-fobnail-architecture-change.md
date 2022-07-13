@@ -98,10 +98,10 @@ connectivity.
 ## Remote platform provisioning
 
 During remote platform provisioning, the Platform Owner is responsible for
-communicating with provisioned Platform, verifying TPM (EK certificate and AIK
-challenge), and receiving and verifying RIMs. Fobnail's sole responsibility is
-to accept the configuration provided by the Platform Owner, which completes the
-provisioning process.
+communicating with the provisioned Platform, verifying TPM (EK certificate and
+AIK challenge), and receiving and verifying RIMs. Fobnail's sole responsibility
+is to accept the configuration provided by the Platform Owner, which completes
+the provisioning process.
 
 Fobnail Token is inserted into Platform Owner during provisioning, and the
 provisioned Platform is remote. Provisioning must always be performed in a
