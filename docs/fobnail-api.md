@@ -254,7 +254,7 @@ returned to signify that the previous RIM has been replaced with the new RIM.
 
 POST request to this endpoint results in writing data attached to the
 Provisioning Context into persistent storage. Currently, this request does not
-contain any data and payload **must** be empty and or **4.00** response will be
+contain any data and payload **must** be empty or **4.00** response will be
 returned.
 
 Fobnail Token verifies whether all required data has been provided (metadata and
@@ -271,7 +271,51 @@ Provisioning Context will return **4.04**.
 | Endpoint Name             | Method | Arguments            |
 | ------------------------- | ------ | -------------------- |
 | /attest                   | POST   | Platform metadata    |
-| /attest/challenge         | POST   | Output of TPM quote  |
+| /attest/{id}              | POST   | Output of TPM quote  |
+
+#### /attest
+
+Client sends platform metadata in the same format as when calling
+`/admin/provision/{id}/meta`. Metadata **must** be signed by signed by the same
+AIK that was used during platform provisioning. If verification is successful
+**2.01** is returned (otherwise **4.04**) and `Location-Path` contains
+Attestation Context ID. Payload contains PCR selection and nonce:
+
+```json
+{
+    // Array of PCR banks (major 4)
+    "banks": [
+        // First PCR bank
+        {
+            // ID of algorithm used by PCRs (major 0)
+            "algo_id": 0x0004,
+            // Bitmap of present PCRs (major 0, unsigned integer)
+            "pcrs": 0xffffffff,
+        },
+        // Another PCR bank (major 5, map)
+        {
+            "algo_id": 0x000b,
+            "pcrs": 0x000000ff,
+        }
+    ],
+    // Nonce to be passed to TPM_Quote() (major 2)
+    "nonce": [0x00, 0x01, 0x02, 0x03, ...]
+}
+```
+
+PCR selection format is similar to that of [RIM](#rim), but stripped out of
+unnecessary fields. Due to the nature of PCR selection parsing done by
+`TPM2_Quote()`, order of PCR banks matters.
+
+### /attest/{id}
+
+Client sends the evidence to this endpoint (the result of TPM Quote). Based on
+the evidence, Fobnail Token decides whether platform is trustworthy or not. If
+Fobnail Token decides that the platform is trustworthy **2.04** response is
+returned, **4.03** otherwise.
+
+If attestation is successful Fobnail Token unlocks access to the Fobnail Token
+Services.
 
 ### Fobnail Token Services
 
@@ -287,23 +331,37 @@ performs cryptographic operations on behalf of Platform, which may be slow. If
 this behaviour is undesired, Secure Storage may be used instead, to store key as
 a file inside Fobnail Token.
 
-| Endpoint Name        | Method | Arguments |
-| -------------------- | ------ | --------- |
-| /crypto              | POST   | TBD       |
-| /crypto/{id}/type    | POST   | None      |
-| /crypto/{id}/encrypt | PUT    | TBD       |
-| /crypto/{id}/decrypt | PUT    | TBD       |
-| /crypto/{id}/sign    | PUT    | TBD       |
-| /crypto/{id}/pub     | POST   | TBD       |
-| /crypto/{id}/kdf     | TBD    | TBD       |
-| /storage             | POST   | TBD       |
-| /storage/{id}/read   | POST   | TBD       |
-| /storage/{id}/write  | POST   | TBD       |
+| Endpoint Name        | Method | Arguments            |
+| -------------------- | ------ | -------------------- |
+| /crypto              | POST   | Key name, type, etc. |
+| /crypto/{id}/type    | GET    | None                 |
+| /crypto/{id}/encrypt | POST   | Data to encrypt      |
+| /crypto/{id}/decrypt | POST   | Data to decrypt      |
+| /crypto/{id}/sign    | PUT    | Data to sign         |
+| /crypto/{id}/pub     | GET    | None                 |
+| /storage             | POST   | File name            |
+| /storage/{id}/read   | GET    | None                 |
+| /storage/{id}/write  | PUT    | Data to be written   |
 
 If platform has not been attested (or failed attestation) these APIs will return
 **4.03** error, otherwise Fobnail Token checks whether a specified key exists
 and whether Platform has access to that key. If key or file does not exists or
 there is no access **4.04** error is returned.
+
+### /storage
+
+Client sends a request to this endpoint to open or create a new file.
+
+```json
+{
+    // Name of the file (major 3)
+    "name": "some_secret",
+    // Mode (major 0)
+    // 0 - open file (fails if file does not exist)
+    // 1 - create file
+    "mode": 1
+}
+```
 
 ----------------------------
 
@@ -357,28 +415,10 @@ those artifacts).
 
 ## PCR selection
 
-PCR selection is sent to Attester during attestation. Its format is similar to
-that of [RIM](#rim), but stripped out of unnecessary fields. Due to the nature
-of PCR selection parsing done by `TPM2_Quote()`, order of PCR banks matters.
+
 
 ```json
-{
-    // Array of PCR banks (major 4)
-    "banks": [
-        // First PCR bank
-        {
-            // ID of algorithm used by PCRs (major 0)
-            "algo_id": 0x0004,
-            // Bitmap of present PCRs (major 0, unsigned integer)
-            "pcrs": 0xffffffff,
-        },
-        // Another PCR bank (major 5, map)
-        {
-            "algo_id": 0x000b,
-            "pcrs": 0x000000ff,
-        }
-    ],
-}
+
 ```
 
 ## Certificate signing request (CSR)
