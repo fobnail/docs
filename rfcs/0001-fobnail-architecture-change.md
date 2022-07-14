@@ -40,12 +40,17 @@ Instead, we propose the following protocol:
 2. Fobnail verifies certificate chain against trusted certificate embedded into
    its firmware. If verification is succesful, Fobnail generates
    Identity/Encryption keypair and responds with a Certificate Signing Request.
-3. Platform Owner finalizes configuration by sending certificate generated from
-   previously provided CSR.
-4. Fobnail Token verifies and saves certificate and provided configuration to
+3. At this point Platform Owner configures various settings in Fobnail Token.
+   Each request must be signed by the leaf certificate provided in the previous
+   step, and Fobnail Token will accept only properly signed requests.
+4. Platform Owner finalizes configuration by sending certificate generated from
+   previously provided CSR. The provided certificate must belong to Platform
+   Owner's chain, i.e., it must be signed by one of the certificates provided in
+   the previous request.
+5. Fobnail Token verifies and saves certificate and provided configuration to
    its internal memory, then locks configuration and sends status to Platform
    Owner, finalizing provisioning process.
-5. Token can be unlocked only by reset, which wipes out all configuration,
+6. Token can be unlocked only by reset, which wipes out all configuration,
    provisioned platforms and all keys.
 
 ![](img/remote-platform-provisioning.svg)
