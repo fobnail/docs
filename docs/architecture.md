@@ -71,7 +71,7 @@ certificate contained in the provisioner Certificate Chain.
 
 ### Fobnail provisioning diagram
 
-![Fobnail-provisioning](images/Fobnail-flows-fobnail-provisioning.png)
+![Fobnail-provisioning](images/Fobnail-flows-fobnail-provisioning.svg)
 
 ---
 
@@ -82,13 +82,11 @@ attestation. We need to provision a Fobnail token and platform. The
 platform provisioning is split into remote provisioning and local
 provisioning. During the remote provisioning, the platform can connect to
 the platform owner. The platform owner verifies the platform state and provides
-the RIM and attestation policies to the Fobnail token. The platform receives an
-attestation identity certificate that specifies the platform. The certificate is
-based on platform metadata (CPU serial, MAC) and the AIK public part.
+the RIM and attestation policies to the Fobnail token.
 
 ### Remote platform provisioning diagram
 
-![remote-provisioning](images/Fobnail-flows-remote-platform-provisioning.png)
+![remote-provisioning](images/Fobnail-flows-remote-platform-provisioning.svg)
 
 In the case of local provisioning, the Fobnail token takes the platform
 owner role. The Fobnail token does not receive the policies, and default
@@ -96,14 +94,14 @@ policies are used during the attestation.
 
 ### Local platform provisioning diagram
 
-![local-provisioning](images/Fobnail-flows-local-platform-provisioning.png)
+![local-provisioning](images/Fobnail-flows-local-platform-provisioning.svg)
 
 ---
 
 ## Attestation
 
 Fobnail role in the attestation of a system is to evaluate an Attestation
- Token and arrive at a decision whether the attested platform represents
+Token and arrive at a decision whether the attested platform represents
 a good state. Fobnail is not an enforcement point for this decision and can
 only provide a physical and digital response to convey its decision. The
 physical response assumes that a user is monitoring the Fobnail Token and will
@@ -115,7 +113,7 @@ the decision.
 
 ### Attestation diagram
 
-![attestation](images/Fobnail-flows-attestation.png)
+![attestation](images/Fobnail-flows-attestation.svg)
 
 ### Default appraisal policy
 
