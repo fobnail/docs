@@ -251,8 +251,8 @@ detail). Example metadata looks like this
 }
 ```
 
-Client **must** sign metadata with AIK (see [Data signing](#data-signing)
-section below).
+Client **must** sign metadata with AIK (see the [Data signing](#data-signing)
+section above).
 
 Fobnail Token verifies the provided metadata against AIK bound to the
 Provisioning Context, if signature verification fails, **4.03** is returned. If
@@ -310,8 +310,8 @@ CBOR:
 }
 ```
 
-Client **must** sign RIM with AIK (see [Data signing](#data-signing) section
-below).
+Client **must** sign RIM with AIK (see the [Data signing](#data-signing) section
+above).
 
 Fobnail Token verifies RIM signature and format. If signature verification
 fails, **4.03** is returned. If RIM has an invalid format, **4.00** is returned.
@@ -373,9 +373,9 @@ ID. The response's payload contains PCR selection and nonce:
 }
 ```
 
-The PCR selection format is similar to that of [RIM](#rim) but stripped of
-unnecessary fields. Due to the nature of PCR selection parsing done by
-`TPM2_Quote()`, order of PCR banks matters.
+The PCR selection format is similar to that of [RIM](#adminprovisionidrim) but
+stripped of unnecessary fields. Due to the nature of PCR selection parsing done
+by `TPM2_Quote()`, order of PCR banks matters.
 
 #### /attest/{id}
 
