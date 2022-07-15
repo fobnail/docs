@@ -1,6 +1,6 @@
 # Summary
 
-Change Fobnail architecture - instead of having the server on the Attester and
+Change Fobnail architecture - instead of having CoAP server on the Attester and
 client on Fobnail Token, the server would be located on Fobnail Token and the
 client on Attester.
 
