@@ -377,7 +377,7 @@ The PCR selection format is similar to that of [RIM](#rim) but stripped of
 unnecessary fields. Due to the nature of PCR selection parsing done by
 `TPM2_Quote()`, order of PCR banks matters.
 
-### /attest/{id}
+#### /attest/{id}
 
 The client sends the evidence to this endpoint (the result of TPM Quote). Based
 on the evidence, Fobnail Token decides whether the platform is trustworthy or
@@ -423,7 +423,7 @@ returned.
 > Note: currently, crypto API is not fully defined. Future versions of this
 > document will address this problem.
 
-### GET /storage/fs/{name}
+#### GET /storage/fs/{name}
 
 The client sends a request to this endpoint to read a file. The file path is
 encoded as part of the URI. If the file exists (and if it's accessible),
@@ -438,7 +438,7 @@ Fobnail Token attempts to open (or create) the requested file and returns
 **2.01** response with file ID, which is used as a handle to access the file.
 **4.04** is returned if the file does not exist or there is no access.
 
-### PUT /storage/fs/{name}
+#### PUT /storage/fs/{name}
 
 This endpoint is used to write file contents. Fobnail Token attempts to write
 the specified file (URI) with the provided payload. If successful, Fobnail Token
@@ -451,7 +451,7 @@ file has been updated). Request may fail in the following situations:
 - If writing the file failed for any reason - **5.00** error (payload may
   contain additional context).
 
-### DELETE /storage/fs/{name}
+#### DELETE /storage/fs/{name}
 
 This endpoint is used to delete a file. The file name is provided in URI, and
 the payload should be empty. On success, or if the file didn't exist before
