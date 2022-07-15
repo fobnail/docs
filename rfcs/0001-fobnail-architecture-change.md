@@ -53,7 +53,7 @@ Instead, we propose the following protocol:
 6. Token can be unlocked only by reset, which wipes out all configuration,
    provisioned platforms and all keys.
 
-![](img/remote-platform-provisioning.svg)
+![](img/token-provisioning.svg)
 
 ## Local platform provisioning
 
@@ -159,6 +159,8 @@ Owner's CoAP server.
 Remote attestation doesn't differ in anything from the Attester's point of view,
 and the protocol is exactly the same as if Attester has spoken directly to the
 Fobnail Token.
+
+![](img/remote-platform-provisioning.svg)
 
 ## Platform attestation
 
