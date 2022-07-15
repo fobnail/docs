@@ -5,61 +5,62 @@ Fobnail Token exposes API over
 
 ## General considerations
 
-This document describes API (major) version 1 and all API endpoint addresses are
-relative to (starting with) `/api/v1`. Version will be increased only when
-backwards-incompatible changes are done.
+This document describes API (major) version 1, and all API endpoint addresses
+are relative to (starting with) `/api/v1`. The version will be increased only
+when backward-incompatible changes are done.
 
 ### General request handling rules
 
-Some APIs create temporary objects that live at most as long as client is
-connected. To check connection status server issues CoAP Ping requests which
-clients **must** respond to, to avoid losing theirs objects.
+Some APIs create temporary objects that live at most as long as the client is
+connected. To check connection status, the server issues CoAP Ping requests,
+which clients **must** respond to in order to avoid losing their objects.
 
-When an object has been created, server responds with **2.01**, `Location-Path`
-specifies path to the resource (a numeric object ID). Object IDs are specific to
-a client - client cannot access object IDs of other clients. `Location-Path` is
-a string option whereas object ID is an integer so it must be encoded as a
-string. Object IDs may be passed as part of CBOR payload (as integer) or in URI
-(as string).
+When an object is created, the server responds with **2.01**, `Location-Path`
+specifying the resource's path (a numeric object ID). Object IDs are specific to
+a client - a client cannot access object IDs of other clients. `Location-Path`
+is a string option, whereas object ID is an integer, so it must be encoded as a
+string. Object IDs may be passed as part of the CBOR payload (as an integer) or
+in URI (as a string).
 
-If `Content-Format` option is not present Fobnail Token assumes that
+If the `Content-Format` option is not present, Fobnail Token assumes that
 `Content-Format` is `application/octet-stream`. All requests which pass
 CBOR-encoded data **must** set `Content-Format` option to `application/cbor` for
-Fobnail Token to interpret the payload as CBOR. If unknown or invalid
-`Content-Format` is given, server responds with **4.00** (Bad Request). If
-passing CBOR-encoded data which is improperly encoded or not valid (e.g.
+Fobnail Token to interpret the payload as CBOR. The server responds with
+**4.00** (Bad Request) if unknown or invalid' Content-Format' is given. If
+passing CBOR-encoded data which is improperly encoded or not valid (e.g.,
 required fields missing) server responds with **4.00**. Passing
 `application/cbor` to an endpoint that expects `application/octet-stream` is
-invalid and will result in **4.00** response.
+invalid and will result in a **4.00** response.
 
-Client may sent one or more `Accept` options which **must** be handled by the
-server. If the server can not respond in the format requested by `Accept`
-options it **must** respond with **4.06** (Not Acceptable).
+The client may send one or more `Accept` options which **must** be handled by
+the server. If the server can not respond in the format requested by the
+`Accept` options, it **must** respond with **4.06** (Not Acceptable).
 
 [Conditional Request Options](https://datatracker.ietf.org/doc/html/rfc7252#section-5.10.8)
-are **not** supported and will result in **4.02** (Bad Option). Payload should
-contain human-readable message describing what options are not supported. See
+are **not** supported and will result in **4.02** (Bad Option). The payload
+should contain a human-readable message describing what options are not
+supported. See
 [RFC7252 section 5.4.1](https://datatracker.ietf.org/doc/html/rfc7252#section-5.4.1)
 for details.
 
-Each response from the Fobnail Token **must** contain `Content-Format` option
-unless it is an error response with a diagnostic payload. See
+Each response from the Fobnail Token **must** contain the `Content-Format`
+option unless it is an error response with a diagnostic payload. See
 [RFC7252](https://datatracker.ietf.org/doc/html/rfc7252#section-5.5.1) for
 details.
 
 ### Error responses
 
-Fobnail Token may return error codes as defined by CoAP specification. An error
-response **may** contain additional context sent as payload. All cacheable error
-responses **must** have `Max-Age` set to 0.
+Fobnail Token may return error codes as defined by the CoAP specification. An
+error response **may** contain an additional context sent as a payload. All
+cacheable error responses **must** have `Max-Age` set to 0.
 
-Error response must not contain `Content-Format` option. Message (if present)
+Error response must not contain the `Content-Format` option. Message (if present)
 must be passed as a raw UTF-8 string.
 
 ### Fobnail Data format
 
-Fobnail uses CBOR (with a few exceptions) for transmitting structured data both
-from Fobnail to Attester and from Attester to Fobnail. We use subset of
+Fobnail uses CBOR (with a few exceptions) to transmit structured data from
+Fobnail to Attester and from Attester to Fobnail. We use a subset of
 [RFC7049](https://datatracker.ietf.org/doc/html/rfc7049) (no tagging and no
 extensions).
 
@@ -68,10 +69,11 @@ transmitting CBOR-encoded data.
 
 ### Data signing
 
-Signature is generated by taking an already CBOR-encoded object, a nonce
-(generated by Fobnail and sent as part of request) and signing hash of them
-both. Nonce is appended to CBOR as plain bytes. Resulting signature and original
-data (without nonce) is wrapped into another CBOR object:
+A signature is generated by taking an already CBOR-encoded object, a nonce
+(generated by Fobnail and sent as part of the request), and signing the hash of
+both of them. The nonce is appended to the CBOR blob as plain bytes. The
+resulting signature and original data (without nonce) are wrapped into another
+CBOR object:
 
 ```json
 {
@@ -100,15 +102,15 @@ those artifacts).
 | /admin/token_provision    | POST   | PO certificate chain                    |
 | /admin/provision_complete | POST   | Fobnail Identity/Encryption certificate |
 
-These APIs may be executed only when Fobnail Token is in a unprovisioned state.
+These APIs may only be executed when Fobnail Token is in an unprovisioned state.
 Fobnail Token **must** respond with **4.03** if these APIs are called after
 provisioning is complete.
 
 #### /admin/token_provision
 
 PO certificate chain is transferred as an ordered array of raw DER certificates,
-starting with the certificate directly after the root certificate (root is
-already known by the Fobnail Token).
+starting with the certificate directly after the root certificate (the Fobnail
+Token already knows the root).
 
 ```json
 {
@@ -124,25 +126,25 @@ already known by the Fobnail Token).
 }
 ```
 
-Fobnail Token verifies certificate chain against the trust anchor embedded into
-its firmware. If verification fails, **4.03** is returned.
+Fobnail Token verifies certificate the chain against the trust anchor embedded
+into its firmware. If verification fails, **4.03** is returned.
 
-On success, Fobnail generates Identity/Encryption key, prepares Certificate
-Signing Request and responds with **2.01** status code, response **must**
+On success, Fobnail generates an Identity/Encryption key, prepares a Certificate
+Signing Request, and responds with a **2.01** status code, response **must**
 contain CSR as a payload. CSR is sent in DER format and `Content-Format`
 **must** be set to `application/octet-stream`.
 
 #### /admin/provision_complete
 
-Client sends a certificate generated from CSR previously provided by
-`/admin/token_provision`. Fobnail Token verifies correctess of the provided
-certificate, such as whether it is properly signed, whether it has correct
-extensions defined, etc. On error **4.03** is returned.
+The client sends a certificate generated from CSR previously provided by
+`/admin/token_provision`. Fobnail Token verifies the provided certificat
+correctness, such as whether it is properly signed, has correct extensions
+defined, etc. On error **4.03** is returned.
 
-On success **2.01** is returned  provisioning is complete.
+On success, **2.01** is returned, and provisioning is complete.
 
-Certificate is sent as a raw DER and `Content-Format` must be set to
-`application/octet-stream` or the request will be rejected. Future API versions
+The certificate is sent as a raw DER, and `Content-Format` must be set to
+`application/octet-stream`, or the request will be rejected. Future API versions
 may accept `application/cbor`.
 
 ### Platform provisioning
@@ -160,13 +162,14 @@ may accept `application/cbor`.
 
 EK certificate chain is transferred in the same format as PO certificate chain
 described above. The certificate directly after the root certificate is the
-first certificate in array while EK certificate is the last.
+first certificate in the array, while the EK certificate is the last.
 
 Client issues POST request with `Content-Format` set to `application/cbor` and
 payload containing CBOR-encoded certificate array as described above. Fobnail
-Token verifies provided certificate chain against one of roots embedded into
-firmware. On success **2.01** response is returned, `Location-Path` contains EK
-object ID. If EK certificate chain verification fails **4.03** is returned.
+Token verifies the provided certificate chain against one of the roots embedded
+into its firmware. On success **2.01** response is returned, `Location-Path`
+contains EK object ID. If EK certificate chain verification fails, **4.03** is
+returned.
 
 #### /admin/provision/aik
 
@@ -184,8 +187,8 @@ credential activation. Unmodified AIK and EK object ID are wrapped into CBOR:
 }
 ```
 
-Fobnail Token verifies whether AIK is a valid TPM2B_PUBLIC and whether key
-algorithm is supported. On success **2.01** response is returned and
+Fobnail Token verifies whether AIK is a valid TPM2B_PUBLIC and whether the key's
+algorithm is supported. On success, **2.01** response is returned, and
 `Location-Path` contains AIK object ID. Response payload contains a challenge
 (Make Credential) prepared using the provided AIK and EK.
 
@@ -196,13 +199,13 @@ algorithm is supported. On success **2.01** response is returned and
 }
 ```
 
-If AIK verification fails **4.03** is returned, payload may contain additional
-context. If provided EK object ID is invalid **4.04** is returned.
+If AIK verification fails, **4.03** is returned, and the payload may contain
+additional context. If provided EK object ID is invalid, **4.04** is returned.
 
 #### /admin/provision
 
-Client calls this endpoint to create a Provisioning Context. Client provides
-result of Credential Activation as payload:
+This endpoint is used to create a Provisioning Context. The client provides the
+result of Credential Activation as a payload:
 
 ```json
 {
@@ -215,13 +218,13 @@ result of Credential Activation as payload:
 }
 ```
 
-Fobnail Token verifies whether the decrypted secret matches with the secret kept
-in Fobnail Token's memory. If verification is successful Fobnail Token creates a
-Provisioning Context and responds with **2.01** response (`Location-Path`
+Fobnail Token verifies whether the decrypted secret matches the secret kept in
+Fobnail Token's memory. If verification is successful, Fobnail Token creates a
+Provisioning Context and responds with a **2.01** response (`Location-Path`
 contains Provisioning Context ID).
 
-If secret does not match **4.03** is returned. If either EK object ID or AIK
-object ID is invalid **4.04** is returned.
+If the secret does not match, **4.03** is returned. If either EK object ID or
+AIK object ID is invalid, **4.04** is returned.
 
 #### /admin/provision/{id}/meta
 
@@ -252,19 +255,20 @@ Client **must** sign metadata with AIK (see [Data signing](#data-signing)
 section below).
 
 Fobnail Token verifies the provided metadata against AIK bound to the
-Provisioning Context, if signature verification fails **4.03** is returned, if
-metadata format is invalid **4.00** is returned. On success either **2.01** or
-**2.04**. On the first successful call **2.01** is returned (`Location-Path`
-must not be present), on subsequent calls **2.04** is returned to signify that
-metadata has been replaced.
+Provisioning Context, if signature verification fails, **4.03** is returned. If
+the metadata format is invalid, **4.00** is returned. On success, either
+**2.01** or **2.04** are returned. On the first successful call, **2.01** is
+returned (`Location-Path` must not be present), and on subsequent calls,
+**2.04** is returned to signify that metadata has been replaced.
 
 #### /admin/provision/{id}/rim
 
 RIM holds PCR registers (from TPM) which are used for attestation. It doesn't
-contain information about the Attester since these are part of metadata. RIM
-may contain multiple PCR banks (depending of hash algorithm: SHA-1, SHA-256,
-others). Each PCR bank contains bitmap of present PCRs (`pcrs` field) and array
-of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
+contain information about the Attester since these are part of the metadata. RIM
+may contain multiple PCR banks (depending on the hash algorithm: SHA-1, SHA-256,
+others). Each PCR bank contains a bitmap of present PCRs (`pcrs` field) and an
+array of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in
+CBOR:
 
 ```json
 {
@@ -309,27 +313,28 @@ of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in CBOR:
 Client **must** sign RIM with AIK (see [Data signing](#data-signing) section
 below).
 
-Fobnail Token verifies RIM signature and format, if signature verification fails
-**4.03** is returned, if RIM has invalid format **4.00** is returned. On success
-**2.01** or **2.04** is returned. On the first successful call **2.01** is
-returned (`Location-Path` must not be present), on subsequent calls **2.04** is
-returned to signify that the previous RIM has been replaced with the new RIM.
+Fobnail Token verifies RIM signature and format. If signature verification
+fails, **4.03** is returned. If RIM has an invalid format, **4.00** is returned.
+On success **2.01** or **2.04** is returned. On the first successful call,
+**2.01** is returned (`Location-Path` must not be present); on subsequent calls,
+**2.04** is returned to signify that the previous RIM has been replaced with the
+new RIM.
 
 #### /admin/provision/{id}
 
 POST request to this endpoint results in writing data attached to the
 Provisioning Context into persistent storage. Currently, this request does not
-contain any data and payload **must** be empty or **4.00** response will be
+contain any data, and payload **must** be empty or **4.00** response will be
 returned.
 
 Fobnail Token verifies whether all required data has been provided (metadata and
 RIM is mandatory). On error, **4.03** response is returned. If verification is
-successful Fobnail writes all required data into persistent storage, completing
-the provisioning process. If an error occurs while writing into persistent
-storage **5.01** is returned, payload may contain additional context. On success
-**2.04** response is returned to signify provisioning is complete. At this point
-the Provisioning Context becomes invalid and all subsequent requests to the
-Provisioning Context will return **4.04**.
+successful, Fobnail Token writes all required data into persistent storage,
+completing the provisioning process. If an error occurs while writing into
+persistent storage, **5.00** is returned (the payload may contain additional
+context). On success, **2.04** response is returned to signify provisioning is
+complete. At this point, the Provisioning Context becomes invalid, and all
+subsequent requests to the Provisioning Context will return **4.04**.
 
 ### Attestation
 
@@ -340,11 +345,11 @@ Provisioning Context will return **4.04**.
 
 #### /attest
 
-Client sends platform metadata in the same format as when calling
-`/admin/provision/{id}/meta`. Metadata **must** be signed by signed by the same
-AIK that was used during platform provisioning. If verification is successful
-**2.01** is returned (otherwise **4.04**) and `Location-Path` contains
-Attestation Context ID. Payload contains PCR selection and nonce:
+The client sends platform metadata in the same format as when calling
+`/admin/provision/{id}/meta`. Metadata **must** be signed by the same AIK that
+was used during platform provisioning. If verification is successful **2.01** is
+returned (otherwise **4.04**) and `Location-Path` contains Attestation Context
+ID. The response's payload contains PCR selection and nonce:
 
 ```json
 {
@@ -368,33 +373,34 @@ Attestation Context ID. Payload contains PCR selection and nonce:
 }
 ```
 
-PCR selection format is similar to that of [RIM](#rim), but stripped out of
+The PCR selection format is similar to that of [RIM](#rim) but stripped of
 unnecessary fields. Due to the nature of PCR selection parsing done by
 `TPM2_Quote()`, order of PCR banks matters.
 
 ### /attest/{id}
 
-Client sends the evidence to this endpoint (the result of TPM Quote). Based on
-the evidence, Fobnail Token decides whether platform is trustworthy or not. If
-Fobnail Token decides that the platform is trustworthy **2.04** response is
-returned, **4.03** otherwise.
+The client sends the evidence to this endpoint (the result of TPM Quote). Based
+on the evidence, Fobnail Token decides whether the platform is trustworthy or
+not. If Fobnail Token decides that the platform is trustworthy, **2.04**
+response is returned, **4.03** otherwise.
 
-If attestation is successful Fobnail Token unlocks access to the Fobnail Token
+If attestation is successful, Fobnail Token unlocks access to the Fobnail Token
 Services.
 
 ### Fobnail Token Services
 
-Fobnail Token Services are available after succesful platform attestation.
-Fobnail can store cryptographic keys (or other stuff) in its internal flash,
-depending on key type (symmetric or asymmetric) and usage permissions various
-operations are available. For symmetric keys it is encryption and decryption.
-For asymmetric keys it is signing, decryption, KDF and public key read (Host
-extracts public key and does encryption on its own).
+Fobnail Token Services are available after successful platform attestation.
+Fobnail Token can store cryptographic keys (or other stuff) in its internal
+flash. Depending on the key's type (symmetric or asymmetric) and usage
+permissions, various operations are available. For symmetric keys, it is
+encryption and decryption. For asymmetric keys, it is signing, decryption, KDF,
+and public key read (The client extracts the public key and does encryption on
+its own).
 
-Key, once is created, may not be read (except for public key). Fobnail Token
-performs cryptographic operations on behalf of Platform, which may be slow. If
-this behaviour is undesired, Secure Storage may be used instead, to store key as
-a file inside Fobnail Token.
+Key, once created, may not be read (except for the public key). Fobnail Token
+performs cryptographic operations on behalf of the client, which may be slow. If
+this behavior is undesired, Secure Storage may be used instead to store the key
+as a file inside Fobnail Token.
 
 | Endpoint Name        | Method | Arguments                        |
 | -------------------- | ------ | -------------------------------- |
@@ -408,28 +414,29 @@ a file inside Fobnail Token.
 | /storage/fs/{name}   | PUT    | File name and file contents      |
 | /storage/fs/{name}   | DELETE | File name                        |
 
-If platform has not been attested (or failed attestation) these APIs will return
-**4.03** error, otherwise Fobnail Token checks whether a specified key exists
-and whether Platform has access to that key. If key or file does not exists or
-there is no access **4.04** error is returned.
+If the platform has not been attested (or failed attestation), these APIs will
+return a **4.04** error. If attestation is successful, Fobnail Token checks
+whether a specified key exists and whether the platform has access to that key.
+If the key or file does not exist or there is no access **4.04** error is
+returned.
 
 > Note: currently, crypto API is not fully defined. Future versions of this
-> documents will address this problem.
+> document will address this problem.
 
 ### GET /storage/fs/{name}
 
-Client sends a request to this endpoint to read a file. File path is encoded as
-part of URI. If a file exists (and if it's accessible) **2.05** response is sent
-with file contans as the payload. `Max-Age` option **must** be set to 0 to
-prevent caching. ETag option **must not** be present in response and if present
-in request it **must** be ignored.
+The client sends a request to this endpoint to read a file. The file path is
+encoded as part of the URI. If the file exists (and if it's accessible),
+**2.05** response is sent with the file contents as the payload. `Max-Age`
+option **must** be set to 0 to prevent caching. ETag option **must not** be
+present in the response, and if present in the request, it **must** be ignored.
 
-> GET method always returns full contents of the file, further versions of this
-> document may define API using FETCH method from RFC8132.
+> The GET method always returns the full contents of the file. Further versions
+> of this document may define API using the FETCH method from RFC8132.
 
 Fobnail Token attempts to open (or create) the requested file and returns
-**2.01** response with file ID which is used as a handle to access the file.
-**4.04** is returned if the file does not exists or there is no access.
+**2.01** response with file ID, which is used as a handle to access the file.
+**4.04** is returned if the file does not exist or there is no access.
 
 ### PUT /storage/fs/{name}
 
@@ -438,15 +445,15 @@ the specified file (URI) with the provided payload. If successful, Fobnail Token
 returns either **2.01** (when the file has been created) or **2.04** (when the
 file has been updated). Request may fail in the following situations:
 
-- If name contains invalid characters (name may not contain NULLs and slash) -
-  **4.03** error.
-- If there is no access to file - **4.03** error.
+- If the name contains invalid characters (name may not contain NULLs and slash,
+  '.' and '..' names are banned), **4.03** error is returned.
+- If the platform is not allowed to create a file, **4.03** error is returned.
 - If writing the file failed for any reason - **5.00** error (payload may
   contain additional context).
 
 ### DELETE /storage/fs/{name}
 
-Used to delete a file. File name is provided in URI and payload should be empty.
-On success, or if the file didn't exist before **2.02** is returned. On error,
-such as when the file does exist, but there is no permission to remove it
-**4.03** is returned.
+This endpoint is used to delete a file. The file name is provided in URI, and
+the payload should be empty. On success, or if the file didn't exist before
+**2.02** is returned. On error, such as when the file does exist, but there is
+no permission to remove it, **4.03** is returned.
