@@ -32,7 +32,7 @@ Platform -> PO: EK<sub>ID</sub>, AIK<sub>ID</sub>, secret
 PO -> PO: Mark AIK as trusted
 PO --> Platform: PC<sub>ID</sub>
 Platform <- Platform: Obtain A<sub>meta</sub>
-Platform -> FT: AIK<sub>priv</sub>(A<sub>meta</sub>), PC<sub>ID</sub>
+Platform -> PO: AIK<sub>priv</sub>(A<sub>meta</sub>), PC<sub>ID</sub>
 PO -> PO: Verify A<sub>meta</sub>
 PO --> Platform: Status
 Platform <- Platform: Obtain RIM
@@ -48,6 +48,8 @@ PO -> FT: PO<sub>chain</sub>
 FT -> FT: Verify PO<sub>chain</sub>
 FT --> PO: PC<sub>ID</sub>
 PO -> FT: PO<sub>priv</sub>(A<sub>meta</sub>)
+FT --> PO: Status
+PO -> FT: PO<sub>priv</sub>(AIK<sub>pub</sub>)
 FT --> PO: Status
 PO -> FT: PO<sub>priv</sub>(RIM)
 FT --> PO: Status
