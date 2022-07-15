@@ -71,7 +71,7 @@ certificate contained in the provisioner Certificate Chain.
 
 ### Fobnail provisioning diagram
 
-![Fobnail-provisioning](images/Fobnail-flows-fobnail-provisioning.svg)
+![Fobnail-provisioning](images/Fobnail-flows-fobnail-provisioning.png)
 
 ---
 
@@ -86,7 +86,7 @@ the RIM and attestation policies to the Fobnail token.
 
 ### Remote platform provisioning diagram
 
-![remote-provisioning](images/Fobnail-flows-remote-platform-provisioning.svg)
+![remote-provisioning](images/Fobnail-flows-remote-platform-provisioning.png)
 
 In the case of local provisioning, the Fobnail token takes the platform
 owner role. The Fobnail token does not receive the policies, and default
@@ -94,7 +94,7 @@ policies are used during the attestation.
 
 ### Local platform provisioning diagram
 
-![local-provisioning](images/Fobnail-flows-local-platform-provisioning.svg)
+![local-provisioning](images/Fobnail-flows-local-platform-provisioning.png)
 
 ---
 
@@ -113,7 +113,7 @@ the decision.
 
 ### Attestation diagram
 
-![attestation](images/Fobnail-flows-attestation.svg)
+![attestation](images/Fobnail-flows-attestation.png)
 
 ### Default appraisal policy
 
