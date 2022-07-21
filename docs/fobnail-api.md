@@ -26,7 +26,7 @@ If the `Content-Format` option is not present, Fobnail Token assumes that
 `Content-Format` is `application/octet-stream`. All requests which pass
 CBOR-encoded data **must** set `Content-Format` option to `application/cbor` for
 Fobnail Token to interpret the payload as CBOR. The server responds with
-**4.00** (Bad Request) if unknown or invalid' Content-Format' is given. If
+**4.00** (Bad Request) if unknown or invalid `Content-Format` is given. If
 passing CBOR-encoded data which is improperly encoded or not valid (e.g.,
 required fields missing) server responds with **4.00**. Passing
 `application/cbor` to an endpoint that expects `application/octet-stream` is
@@ -64,7 +64,7 @@ Fobnail to Attester and from Attester to Fobnail. We use a subset of
 [RFC7049](https://datatracker.ietf.org/doc/html/rfc7049) (no tagging and no
 extensions).
 
-Clients are **required** to set `Content-Format` to `Application/CBOR` when
+Clients are **required** to set `Content-Format` to `application/cbor` when
 transmitting CBOR-encoded data.
 
 ### Data signing
@@ -87,7 +87,7 @@ CBOR object:
 
 #### Exception
 
-Result of `quote` command has nonce explicitly included in returned structure.
+Result of `quote` command has nonce explicitly included in sent structure.
 No additional data is appended before signing. Returned CBOR object has the same
 format as above. This (along with other mechanisms) ensures freshness of Claims,
 in addition to freshness of Evidence (see RATS architecture for description of
@@ -120,7 +120,7 @@ Token already knows the root).
         [ 0x30, 0x82, 0x03, 0x8b, ... ],
         // Intermediate CAs, if any
         ...
-        // EK certificate (major 2)
+        // PO certificate for certificate signing (major 2)
         [ 0x30, 0x82, 0x04, 0x8f, ... ]
     ],
 }
@@ -255,7 +255,7 @@ Client **must** sign metadata with AIK (see the [Data signing](#data-signing)
 section above).
 
 Fobnail Token verifies the provided metadata against AIK bound to the
-Provisioning Context, if signature verification fails, **4.03** is returned. If
+Provisioning Context. If signature verification fails, **4.03** is returned. If
 the metadata format is invalid, **4.00** is returned. On success, either
 **2.01** or **2.04** are returned. On the first successful call, **2.01** is
 returned (`Location-Path` must not be present), and on subsequent calls,
@@ -394,7 +394,7 @@ Fobnail Token can store cryptographic keys (or other stuff) in its internal
 flash. Depending on the key's type (symmetric or asymmetric) and usage
 permissions, various operations are available. For symmetric keys, it is
 encryption and decryption. For asymmetric keys, it is signing, decryption, KDF,
-and public key read (The client extracts the public key and does encryption on
+and public key read (the client extracts the public key and does encryption on
 its own).
 
 Key, once created, may not be read (except for the public key). Fobnail Token
