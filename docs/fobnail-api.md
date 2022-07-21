@@ -95,6 +95,25 @@ those artifacts).
 
 ## API endpoints
 
+Please note that all addresses listed below are relative to `/api/v1`, except
+the `/api/version` endpoint which is used to query supported API versions. To
+query supported API versions, please issue GET request to `/api/v1`. Server
+responds with **2.05** code and CoAP payload contains CBOR-encoded message:
+
+```json
+{
+    // Array of supported API versions (major 4)
+    "versions": [
+        // API version 1 (major 0)
+        1,
+        // API version 2 (major 0)
+        2,
+        // API version 3 (major 0)
+        3,
+    ],
+}
+```
+
 ### Fobnail Token provisioning
 
 | Endpoint Name             | Method | Arguments                               |
@@ -434,9 +453,9 @@ present in the response, and if present in the request, it **must** be ignored.
 > The GET method always returns the full contents of the file. Further versions
 > of this document may define API using the FETCH method from RFC8132.
 
-Fobnail Token attempts to open (or create) the requested file and returns
-**2.01** response with file ID, which is used as a handle to access the file.
-**4.04** is returned if the file does not exist or there is no access.
+Fobnail Token attempts to open the requested file and returns **2.05** response
+with file contents. **4.04** is returned if the file does not exist or there is
+no access.
 
 #### PUT /storage/fs/{name}
 
