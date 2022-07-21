@@ -25,7 +25,7 @@ nav:
       - 'Detailed description': description.md
       - 'Architecture': architecture.md
       - 'Keys and certificates': keys_and_certificates.md
-      - 'Data format': fobnail-data-format.md
+      - 'Fobnail API': fobnail-api.md
       - 'Ethernet over USB':
         - 'Research': eth-over-usb-research.md
         - 'Implementation': implementing-eth-over-usb.md
