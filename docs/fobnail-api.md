@@ -88,8 +88,8 @@ To obtain nonce for data signing, please use the [/nonce](#nonce) endpoint.
 
 #### Exception
 
-Result of `quote` command has nonce explicitly included in sent structure.
-No additional data is appended before signing. Returned CBOR object has the same
+Request for `/attest/{id}` command has nonce explicitly included in sent structure.
+No additional data is appended before signing. Sent CBOR object has the same
 format as above. This (along with other mechanisms) ensures freshness of Claims,
 in addition to freshness of Evidence (see RATS architecture for description of
 those artifacts).
@@ -425,7 +425,7 @@ Services.
 ### Fobnail Token Services
 
 Fobnail Token Services are available after successful platform attestation.
-Fobnail Token can store cryptographic keys (or other stuff) in its internal
+Fobnail Token can store cryptographic keys (or other data) in its internal
 flash. Depending on the key's type (symmetric or asymmetric) and usage
 permissions, various operations are available. For symmetric keys, it is
 encryption and decryption. For asymmetric keys, it is signing, decryption, KDF,
