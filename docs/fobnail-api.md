@@ -130,6 +130,11 @@ contains nonce as a raw byte array (currently 32 bytes).
 Nonce is bound to each client and is valid until it is used. When used, the
 client must call `/nonce` again to obtain a new nonce.
 
+Some requests return a new nonce as part of their response That's the case with
+the `/attest` endpoint and client must use nonce from `/attest` response in call
+to `/attest/{id}`. Attempt to call `/nonce` endpoint **will invalidate**
+Attestation Context.
+
 ### Fobnail Token provisioning
 
 | Endpoint Name             | Method | Arguments                               |
