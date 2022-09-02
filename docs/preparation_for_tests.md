@@ -1,56 +1,102 @@
 # Preparation for tests
 
+This document describes step by step how to prepare the environment to run
+Fobnail and provision it.
+
 ## Requirements
+
+Files that you should have before starting the procedure:
 
 * root.crt
 * provision.sh
+* ca2.crt
+* ca2.priv
+* ca2.srl
+* cc_cbor.py
+* chain.pem
+* leaf.ext
 
-## Procedure
+## The procedure of running the CoAP server
 
-1. To prepare the Fobnail environment run the following commands:
-
-```bash
-git clone git@github.com:fobnail/fobnail.git
-cd fobnail/
-git submodule update --init --recursive
-git checkout token_provisioning
-```
-
-1. https://github.com/fobnail/fobnail-sdk/blob/main/run-fobnail-sdk.sh - Put
-    this file in PATH - to do this put this fail to `~/.local/bin/` and run the
-    following command:
+1. [Install docker](https://docs.docker.com/engine/install/) using the guide
+   for Linux distribution present on your computer.
+1. Add your user to the docker group: `sudo usermod -aG docker $USER`. Then log
+    out of the desktop session then log in again. This step is one-time only.
+1. Prepare the Fobnail environment by opening the terminal and running the
+    following commands:
 
     ```bash
+    git clone git@github.com:fobnail/fobnail.git
+    cd fobnail/
+    git checkout token_provisioning
+    git submodule update --init --recursive
+    ```
+
+1. Put file `run-fobnail-sdk.sh` from `fobnail-sdk` repository in PATH by
+    running the following commands in the new terminal:
+
+    ```bash
+    git clone git@github.com:fobnail/fobnail-sdk.git
+    cd fobnail-sdk/
+    mv run-fobnail-sdk.sh ~/.local/bin/
     source ~/.bashrc
     ```
 
-1. Put the `root.crt` file in the `fobnail` dictionary.
-1. [Configure Network](https://fobnail.3mdeb.com/environment/#networking-setup)
-1. To prepare some variables, run the following commands:
+1. [Configure Network](https://fobnail.3mdeb.com/environment/#networking-setup),
+    for a fast but temporary solution, you can only use the first 3 commands.
+1. Put the `root.crt` file in the main `fobnail` dictionary.
+1. Prepare some variables by running the following commands:
 
-```bash
-export FOBNAIL_PO_ROOT=root.crt
-export FOBNAIL_LOG=debug
-```
+    ```bash
+    export FOBNAIL_PO_ROOT=root.crt
+    export FOBNAIL_LOG=debug
+    ```
 
-1. To start Fobnail run the following command:
+1. Start Fobnail by running the following command:
 
-```bash
-./build.sh --run
-```
+    ```bash
+    ./build.sh --run
+    ```
 
 1. Wait for similar output:
 
-```bash
-.Finished dev [optimized + debuginfo] target(s) in 3m 21s
-    Running `target/x86_64-unknown-linux-gnu/debug/fobnail`
-INFO  fobnail > Hello from main
-```
+    ```bash
+    .Finished dev [optimized + debuginfo] target(s) in 3m 21s
+        Running `target/x86_64-unknown-linux-gnu/debug/fobnail`
+    INFO  fobnail > Hello from main
+    ```
 
-1. To provisioning token run the script with the following commands:
+If the output as above is displayed, it means that the CoAP server was successfully
+set up and started.
 
-```bash
-./provision.sh
-```
+## Provisioning
 
-TBD
+The CoAp server should be running to be able to receive commands from the
+client.
+
+1. Install the necessary libraries by running the following command:
+
+    ```bash
+    pip3 install cbor pem hexdump
+    ```
+
+1. Install the `libcoap` library by following the
+    [procedure](https://github.com/fobnail/fobnail-attester#install-dependencies-for-building-the-project)
+
+    If you run into `git checkout` problems, try copying all of the content
+    below and running it in a terminal:
+
+    ```bash
+    git clone --recursive -b 'develop' \
+    'https://github.com/obgm/libcoap.git' /tmp/libcoap && \
+    cd /tmp/libcoap && \
+    git checkout --recurse-submodules 2a329e1c763a47a910f075aad4478398aaaea400
+    ```
+
+1. Provision token by running the script with the following commands:
+
+    ```bash
+    ./provision.sh
+    ```
+
+A message `Token provisioning complete` should appear on the CoAP server.
