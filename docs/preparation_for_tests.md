@@ -121,7 +121,7 @@ client.
 
 1. Set the appropriate variables according to your configuration in the
     `variables.robot` file:
-    
+
     ```bash
     ${server_device_ip}                    192.168.192.168
     ${server_device_username}              user
