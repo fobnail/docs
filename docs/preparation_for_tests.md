@@ -52,6 +52,8 @@ Files that you should have before starting the procedure:
     export FOBNAIL_LOG=debug
     ```
 
+    > These commands are required each time the computer is restarted.
+
 1. Start Fobnail by running the following command:
 
     ```bash
@@ -66,8 +68,8 @@ Files that you should have before starting the procedure:
     INFO  fobnail > Hello from main
     ```
 
-If the output as above is displayed, it means that the CoAP server was successfully
-set up and started.
+    If the output as above is displayed, it means that the CoAP server was
+    successfully set up and started.
 
 ## Provisioning
 
@@ -99,4 +101,35 @@ client.
     ./provision.sh
     ```
 
-A message `Token provisioning complete` should appear on the CoAP server.
+    A message `Token provisioning complete` should appear on the CoAP server.
+    Note that provisioning token won't work when the token is already
+    provisioned.
+
+## Testing environment
+
+1. Download and prepare the testing repository by opening the terminal and
+    running the following commands:
+
+    ```bash
+    git clone git@github.com:fobnail/fobnail-test-environment.git
+    cd fobnail-test-environment
+    virtualenv -p $(which python3) robot-venv
+    source robot-venv/bin/activate
+    pip install -U -r requirements.txt
+    ```
+
+1. Set the appropriate variables according to your configuration in the
+    `variables.robot` file:
+    
+    ```bash
+    ${server_device_ip}                    192.168.192.168
+    ${server_device_username}              user
+    ${server_device_password}              password
+    ${fobnail_path}                        /home/user/fobnail
+    ```
+
+1. Running test cases example:
+
+    ```bash
+    robot -L TRACE -l <output_file_name>.html tests/<test_file_name>.robot
+    ```
