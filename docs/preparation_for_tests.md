@@ -103,7 +103,7 @@ client.
 
     A message `Token provisioning complete` should appear on the CoAP server.
     Note that provisioning token won't work when the token is already
-    provisioned. To unprovisioning the token removes the `flash.bin` file from
+    provisioned. To unprovision the token remove the `flash.bin` file from
     the `fobnail/target` directory.
 
 ## Testing environment
