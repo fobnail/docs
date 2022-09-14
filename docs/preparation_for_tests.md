@@ -1,22 +1,9 @@
 # Preparation for tests
 
 This document describes step by step how to prepare the environment to run
-Fobnail and provision it.
+Fobnail and prepare it for provisioning.
 
-## Requirements
-
-Files that you should have before starting the procedure:
-
-* root.crt
-* provision.sh
-* ca2.crt
-* ca2.priv
-* ca2.srl
-* cc_cbor.py
-* chain.pem
-* leaf.ext
-
-## The procedure of running the CoAP server
+## Running Fobnail Firmware
 
 1. [Install docker](https://docs.docker.com/engine/install/) using the guide
    for Linux distribution present on your computer.
@@ -44,19 +31,16 @@ Files that you should have before starting the procedure:
 
 1. [Configure Network](https://fobnail.3mdeb.com/environment/#networking-setup),
     for a fast but temporary solution, you can only use the first 3 commands.
-1. Put the `root.crt` file in the main `fobnail` dictionary.
-1. Prepare some variables by running the following commands:
+1. Put the `fobnail_test_root.crt` file in the main `fobnail` dictionary.
+
+    > You can take `fobnail_test_root.crt` from
+    [fobnail-test-environment](https://github.com/fobnail/fobnail-test-environment)
+
+1. Start Fobnail by running the following commands:
 
     ```bash
-    export FOBNAIL_PO_ROOT=root.crt
+    export FOBNAIL_PO_ROOT=fobnail_test_root.crt
     export FOBNAIL_LOG=debug
-    ```
-
-    > These commands are required each time the computer is restarted.
-
-1. Start Fobnail by running the following command:
-
-    ```bash
     ./build.sh --run
     ```
 
@@ -71,10 +55,7 @@ Files that you should have before starting the procedure:
     If the output as above is displayed, it means that the CoAP server was
     successfully set up and started.
 
-## Provisioning
-
-The CoAp server should be running to be able to receive commands from the
-client.
+## Installing libraries required for provisioning
 
 1. Install the necessary libraries by running the following command:
 
@@ -95,16 +76,21 @@ client.
     git checkout --recurse-submodules 2a329e1c763a47a910f075aad4478398aaaea400
     ```
 
-1. Provision token by running the script with the following commands:
+    > libcoap3 is required, coap-client from libcoap2 will not work properly
+
+1. Open the terminal and run the following command to test coap-client:
 
     ```bash
-    ./provision.sh
+    coap-client -m get coap://169.254.0.1
     ```
 
-    A message `Token provisioning complete` should appear on the CoAP server.
-    Note that provisioning token won't work when the token is already
-    provisioned. To unprovision the token remove the `flash.bin` file from
-    the `fobnail/target` directory.
+    If you get `4.04 Not found` output, you have installed the dependencies
+    correctly.
+
+The CoAp server should be running to be able to receive commands from the
+client. Note that provisioning token won't work when the token is already
+provisioned. To unprovision the token remove the `flash.bin` file from the
+`fobnail/target` directory.
 
 ## Testing environment
 
@@ -119,14 +105,10 @@ client.
     pip install -U -r requirements.txt
     ```
 
-1. Set the appropriate variables according to your configuration in the
-    `variables.robot` file:
+1. Set the absolute Fobnail path on your device in the `variables.robot` file:
 
     ```bash
-    ${server_device_ip}                    192.168.192.168
-    ${server_device_username}              user
-    ${server_device_password}              password
-    ${fobnail_path}                        /home/user/fobnail
+    ${absolute_fobnail_path}                        /home/user/fobnail
     ```
 
 1. Running test cases example:
