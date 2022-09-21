@@ -105,14 +105,8 @@ provisioned. To unprovision the token remove the `flash.bin` file from the
     pip install -U -r requirements.txt
     ```
 
-1. Set the absolute Fobnail path on your device in the `variables.robot` file:
-
-    ```bash
-    ${absolute_fobnail_path}                        /home/user/fobnail
-    ```
-
 1. Running test cases example:
 
     ```bash
-    robot -L TRACE -l <output_file_name>.html tests/<test_file_name>.robot
+    robot -L TRACE -o <output-file-prefix> -r <report_file_prefix> -l <output_file_name>.html -v absolute_fobnail_path:<path_to_fobnail> tests/<test_file_name>.robot
     ```
