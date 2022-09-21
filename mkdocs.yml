@@ -22,6 +22,8 @@ nav:
       - 'Flashing sample applications': flashing_samples.md
       - 'Run CHARRA concept on PC': charra-concept-on-pc.md
       - 'Preparation for tests': preparation_for_tests.md
+    - 'Example Applications':
+      - 'Disk encryption': examples/disk_encryption.md
     - 'Knowledge Base':
       - 'Detailed description': description.md
       - 'Architecture': architecture.md
