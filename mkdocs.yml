@@ -17,11 +17,11 @@ nav:
         - 'Fobnail Token': fobnail_token.md
   #     - 'NitroKey': nitrokey.md
     - 'Development Process':
-      - 'Preparation for tests': preparation_for_tests.md
       - 'Environment setup': environment.md
       - 'Developing firmware on PC': local_development.md
       - 'Flashing sample applications': flashing_samples.md
       - 'Run CHARRA concept on PC': charra-concept-on-pc.md
+      - 'Preparation for tests': preparation_for_tests.md
     - 'Knowledge Base':
       - 'Detailed description': description.md
       - 'Architecture': architecture.md
