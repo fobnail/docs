@@ -1,9 +1,5 @@
 # Use case: Disk encryption
 
-> NOTE: this is work in progress. Exact format of arguments passed to
-`fobnail-attester` and returned data aren't yet fully designed and may change in
-the future. Points that are most likely going to change are marked with `TBD`.
-
 ## Description
 
 Disk drive (either physical one or its image) contains personal or corporate
@@ -63,11 +59,14 @@ used to decrypt master-key (see [LUKS2-docs](https://gitlab.com/cryptsetup/LUKS2
 for details):
 
     ```shell
-    $ dd bs=512 count=4 if=/dev/random of=keyfile.bin
+    $ dd bs=512 count=4 if=/dev/urandom of=keyfile.bin
     4+0 records in
     4+0 records out
     2048 bytes (2,0 kB, 2,0 KiB) copied, 0,00431696 s, 474 kB/s
     ```
+
+    You may use `/dev/random` if you're paranoid, but it may take much longer.
+    Add `iflag=fullblock` in that case, otherwise key could be truncated.
 
     Make sure the environment is kept secure (e.g. don't leave the platform
     unattended) until further notice.
@@ -109,13 +108,17 @@ for details):
     $ sudo cryptsetup close c1
     ```
 
-7. (TBD) Move key to Fobnail Token:
+7. Move key to Fobnail Token:
 
     ```shell
-    $ sudo fobnail-attester --write-key keyfile.bin && \
+    $ sudo fobnail-attester --write-file keyfile.bin:luks_key && \
       dd if=/dev/urandom of=keyfile.bin bs=$(stat -c %s keyfile.bin) count=1 && \
       rm keyfile.bin
     ```
+
+    `luks_key` is name under which file is saved on Fobnail Token. It can be
+    arbitrary, as long as it doesn't contain any of the forbidden characters
+    listed [here](/fobnail-api/#put-storagefsname).
 
     DO NOT overwrite or remove `keyfile.bin` unless it was successfully
     written to the Token or you won't be able to access the disk.
@@ -129,15 +132,20 @@ for details):
 9. **At this point the keyfile should be present only in Fobnail Token. Platform
 no longer has to be maintained in secure state.**
 
-10. (TBD) When access to the drive is required, plug in Token and disk and run:
+10. When access to the drive is required, plug in Token and disk and run:
 
     (Optional - when using image file) Repeat `sudo losetup -f --show disk.img`.
     Note that the device number may be different than previously.
 
     ```shell
-    $ sudo fobnail-attester --read-key | cryptsetup luksOpen -d - /dev/<your_disk> c1
+    $ sudo fobnail-attester --read-file luks_key:- | \
+      cryptsetup luksOpen -d - /dev/<your_disk> c1
     $ sudo mount /dev/mapper/c1
     ```
+
+    The same name as in step 7 must be used fore reading, `luks_key` in this
+    case. `-` in place of output filename tells to read to stdout, which is
+    passed through a pipe to `cryptsetup`. This way the key isn't saved to disk.
 
 11. Use drive as usual.
 
