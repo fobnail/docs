@@ -59,7 +59,7 @@ used to decrypt master-key (see [LUKS2-docs](https://gitlab.com/cryptsetup/LUKS2
 for details):
 
     ```shell
-    $ dd bs=512 count=4 if=/dev/urandom of=keyfile.bin
+    $ dd bs=512 count=4 if=/dev/urandom of=/tmp/keyfile.bin
     4+0 records in
     4+0 records out
     2048 bytes (2,0 kB, 2,0 KiB) copied, 0,00431696 s, 474 kB/s
@@ -84,7 +84,7 @@ for details):
 4. Map the LUKS2 container and create a file system on it:
 
     ```shell
-    $ sudo cryptsetup luksOpen -d keyfile.bin /dev/<your_disk> c1
+    $ sudo cryptsetup luksOpen -d /tmp/keyfile.bin /dev/<your_disk> c1
     $ sudo mke2fs -j /dev/mapper/c1
     ```
 
@@ -111,9 +111,9 @@ for details):
 7. Move key to Fobnail Token:
 
     ```shell
-    $ sudo fobnail-attester --write-file keyfile.bin:luks_key && \
-      dd if=/dev/urandom of=keyfile.bin bs=$(stat -c %s keyfile.bin) count=1 && \
-      rm keyfile.bin
+    $ sudo fobnail-attester --write-file /tmp/keyfile.bin:luks_key && \
+      dd if=/dev/urandom of=/tmp/keyfile.bin bs=$(stat -c %s /tmp/keyfile.bin) count=1 && \
+      rm /tmp/keyfile.bin
     ```
 
     `luks_key` is name under which file is saved on Fobnail Token. It can be
@@ -139,11 +139,11 @@ no longer has to be maintained in secure state.**
 
     ```shell
     $ sudo fobnail-attester --read-file luks_key:- | \
-      cryptsetup luksOpen -d - /dev/<your_disk> c1
+      sudo cryptsetup luksOpen -d - /dev/<your_disk> c1
     $ sudo mount /dev/mapper/c1
     ```
 
-    The same name as in step 7 must be used fore reading, `luks_key` in this
+    The same name as in step 7 must be used for reading, `luks_key` in this
     case. `-` in place of output filename tells to read to stdout, which is
     passed through a pipe to `cryptsetup`. This way the key isn't saved to disk.
 
