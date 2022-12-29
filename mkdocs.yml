@@ -29,6 +29,7 @@ nav:
       - 'Architecture': architecture.md
       - 'Keys and certificates': keys_and_certificates.md
       - 'Fobnail API': fobnail-api.md
+      - 'Fobnail blink codes': blink-codes.md
       - 'Ethernet over USB':
         - 'Research': eth-over-usb-research.md
         - 'Implementation': implementing-eth-over-usb.md
