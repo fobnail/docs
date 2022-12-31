@@ -126,7 +126,7 @@ find big pictures of such header:
 https://blog.adafruit.com/2019/01/17/new-product-mini-swd-0-05-pitch-connector-10-pin-smt-box-header/
 
 Until we do not need to debug USB connection, we may use a blinky sample as a
-reference program to be debugged. Refer to [Flashing sample applications](flashing_samples.md)
+reference program to be debugged. Refer to [Flashing sample applications](flashing_preparation.md)
 how to build the samples. Now we will try to flash them with the needle
 connector instead of USB DFU. Inside the fobnail SDK container execute:
 
@@ -150,7 +150,7 @@ connector instead of USB DFU. Inside the fobnail SDK container execute:
 8. Solder SB2 and desolder SB1. Unplug black and violet wires. Unplug the
    needle connector. Black wire floating safely.
 9. Plug the dongle into USB and flash the samples using DFU as instructed in
-   [Flashing sample applications](flashing_samples.md).
+   [Flashing sample applications](flashing_preparation.md).
 
 Since the Nordic's bootloader is stuck when not connected to USB, and we cannot
 use dev kit to debug when dongle is connected to USB, the guide below presents

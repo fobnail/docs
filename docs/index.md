@@ -27,8 +27,7 @@ detailed project description please check [here](description).
 ## Where to go next?
 
 * Read Fobnail Project [detailed description](description.md)
-* [Environment setup](environment.md)
-* [Flashing sample applications](flashing_samples.md)
+* [Building instructions](building.md)
 * How to support the project?
 
 ## Other resources
