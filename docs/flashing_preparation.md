@@ -1,14 +1,5 @@
 # Flashing sample applications
 
-## Preparing environment
-
-Prepare the development environment first as described in
-[Environment setup document](environment.md).
-
-## nRF52840 buttons and LEDs
-
-![](images/nRF52840_dongle_buttons_leds.png)
-
 ## Required hardware
 
 You need following hardware to flash apps:
@@ -59,7 +50,7 @@ Replace `idVendor` and `idProduct` and `OWNER` with correct VID, PID and your
 user name, save this to `/etc/udev/rules.d/99-usb.rules`, then run
 `sudo systemctl reload systemd-udevd` to apply these rules without rebooting.
 
-## Building and flashing blinky sample
+## (Optional) Building and flashing blinky sample
 
 In order to flash a sample application on the nRF52840 dongle we will use
 blinky sample application from our [nrf-hal](https://github.com/fobnail/nrf-hal)
