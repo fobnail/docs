@@ -17,11 +17,10 @@ nav:
         - 'Fobnail Token': fobnail_token.md
   #     - 'NitroKey': nitrokey.md
     - 'Development Process':
-      - 'Environment setup': environment.md
-      - 'Developing firmware on PC': local_development.md
-      - 'Flashing sample applications': flashing_samples.md
-      - 'Run CHARRA concept on PC': charra-concept-on-pc.md
-      - 'Preparation for tests': preparation_for_tests.md
+      - 'Cloning and building': building.md
+      - 'Flashing preparation': flashing_preparation.md
+      - 'Networking setup': networking_setup.md
+      - 'Debugging': debugging.md
     - 'Example Applications':
       - 'Disk encryption': examples/disk_encryption.md
     - 'Knowledge Base':
@@ -38,3 +37,8 @@ nav:
         - 'meta-fobnail PoC': meta-fobnail-in-dlme.md
         - 'Zephyr PoC': zephyr-in-dlme.md
         - 'Xen PoC': xen-in-dlme.md
+    - 'Archived':
+      - 'Environment setup': archive/environment.md
+      - 'Developing firmware on PC': archive/local_development.md
+      - 'Run CHARRA concept on PC': archive/charra-concept-on-pc.md
+      - 'Preparation for tests': archive/preparation_for_tests.md
