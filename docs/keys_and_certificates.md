@@ -191,18 +191,7 @@ private keys belong to the same pair, and no exchange of data between separate
 entities happens. `-x509` parameter tells that this is the case and a self-
 signed certificate is to be made, instead of CSR (Certificate Signing Request).
 
-Command:
-
-```shell
-openssl req -newkey rsa:2048 -nodes -keyout $ROOT_PRIV -x509 -days 365 \
-        -out $ROOT_CERT -config $ROOT_CONFIG
-```
-
-- `ROOT_PRIV` (out) - newly created private root CA key. Keep it safe.
-- `ROOT_CERT` (out) - root CA certificate. This will be hardcoded and marked as
-trusted by Fobnail Token and Attester.
-- `ROOT_CONFIG` (in) - configuration file, e.g.:
-
+* First create configuration file `root_ca.cfg`, for example:
 ```
 [ req ]
 distinguished_name     = req_distinguished_name
@@ -221,6 +210,17 @@ keyUsage               = critical, keyCertSign, cRLSign
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always
 ```
+Feel free to adjust configuration to your needs.
+
+* Run command:
+    ```shell
+    openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.key -x509 -days 365 \
+            -out root_ca.crt -config root_ca.cfg
+    ```
+    - `root_ca_priv.key` - newly created private root CA key. Keep it safe.
+    - `root_ca.crt` - root CA certificate. This will be hardcoded and marked as
+      trusted by Fobnail Token and Attester.
+
 
 ### Intermediate/issuing CA
 
