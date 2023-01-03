@@ -219,7 +219,7 @@ Feel free to adjust configuration to your needs.
     ```
     - `root_ca_priv.key` - newly created private root CA key. Keep it safe.
     - `root_ca.crt` - root CA certificate. This will be hardcoded and marked as
-      trusted by Fobnail Token and Attester.
+      trusted by Fobnail Token.
 
 
 ### Intermediate/issuing CA
