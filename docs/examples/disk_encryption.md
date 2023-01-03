@@ -37,6 +37,7 @@ and Fobnail doesn't limit any of those.
     - (FUTURE FEATURE) May be more if same pair of disk/Token is to be used on
     multiple platforms
 - Safe environment during initial preparation of disk
+  - Also during firmware updates
 
 ### Steps
 
@@ -165,3 +166,58 @@ no longer has to be maintained in secure state.**
     ```shell
     $ losetup -d /dev/<your_disk>
     ```
+
+### Firmware or configuration updates
+
+When change to PCR values is expected (e.g. during firmware update), one should
+back up and restore the encryption key. As of now, Fobnail Token can be bounded
+to just one platform, and after update machine becomes a new platform as far as
+Fobnail is concerned. Because of that, the Token has to be reprovisioned.
+
+Incidentally, similar steps have to be performed when switching to another
+physical platform, except for the step with FW update.
+
+1. Ask your Platform Owner for permission to update the firmware.
+
+    Some companies won't allow firmware updates to be performed by employees. In
+    that case it may be necessary to give the PC to IT department instead.
+    Depending on rules in your organization, key may be backed up by IT or it
+    may be left for users, so IT don't even has access to the secret data.
+
+    In any case, the steps performed are the same, the only difference is in who
+    performs them.
+
+2. Read the encryption key from Token.
+
+    ```shell
+    $ sudo fobnail-attester --read-file luks_key:/path/to/backup/keyfile.bin
+    ```
+
+3. Update PC firmware.
+
+4. Ask your Platform Owner to reprovision the Token.
+
+    This is done by flashing the Token again. All data will be purged, including
+    any encryption keys or other data, and saved platform metadata.
+
+    After that, `fobnail-platform-owner` has to be run again, exactly as it was
+    done during initial Token provisioning, on Platform Owner's machine.
+
+5. Provision new platform.
+
+    Re-run `fobnail-attester-with-provisioning` on the target platform. In case
+    of firmware update, old AIK can be reused, so it should be slightly faster
+    than first provisioning.
+
+6. Write old encryption key to the Token.
+
+    ```shell
+    $ sudo fobnail-attester --write-file /path/to/backup/keyfile.bin:luks_key && \
+      dd if=/dev/urandom of=/path/to/backup/keyfile.bin bs=$(stat -c %s /path/to/backup/keyfile.bin) count=1 && \
+      rm /path/to/backup/keyfile.bin
+    ```
+
+    This can also be done during platform provisioning, as `-with-provisioning`
+    version is capable of doing everything that plain `fobnail-attester` can do.
+    It is shown as a separate step here to accommodate for use case where user
+    is responsible for key management, and not Platform Owner.
