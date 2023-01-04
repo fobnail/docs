@@ -15,11 +15,10 @@ Following steps were successfully performed on Ubuntu 22.04.1 LTS.
 
 ## Fobnail Token firmware
 
-Start by installing prerequisites and adding current user to `docker` group:
+Start by installing prerequisites:
 
 ```shell
-sudo apt -y install git docker.io
-sudo usermod -aG docker $USER
+sudo apt -y install git
 ```
 
 Log out of the desktop session then log in again - this is required after making
@@ -32,21 +31,12 @@ git clone https://github.com/fobnail/fobnail --recurse-submodules
 ```
 
 Build process for Token firmware is by far the most complicated one. For that
-reason Fobnail SDK is strongly suggested. To use it, simply download script
-`run-fobnail-sdk.sh` either by cloning whole repository or just this one script
-and save it to a directory in your `PATH` environment variable:
+reason use of Fobnail SDK is strongly suggested. Follow [these instructions](/fobnail-sdk.md)
+to install it.
 
-```shell
-sudo wget -O /usr/local/bin/run-fobnail-sdk.sh \
-  https://raw.githubusercontent.com/fobnail/fobnail-sdk/main/run-fobnail-sdk.sh
-sudo chmod +x /usr/local/bin/run-fobnail-sdk.sh
-```
-
-With the script installed, one can prepare for the build process itself.
-Firmware can be build for a physical Fobnail Token or simulated on PC, with
-different preparatory steps required. In both cases, first execution of
-`build.sh` downloads Docker container image, which can be both time- and
-bandwidth-consuming.
+With the SDK installed, one can prepare for the build process itself. Firmware
+can be build for a physical Fobnail Token or simulated on PC, with different
+preparatory steps required.
 
 #### Environment variables common for both targets
 
@@ -60,6 +50,8 @@ directory.
 - `FOBNAIL_PO_ROOT` - **required** option, must point to valid PEM or DER file
   with Platform Owner's root certificate. See [this document](/keys_and_certificates/#platform-owner-certificate-chain)
   for description of PO certificate chain and instructions for building such.
+  For Fobnail Token firmware it is enough to create only [root CA certificate](https://fobnail.3mdeb.com/keys_and_certificates/#root-ca).
+  The rest of chain will be required for provisioning.
 
 - `FOBNAIL_EK_ROOT_DIR` - points to directory with TPM root certificates.
   Fobnail repository includes [such directory](https://github.com/fobnail/fobnail/tree/main/tpm_ek_roots)
