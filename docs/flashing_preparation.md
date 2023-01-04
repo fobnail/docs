@@ -27,8 +27,9 @@ We use `cargo-embed` for firmware flashing and debugging, which internally uses
 `probe-rs`, so you need a compatible debugger. We are using
 [nRF52840-DK](https://www.nordicsemi.com/Products/Development-hardware/nrf52840-dk)
 development board, which exposes a JLink-compatible interface. To check whether
-your debugger is supported, start Fobnail SDK and run `probe-rs-cli list`. You
-see similar output:
+your debugger is supported, connect the development kit to your PC with USB
+cable, [start Fobnail SDK](/fobnail-sdk.md) and run `probe-rs-cli list`. You
+will see output similar to this:
 
 ```
 The following devices were found:
@@ -58,7 +59,7 @@ fork. Follow the steps below to build and flash blinky sample:
 
 1. Power on dongle and connect it to debugger.
 2. Go to `nrf-hal` directory
-3. Run the fobnail-sdk container with `./run-container.sh`.
+3. Run the fobnail-sdk container with `run-fobnail-sdk.sh`.
 4. Go to `examples/blinky-demo-nrf52840`
 5. Execute `cargo embed --target thumbv7em-none-eabihf`. This command will build
    the sample app, flash it onto target device and spawn RTT console (sort of
