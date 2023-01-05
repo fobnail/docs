@@ -57,13 +57,12 @@ directory.
   Fobnail repository includes [such directory](https://github.com/fobnail/fobnail/tree/main/tpm_ek_roots)
   which normally should be used as `FOBNAIL_EK_ROOT_DIR`, but you may change it
   if certificates supplied in repository became outdated. Either this or
-  `FOBNAIL_EXTRA_EK_ROOT` (or both) **must be specified**, but build process
-  won't fail when neither is passed.
+  `FOBNAIL_EXTRA_EK_ROOT` (or both) **must be specified**.
 
 - `FOBNAIL_EXTRA_EK_ROOT` - points to one specific TPM certificate. Useful when
-  testing with TPM emulator, or to limit Fobnail usage to one specific TPM
-  vendor. Either this or `FOBNAIL_EK_ROOT_DIR` (or both) **must be specified**,
-  but build process won't fail when neither is passed.
+  [testing with TPM emulator](/tpm-simulators/), or to limit Fobnail usage to
+  one specific TPM vendor. Either this or `FOBNAIL_EK_ROOT_DIR` (or both)
+  **must be specified**.
 
 #### Building and flashing firmware to Fobnail Token
 
