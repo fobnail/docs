@@ -144,6 +144,10 @@ Certificate:
 > for simulator is tried. They can be safely ignored, as long as content of
 > certificate is printed afterwards.
 
+Certificate in `tools/keys_and_certs/ca_cert.der` is the one that has to be
+passed to `build.sh` in `FOBNAIL_EXTRA_EK_ROOT` variable, see [building instructions](/building/#environment-variables-common-for-both-targets)
+for details.
+
 ## Using simulated TPM
 
 For most cases running TPM simulator is enough. Only platform provisioning needs

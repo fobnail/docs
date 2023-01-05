@@ -13,6 +13,9 @@ sudo wget -O /usr/local/bin/run-fobnail-sdk.sh \
 sudo chmod +x /usr/local/bin/run-fobnail-sdk.sh
 ```
 
+For proper operation, you need to have Docker [installed](https://docs.docker.com/engine/install/ubuntu/)
+and [properly configured](https://docs.docker.com/engine/install/linux-postinstall/).
+
 First execution of this script downloads Docker container image, which can be
 both time- and bandwidth-consuming. Running this script without any additional
 parameters will open interactive shell.
