@@ -230,6 +230,15 @@ done by key creator, second one is creating the certificate itself - this is
 done by the parent CA. This separation is done to keep private keys secret at
 all times.
 
+Steps for both intermediate and issuing CA certificates are the same, the only
+difference is that CSR for intermediate is sent to root CA, and issuer's CSR is
+sent to intermediate CA. This chain can be longer in general, but Fobnail limits
+maximum length, as [mentioned above](#informational-checks). Intermediate CA is
+optional, issuer CA certificate can be signed by root CA directly.
+
+File names in this section were written as variables because they probably will
+be different for both certificates, change them as needed.
+
 #### Generating CSR
 
 This is similar to creating root CA with two small but important differences:
@@ -301,4 +310,16 @@ basicConstraints       = critical, CA:TRUE, pathlen:2
 keyUsage               = critical, keyCertSign, cRLSign
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always
+```
+
+### Putting the chain together
+
+PEM files contain certificates (among other objects that are not relevant here)
+encoded as text. They can be concatenated e.g. with `cat` to form a chain. As
+[mentioned above](#informational-checks), the order of certificates matters:
+leaf (i.e. issuer certificate) must come first, root CA - last. Assuming `*.crt`
+files are PEM certificates of various CAs, full chain is produced by:
+
+```shell
+cat issuer.crt intermediate.crt root.crt > chain.pem
 ```
