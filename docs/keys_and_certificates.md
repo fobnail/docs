@@ -120,6 +120,13 @@ Note that this list includes possible usages that may not be implemented yet.
 
 ## Platform Owner certificate chain
 
+Platform Owner trust chain uses X.509 certificates, usually in PEM format. It
+aims to be compatible with standard Public Key Infrastructure, as described in
+RFCs [5280](https://www.rfc-editor.org/rfc/rfc5280) or [3647](https://www.rfc-editor.org/rfc/rfc3647),
+among others. At least basic understanding of PKI is strongly suggested, but if
+you just want to quickly test Fobnail, you may just do steps in [TL;DR](#tldr-version)
+section.
+
 Platform Owner certificate is used during Fobnail provisioning. Its root CA
 certificate must be preinstalled on Fobnail Token. Due to limited hardware
 capabilities of Fobnail Token, following restrictions apply.
@@ -177,7 +184,9 @@ certificates should result in failed provisioning.
 This section describes how to create a certificate chain that conforms to
 restrictions mentioned earlier. This is just a minimal example showing all
 required configuration options and commands used in the process, fields listed
-here may be extended or modified, but should not be removed.
+here may be extended or modified, but should not be removed. Normally CAs do
+much more than what is presented here, some guidelines can be found in
+[RFC 3647](https://www.rfc-editor.org/rfc/rfc3647).
 
 Note that root CA doesn't have to be under Platform Owner's control, but it must
 issue a certificate that is (either directly or through intermediate issuer). In
@@ -222,7 +231,12 @@ Feel free to adjust configuration to your needs.
       trusted by Fobnail Token.
 
 
-### Intermediate/issuing CA
+### Intermediate/PO issuing CA
+
+> Note: "PO issuing CA" in this part of the document should be understood as the
+> CA that issues certificate requested by Fobnail Token. In general, each
+> certificate has its own issuer. If that meaning of the word is required,
+> "higher-level CA", "intermediate CA" or "root CA" is used.
 
 These certificates aren't self-signed. Creation of such certificates consists of
 two steps: first one is generating a CSR (Certificate Signing Request) and is
@@ -231,10 +245,10 @@ done by the parent CA. This separation is done to keep private keys secret at
 all times.
 
 Steps for both intermediate and issuing CA certificates are the same, the only
-difference is that CSR for intermediate is sent to root CA, and issuer's CSR is
-sent to intermediate CA. This chain can be longer in general, but Fobnail limits
-maximum length, as [mentioned above](#informational-checks). Intermediate CA is
-optional, issuer CA certificate can be signed by root CA directly.
+difference is that CSR for intermediate is sent to root CA, and PO issuing CA's
+CSR is sent to intermediate CA. This chain can be longer in general, but Fobnail
+limits maximum length, as [mentioned above](#informational-checks). Intermediate
+CA is optional, PO issuing CA certificate can be signed by root CA directly.
 
 File names in this section were written as variables because they probably will
 be different for both certificates, change them as needed.
@@ -253,10 +267,11 @@ openssl req -newkey rsa:2048 -nodes -keyout $CA_PRIV -out $CA_CSR \
         -config $CA_CONFIG
 ```
 
-- `CA_PRIV` (out) - newly created private intermediate/issuer CA key. Keep it
-safe.
-- `CA_CSR` (out) - intermediate/issuer CA certificate signing request. This file
-is signed with private intermediate/issuer CA key and sent to higher level CA.
+- `CA_PRIV` (out) - newly created private intermediate/PO issuing CA key. Keep
+it safe.
+- `CA_CSR` (out) - intermediate/PO issuing CA certificate signing request. This
+file is signed with private intermediate/PO issuing CA key and sent to higher
+level CA.
 - `CA_CONFIG` (in) - configuration file, e.g.:
 
 ```
@@ -277,14 +292,15 @@ Before issuing a certificate, issuer must check if subject is authorized to
 ask for it. It can't just blindly provide a new certificate to anyone that asks
 for it, because by creating a signed certificate CA tells others that it trusts
 its subject. Trust decision can be based on fields of CSR, challenge password,
-secure and non-public way of conveying CSR to issuer, or other means. This is
-especially important in this case because subject of each signed certificate is
-itself a CA and can create certificates for other entities.
+secure and non-public way of conveying CSR to issuer, or other means. Sometimes
+the decision is made by another entity called Registration Authority (RA) on
+behalf of CA.
 
-Certificate revocation for Fobnail can't be done by means other than firmware
-updates, so issuing a certificate to untrustworthy subject impacts not only the
-security of devices provisioned by issuer, but also every device with the same
-root CA.
+In this case because subject of each signed certificate is itself a CA and can
+create certificates for other entities. Certificate revocation for Fobnail can't
+be done by means other than firmware updates, so issuing a certificate to
+untrustworthy subject impacts not only the security of devices provisioned by
+issuer, but also every device with the same root CA.
 
 > `openssl ca` can also be used for this purpose, but `openssl x509` is easier
 to use for single use. On the other hand, `openssl ca` better suits the needs of
@@ -299,9 +315,10 @@ openssl x509 -req -in $SUBJECT_CSR -CA $AUTHORITY_CERT -CAkey $AUTHORITY_PRIV \
 ```
 
 - `SUBJECT_CSR` (in) - sent by lower-level CA.
-- `AUTHORITY_CERT` and `AUTHORITY_PRIV` (in) - those were created by issuer CA
-earlier.
-- `SUBJECT_CERT` (out) - certificate signed with `AUTHORITY_PRIV`.
+- `AUTHORITY_CERT` and `AUTHORITY_PRIV` (in) - those were created by
+higher-level CA earlier.
+- `SUBJECT_CERT` (out) - lower-level CA certificate signed with
+`AUTHORITY_PRIV`.
 - `SUBJECT_EXT` (in) - file describing certificate extensions, e.g.:
 
 ```
@@ -317,9 +334,85 @@ authorityKeyIdentifier = keyid:always
 PEM files contain certificates (among other objects that are not relevant here)
 encoded as text. They can be concatenated e.g. with `cat` to form a chain. As
 [mentioned above](#informational-checks), the order of certificates matters:
-leaf (i.e. issuer certificate) must come first, root CA - last. Assuming `*.crt`
-files are PEM certificates of various CAs, full chain is produced by:
+leaf (i.e. PO issuing certificate) must come first, root CA - last. Assuming
+`*.crt` files are PEM certificates of various CAs, full chain is produced by:
 
 ```shell
 cat issuer.crt intermediate.crt root.crt > chain.pem
 ```
+
+### TL;DR version
+
+While it is strongly suggested to understand and follow steps described above,
+these steps can be used to produce a chain that will be accepted by Fobnail. It
+can be used to quickly build and test Fobnail project, but such approach defies
+the idea of Fobnail provisioning and Platform Owner in general. **It should not
+be used on Tokens for production environments**.
+
+1. Create root CA key and certificate:
+
+    ```shell
+    openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.key -x509 -days 30 \
+                -out root_ca.crt -config <(cat << EOF
+
+    [ req ]
+    distinguished_name     = req_distinguished_name
+    prompt                 = no
+    x509_extensions        = v3_ext
+
+    [ req_distinguished_name ]
+    C                      = PL
+    O                      = Fobnail
+    ST                     = State
+    CN                     = Platform Owner root CA certificate
+
+    [v3_ext]
+    basicConstraints       = critical, CA:TRUE, pathlen:2
+    keyUsage               = critical, keyCertSign, cRLSign
+    subjectKeyIdentifier   = hash
+    authorityKeyIdentifier = keyid:always
+
+    EOF
+    )
+    ```
+
+2. Create PO issuing CA private key and CSR:
+
+    ```shell
+    openssl req -newkey rsa:2048 -nodes -keyout issuer_ca_priv.key \
+            -out issuer_ca.csr -config <(cat << EOF
+
+    [ req ]
+    distinguished_name     = req_distinguished_name
+    prompt                 = no
+
+    [ req_distinguished_name ]
+    C                      = PL
+    O                      = Fobnail
+    ST                     = State
+    CN                     = Platform Owner issuer CA certificate
+
+    EOF
+    )
+    ```
+
+3. Create PO issuing CA certificate:
+
+    ```shell
+    openssl x509 -req -in issuer_ca.csr -CA root_ca.crt -CAkey root_ca_priv.key \
+            -CAcreateserial -days 30 -out issuer_ca.crt -extfile <(cat << EOF
+
+    basicConstraints       = critical, CA:TRUE, pathlen:1
+    keyUsage               = critical, keyCertSign, cRLSign
+    subjectKeyIdentifier   = hash
+    authorityKeyIdentifier = keyid:always
+
+    EOF
+    )
+    ```
+
+4. Create chain from both certificates:
+
+    ```shell
+    cat issuer_ca.crt root_ca.crt > chain.pem
+    ```
