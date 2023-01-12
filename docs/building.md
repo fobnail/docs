@@ -71,7 +71,7 @@ For hardware setup instructions see [Flashing preparation](flashing_preparation.
 Building and flashing is performed by executing (from `fobnail` directory):
 
 ```shell
-env FOBNAIL_PO_ROOT=po_root.crt FOBNAIL_EK_ROOT_DIR=tpm_ek_roots \
+env FOBNAIL_PO_ROOT=root_ca.crt FOBNAIL_EK_ROOT_DIR=tpm_ek_roots \
     ./build.sh -t nrf --run
 ```
 
@@ -90,7 +90,7 @@ To build and run firmware execute the following commands (from `fobnail`
 directory).
 
 ```shell
-env FOBNAIL_LOG=info FOBNAIL_PO_ROOT=po_root.crt \
+env FOBNAIL_LOG=info FOBNAIL_PO_ROOT=root_ca.crt \
     FOBNAIL_EK_ROOT_DIR=tpm_ek_roots ./build.sh -t pc --run
 ```
 
