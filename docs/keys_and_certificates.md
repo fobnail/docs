@@ -150,8 +150,8 @@ capabilities of Fobnail Token, following restrictions apply.
 - File format
 
     Certificates are concatenated to a single PEM file. Order of concatenation
-    matters, certificates must be written starting with leaf certificate and
-    moving through intermediate towards root CA certificate. All of them must be
+    matters, certificates must be written starting with root CA certificate and
+    moving through intermediate towards leaf certificate. All of them must be
     present, despite the fact that root CA is already known by Fobnail.
 
 - Certificate extensions
@@ -338,7 +338,7 @@ leaf (i.e. PO issuing certificate) must come first, root CA - last. Assuming
 `*.crt` files are PEM certificates of various CAs, full chain is produced by:
 
 ```shell
-cat issuer.crt intermediate.crt root.crt > chain.pem
+cat root.crt intermediate.crt issuer.crt > chain.pem
 ```
 
 ### TL;DR version
@@ -414,5 +414,5 @@ be used on Tokens for production environments**.
 4. Create chain from both certificates:
 
     ```shell
-    cat issuer_ca.crt root_ca.crt > chain.pem
+    cat root_ca.crt issuer_ca.crt > chain.pem
     ```
