@@ -59,10 +59,10 @@ used to decrypt master-key (see [LUKS2-docs](https://gitlab.com/cryptsetup/LUKS2
 for details):
 
     ```shell
-    $ dd bs=512 count=4 if=/dev/urandom of=/tmp/keyfile.bin
-    4+0 records in
-    4+0 records out
-    2048 bytes (2,0 kB, 2,0 KiB) copied, 0,00431696 s, 474 kB/s
+    $ dd bs=512 count=2 if=/dev/urandom of=/tmp/keyfile.bin
+    2+0 records in
+    2+0 records out
+    1024 bytes (1,0 kB, 1,0 KiB) copied, 0,00427485 s, 240 kB/s
     ```
 
     You may use `/dev/random` if you're paranoid, but it may take much longer.
