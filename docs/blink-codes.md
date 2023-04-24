@@ -30,9 +30,9 @@ failure, i.e. red light will be kept on.
 
 ## Platform provisioning
 
-On successful Token provisioning, green LED will blink three times. After
-failure followed by client disconnection Token goes back to waiting state, i.e.
-both LEDs will blink every 5 seconds.
+On successful platform provisioning, green LED will blink three times, then
+Token goes back to waiting state. On failure no signal will be given, the Token
+will stay in waiting state and will keep blinking both LEDs every 5 seconds.
 
 ## Attestation
 
