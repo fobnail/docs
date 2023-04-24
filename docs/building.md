@@ -31,8 +31,8 @@ git clone https://github.com/fobnail/fobnail --recurse-submodules
 ```
 
 Build process for Token firmware is by far the most complicated one. For that
-reason use of Fobnail SDK is strongly suggested. Follow [these instructions](/fobnail-sdk.md)
-to install it.
+reason use of Fobnail SDK is strongly suggested. Follow [these
+instructions](/fobnail-sdk) to install it.
 
 With the SDK installed, one can prepare for the build process itself. Firmware
 can be build for a physical Fobnail Token or simulated on PC, with different
@@ -50,7 +50,7 @@ directory.
 - `FOBNAIL_PO_ROOT` - **required** option, must point to valid PEM or DER file
   with Platform Owner's root certificate. See [this document](/keys_and_certificates/#platform-owner-certificate-chain)
   for description of PO certificate chain and instructions for building such.
-  For Fobnail Token firmware it is enough to create only [root CA certificate](https://fobnail.3mdeb.com/keys_and_certificates/#root-ca).
+  For Fobnail Token firmware it is enough to create only [root CA certificate](/keys_and_certificates/#root-ca).
   The rest of chain will be required for provisioning.
 
 - `FOBNAIL_EK_ROOT_DIR` - points to directory with TPM root certificates.

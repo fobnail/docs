@@ -197,8 +197,9 @@ mechanisms of proving the identity of the requester than those used by OpenSSL.
 
 Root CA certificate is self-signed. This means that signed public and signing
 private keys belong to the same pair, and no exchange of data between separate
-entities happens. `-x509` parameter tells that this is the case and a self-
-signed certificate is to be made, instead of CSR (Certificate Signing Request).
+entities happens. `-x509` parameter tells that this is the case and a
+self-signed certificate is to be made, instead of CSR (Certificate Signing
+Request).
 
 * First create configuration file `root_ca.cfg`, for example:
 ```
@@ -224,7 +225,7 @@ Feel free to adjust configuration to your needs.
 * Run command:
     ```shell
     openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.key -x509 -days 365 \
-            -out root_ca.crt -config root_ca.cfg
+    -out root_ca.crt -config root_ca.cfg
     ```
     - `root_ca_priv.key` - newly created private root CA key. Keep it safe.
     - `root_ca.crt` - root CA certificate. This will be hardcoded and marked as
@@ -264,7 +265,7 @@ Command:
 
 ```shell
 openssl req -newkey rsa:2048 -nodes -keyout $CA_PRIV -out $CA_CSR \
-        -config $CA_CONFIG
+-config $CA_CONFIG
 ```
 
 - `CA_PRIV` (out) - newly created private intermediate/PO issuing CA key. Keep
