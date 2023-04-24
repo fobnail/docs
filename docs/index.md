@@ -26,6 +26,7 @@ detailed project description please check [here](description).
 
 ## Where to go next?
 
+* Get familiar with [Fobnail architecture](architecture.md)
 * Read Fobnail Project [detailed description](description.md)
 * [Building instructions](building.md)
 * How to support the project?
