@@ -8,9 +8,15 @@ communicate with the external world is needed. You can create such an interface
 by executing the following commands:
 
 ```shell
-$ sudo ip tuntap add fobnail0 mode tap user `whoami`
-$ sudo ip addr add 169.254.0.8/16 dev fobnail0
-$ sudo ip link set dev fobnail0 up
+sudo ip tuntap add fobnail0 mode tap user `whoami`
+```
+
+```shell
+sudo ip addr add 169.254.0.8/16 dev fobnail0
+```
+
+```shell
+sudo ip link set dev fobnail0 up
 ```
 
 To make this persistent across reboots, you can use `systemd-networkd`, which
@@ -42,13 +48,16 @@ steps:
 * Enable `systemd-networkd`.
 
   ```shell
-  $ sudo systemctl enable --now systemd-networkd
+  sudo systemctl enable --now systemd-networkd
   ```
 
 You should see a new network interface created.
 
 ```shell
-$ ip addr show dev fobnail0
+ip addr show dev fobnail0
+```
+
+```shell
 40: fobnail0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
     link/ether 8e:36:f4:4c:98:28 brd ff:ff:ff:ff:ff:ff
     inet6 fe80::8c36:f4ff:fe4c:9828/64 scope link
@@ -58,8 +67,16 @@ $ ip addr show dev fobnail0
 You should see the same interface inside Docker container.
 
 ```shell
-$ run-fobnail-sdk.sh /bin/bash
-(docker)$ ip link
+run-fobnail-sdk.sh /bin/bash
+```
+
+Inside docker container:
+
+```shell
+ip link show fobnail0
+```
+
+```shell
 40: fobnail0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN mode DEFAULT group default qlen 1000
     link/ether 8e:36:f4:4c:98:28 brd ff:ff:ff:ff:ff:ff
 ```
