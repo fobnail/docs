@@ -19,9 +19,9 @@ Total chain size: 4095 bytes
 Size of the biggest certificate: 1463 bytes
 ```
 
-## SLB 9670
+## SLB 9670 - Raspberry Pi
 
-Used on Raspberry Pi. Two different specimens had slightly different chains:
+Two different specimens had slightly different chains:
 
 ```text
 Certificate 0 size: 1422 bytes
@@ -45,22 +45,16 @@ Total chain size: 4075 bytes
 Size of the biggest certificate: 1455 bytes
 ```
 
-Same TPM on NovaCustom NS5x/7x and Protectli VP4630/50/70 platforms:
+## SLB 9670 - other platforms
 
-```text
-Certificate 0 size: 1171 bytes
-Certificate 1 size: 1449 bytes
-Certificate 2 size: 1455 bytes
-Certificate is self-signed, assuming it is root
+Found on multiple different platforms:
 
-Chain length: 3
-Total chain size: 4075 bytes
-Size of the biggest certificate: 1455 bytes
-```
+- NovaCustom NV4x
+- NovaCustom NS5x/7x
+- Protectli VP4630/50/70
 
-## Unknown TPM (probably also SLB 9670)
-
-Found in NovaCustom NV4X laptops:
+All tested samples had identical sizes, but it is possible that other chains
+exist, given that the same TPM model on Raspberry Pi had two different chains.
 
 ```text
 Certificate 0 size: 1171 bytes
