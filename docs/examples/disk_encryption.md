@@ -32,7 +32,7 @@ and Fobnail doesn't limit any of those.
 
 ### Prerequisites
 
-- Provisioned Fobnail Token
+- [Provisioned](/token_provisioning) Fobnail Token
 - At least one platform bound to that Token
     - (FUTURE FEATURE) May be more if same pair of disk/Token is to be used on
     multiple platforms

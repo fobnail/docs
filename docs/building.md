@@ -141,12 +141,7 @@ make
 ```
 
 Produced binary is located in `bin/fobnail-platform-owner`, from where it can be
-moved to `PATH` or just started from there. Platform owner binary expects two
-files: PO certificate chain `cert_chain.pem` and private key `po_priv_key.pem`.
-For quick start both of those files can be produced using [these TL;DR
-instructions](/keys_and_certificates/#tldr-version). Certificate chain must
-begin with the root CA that was passed as `FOBNAIL_PO_ROOT` when building
-firmware for Token.
+moved to `PATH` or just started from there.
 
 #### Attester
 
@@ -170,3 +165,8 @@ Two executables are produced in `bin` folder: `fobnail-attester` and
 easier use. The latter is expected to be run only once per Token, by an
 administrator in a controlled environment, and not for daily use, so it can be
 not installed to avoid confusion.
+
+## Summary and next steps
+
+Congratulations, you have built all of the components of Fobnail! From here you
+should proceed to [Token provisioning guide](/token_provisioning).
