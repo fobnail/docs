@@ -10,6 +10,8 @@ theme:
 markdown_extensions:
     - pymdownx.highlight
     - pymdownx.superfences
+    - pymdownx.tabbed:
+        alternate_style: true
     - pymdownx.keys
 nav:
     - 'Intro': index.md
@@ -21,6 +23,7 @@ nav:
       - 'Cloning and building': building.md
       - 'Flashing preparation': flashing_preparation.md
       - 'Networking setup': networking_setup.md
+      - 'Token provisioning': token_provisioning.md
       - 'Using TPM simulators': tpm-simulators.md
       - 'Debugging': debugging.md
     - 'Example Applications':
