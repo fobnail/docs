@@ -224,10 +224,10 @@ Feel free to adjust configuration to your needs.
 
 * Run command:
     ```shell
-    openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.key -x509 -days 365 \
+    openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.pem -x509 -days 365 \
     -out root_ca.crt -config root_ca.cfg
     ```
-    - `root_ca_priv.key` - newly created private root CA key. Keep it safe.
+    - `root_ca_priv.pem` - newly created private root CA key. Keep it safe.
     - `root_ca.crt` - root CA certificate. This will be hardcoded and marked as
       trusted by Fobnail Token.
 
@@ -339,7 +339,7 @@ leaf (i.e. PO issuing certificate) must come first, root CA - last. Assuming
 `*.crt` files are PEM certificates of various CAs, full chain is produced by:
 
 ```shell
-cat root.crt intermediate.crt issuer.crt > chain.pem
+cat root.crt intermediate.crt issuer.crt > cert_chain.pem
 ```
 
 ### TL;DR version
@@ -353,8 +353,8 @@ be used on Tokens for production environments**.
 1. Create root CA key and certificate:
 
     ```shell
-    openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.key -x509 -days 30 \
-                -out root_ca.crt -config <(cat << EOF
+    openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.pem -x509
+                -days 30 -out root_ca.crt -config <(cat << EOF
 
     [ req ]
     distinguished_name     = req_distinguished_name
@@ -380,7 +380,7 @@ be used on Tokens for production environments**.
 2. Create PO issuing CA private key and CSR:
 
     ```shell
-    openssl req -newkey rsa:2048 -nodes -keyout issuer_ca_priv.key \
+    openssl req -newkey rsa:2048 -nodes -keyout po_priv_key.pem \
             -out issuer_ca.csr -config <(cat << EOF
 
     [ req ]
@@ -400,8 +400,9 @@ be used on Tokens for production environments**.
 3. Create PO issuing CA certificate:
 
     ```shell
-    openssl x509 -req -in issuer_ca.csr -CA root_ca.crt -CAkey root_ca_priv.key \
-            -CAcreateserial -days 30 -out issuer_ca.crt -extfile <(cat << EOF
+    openssl x509 -req -in issuer_ca.csr -CA root_ca.crt -CAcreateserial \
+            -CAkey root_ca_priv.pem -days 30 -out issuer_ca.crt \
+            -extfile <(cat << EOF
 
     basicConstraints       = critical, CA:TRUE, pathlen:1
     keyUsage               = critical, keyCertSign, cRLSign
@@ -415,5 +416,5 @@ be used on Tokens for production environments**.
 4. Create chain from both certificates:
 
     ```shell
-    cat root_ca.crt issuer_ca.crt > chain.pem
+    cat root_ca.crt issuer_ca.crt > cert_chain.pem
     ```
