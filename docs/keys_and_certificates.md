@@ -202,33 +202,37 @@ self-signed certificate is to be made, instead of CSR (Certificate Signing
 Request).
 
 * First create configuration file `root_ca.cfg`, for example:
-```
-[ req ]
-distinguished_name     = req_distinguished_name
-prompt                 = no
-x509_extensions        = v3_ext
 
-[ req_distinguished_name ]
-C                      = PL
-O                      = Fobnail
-ST                     = State
-CN                     = Platform Owner root CA certificate
+    ```
+    [ req ]
+    distinguished_name     = req_distinguished_name
+    prompt                 = no
+    x509_extensions        = v3_ext
 
-[v3_ext]
-basicConstraints       = critical, CA:TRUE, pathlen:3
-keyUsage               = critical, keyCertSign, cRLSign
-subjectKeyIdentifier   = hash
-authorityKeyIdentifier = keyid:always
-```
-Feel free to adjust configuration to your needs.
+    [ req_distinguished_name ]
+    C                      = PL
+    O                      = Fobnail
+    ST                     = State
+    CN                     = Platform Owner root CA certificate
+
+    [v3_ext]
+    basicConstraints       = critical, CA:TRUE, pathlen:3
+    keyUsage               = critical, keyCertSign, cRLSign
+    subjectKeyIdentifier   = hash
+    authorityKeyIdentifier = keyid:always
+    ```
+
+    Feel free to adjust configuration to your needs.
 
 * Run command:
+
     ```shell
     openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.pem -x509 -days 365 \
-    -out root_ca.crt -config root_ca.cfg
+    -out root.crt -config root_ca.cfg
     ```
+
     - `root_ca_priv.pem` - newly created private root CA key. Keep it safe.
-    - `root_ca.crt` - root CA certificate. This will be hardcoded and marked as
+    - `root.crt` - root CA certificate. This will be hardcoded and marked as
       trusted by Fobnail Token.
 
 
@@ -245,49 +249,12 @@ done by key creator, second one is creating the certificate itself - this is
 done by the parent CA. This separation is done to keep private keys secret at
 all times.
 
-Steps for both intermediate and issuing CA certificates are the same, the only
-difference is that CSR for intermediate is sent to root CA, and PO issuing CA's
-CSR is sent to intermediate CA. This chain can be longer in general, but Fobnail
-limits maximum length, as [mentioned above](#informational-checks). Intermediate
-CA is optional, PO issuing CA certificate can be signed by root CA directly.
-
-File names in this section were written as variables because they probably will
-be different for both certificates, change them as needed.
-
-#### Generating CSR
-
-This is similar to creating root CA with two small but important differences:
-
-- `-x509` flag is not used in the command line
-- `x509_extensions` are not present (those are added by the issuer)
-
-Command:
-
-```shell
-openssl req -newkey rsa:2048 -nodes -keyout $CA_PRIV -out $CA_CSR \
--config $CA_CONFIG
-```
-
-- `CA_PRIV` (out) - newly created private intermediate/PO issuing CA key. Keep
-it safe.
-- `CA_CSR` (out) - intermediate/PO issuing CA certificate signing request. This
-file is signed with private intermediate/PO issuing CA key and sent to higher
-level CA.
-- `CA_CONFIG` (in) - configuration file, e.g.:
-
-```
-[ req ]
-distinguished_name     = req_distinguished_name
-prompt                 = no
-
-[ req_distinguished_name ]
-C                      = PL
-O                      = Fobnail
-ST                     = State
-CN                     = Platform Owner issuer CA certificate
-```
-
-#### Generating certificate
+Steps for both intermediate and issuing CA certificates are mostly the same, the
+main difference is that CSR for intermediate is sent to root CA, and PO issuing
+CA's CSR is sent to intermediate CA. This chain can be longer in general, but
+Fobnail limits maximum length, as [mentioned above](#informational-checks).
+Intermediate CA is optional, PO issuing CA certificate can be signed by root CA
+directly.
 
 Before issuing a certificate, issuer must check if subject is authorized to
 ask for it. It can't just blindly provide a new certificate to anyone that asks
@@ -303,28 +270,114 @@ be done by means other than firmware updates, so issuing a certificate to
 untrustworthy subject impacts not only the security of devices provisioned by
 issuer, but also every device with the same root CA.
 
-> `openssl ca` can also be used for this purpose, but `openssl x509` is easier
-to use for single use. On the other hand, `openssl ca` better suits the needs of
-CA after configuration and may do more checks in semi-automatic process than
-`openssl x509`.
+#### Generating intermediate CA key and CSR
 
-Command:
+This is similar to creating root CA with two small but important differences:
+
+- `-x509` flag is not used in the command line
+- `x509_extensions` are not present (those are added by the issuer)
+
+Command executed by **intermediate CA**:
 
 ```shell
-openssl x509 -req -in $SUBJECT_CSR -CA $AUTHORITY_CERT -CAkey $AUTHORITY_PRIV \
+openssl req -newkey rsa:2048 -nodes -keyout intermediate_priv_key.pem
+-out intermediate.csr -config intermediate.cfg
+```
+
+- `intermediate_priv_key.pem` (out) - newly created private intermediate CA key.
+  Keep it safe.
+- `intermediate.csr` (out) - intermediate CA certificate signing request. This
+  file is signed with private intermediate CA key by above command and must be
+  passed to root CA.
+- `intermediate.cfg` (in) - configuration file, e.g.:
+
+```text
+[ req ]
+distinguished_name     = req_distinguished_name
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = PL
+O                      = Fobnail
+ST                     = State
+CN                     = Intermediate CA certificate
+```
+
+#### Generating intermediate CA certificate
+
+> `openssl ca` can also be used for this purpose, but `openssl x509` is easier
+to use for single chain. On the other hand, `openssl ca` better suits the needs
+of CA after configuration and may do more checks in semi-automatic process than
+`openssl x509`.
+
+Command executed by **root CA**:
+
+```shell
+openssl x509 -req -in intermediate.csr -CA root.crt -CAkey root_ca_priv.pem \
+    -CAcreateserial -days 365 -extfile intermediate.ext -out intermediate.crt
+```
+
+- `intermediate.csr` (in) - sent by intermediate CA.
+- `root.crt` and `root_ca_priv.pem` (in) - those were created by root CA
+  earlier.
+- `intermediate.crt` (out) - intermediate CA certificate signed with root CA key
+  `root_ca_priv.pem`.
+- `intermediate.ext` (in) - file describing certificate extensions, e.g.:
+
+```text
+basicConstraints       = critical, CA:TRUE, pathlen:2
+keyUsage               = critical, keyCertSign, cRLSign
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always
+```
+
+#### Generating PO issuer CA key and CSR
+
+Command executed by **PO issuer CA**:
+
+```shell
+openssl req -newkey rsa:2048 -nodes -keyout root_ca_priv.pem -out issuer.csr \
+-config issuer.cfg
+```
+
+- `root_ca_priv.pem` (out) - newly created private PO issuing CA key. Keep it
+  safe.
+- `issuer.csr` (out) - PO issuing CA certificate signing request. This file is
+  signed with private PO issuing CA key by above command and must be passed to
+  intermediate CA.
+- `issuer.cfg` (in) - configuration file, e.g.:
+
+```text
+[ req ]
+distinguished_name     = req_distinguished_name
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = PL
+O                      = Fobnail
+ST                     = State
+CN                     = Platform Owner issuer CA certificate
+```
+
+#### Generating PO issuer CA certificate
+
+Command executed by **intermediate CA**:
+
+```shell
+openssl x509 -req -in issuer.csr -CA $AUTHORITY_CERT -CAkey $AUTHORITY_PRIV \
         -CAcreateserial -days 365 -extfile $SUBJECT_EXT -out $SUBJECT_CERT
 ```
 
-- `SUBJECT_CSR` (in) - sent by lower-level CA.
-- `AUTHORITY_CERT` and `AUTHORITY_PRIV` (in) - those were created by
-higher-level CA earlier.
-- `SUBJECT_CERT` (out) - lower-level CA certificate signed with
-`AUTHORITY_PRIV`.
-- `SUBJECT_EXT` (in) - file describing certificate extensions, e.g.:
+- `issuer.csr` (in) - sent by PO issuer CA.
+- `intermediate_priv_key.pem` (in) - created by intermediate CA earlier.
+- `intermediate.crt` (in) - issued by root CA in response to request from
+  intermediate CA.
+- `issuer.crt` (out) - PO issuer CA certificate signed with
+  `intermediate_priv_key.pem`.
+- `issuer.ext` (in) - file describing certificate extensions, e.g.:
 
-```
-# pathlen = 2 for intermediate, 1 for issuer certificate
-basicConstraints       = critical, CA:TRUE, pathlen:2
+```text
+basicConstraints       = critical, CA:TRUE, pathlen:1
 keyUsage               = critical, keyCertSign, cRLSign
 subjectKeyIdentifier   = hash
 authorityKeyIdentifier = keyid:always
