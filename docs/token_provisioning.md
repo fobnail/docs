@@ -100,6 +100,32 @@ choose proper version before continuing.
 
 ---
 
+## Unprovisioning
+
+In some cases (PO certificate update, change of owner or when moving from test
+provisioning to target one) it is necessary to perform provisioning again. To do
+so, previously installed by PO certificate must be removed. Instructions are
+different for physical and simulated Token, but in both cases **all secrets
+protected by Token are removed** for security reasons. If those are important to
+you, make sure you have a copy or are able to recreate them.
+
+=== "Physical Fobnail Token"
+
+    To unprovision physical Token you have to flash it again using [these
+    instructions](/building/#building-and-running-firmware). Pass new
+    `FOBNAIL_PO_ROOT` if needed.
+
+=== "PC simulation"
+
+    Unprovisioning in case of PC simulation is done by removing virtual flash
+    contents by removing `target/flash.bin` file. After that, start the
+    simulation as usual, flash file will be recreated with no PO certificate
+    provisioned.
+
+Now you can repeat [provisioning instructions](#provisioning-instructions).
+
+---
+
 ## Summary and next steps
 
 In this state Fobnail Token is provisioned and awaits platform provisioning.
