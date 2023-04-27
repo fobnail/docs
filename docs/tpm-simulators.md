@@ -44,10 +44,7 @@ As mentioned, EK certificate must be written to TPM NVRAM. In addition, it must
 point to valid CA certificate that will be downloaded during platform
 provisioning. A script for simplifying this process and required configuration
 are included in [Attester's repository](https://github.com/fobnail/fobnail-attester/tree/main/tools).
-
-Configuration assumes that CA certificate will be made available at address
-`http://127.0.0.1:8080/ca_cert.der`, to change this please edit `ek_v3.ext` in
-`tools` directory.
+`tpm2-tools` and `openssl` are used by this script, so they must be installed.
 
 To create root certificate, EK certificate and write the latter to NVRAM, it is
 enough to call the following (`-s` tells to send `TPM2_Startup` command):
@@ -148,6 +145,16 @@ Certificate in `tools/keys_and_certs/ca_cert.der` is the one that has to be
 passed to `build.sh` in `FOBNAIL_EXTRA_EK_ROOT` variable, see [building
 instructions](/building/#environment-variables-common-for-both-targets)
 for details.
+
+Configuration assumes that CA certificate will be made available at address
+`http://127.0.0.1:8080/ca_cert.der`, to change this please edit `ek_v3.ext` in
+`tools` directory.
+
+If you have to re-run the manufacturing process (e.g. EK root certificate is
+lost or some changes were done to its extensions) start `tpm_manufacture.sh`
+with additional `-f` flag that will overwrite EK certificate even if it is
+already present. **Do not use it on real TPM, there is no way of recovering
+original certificate if it was removed!**.
 
 ## Using simulated TPM
 
