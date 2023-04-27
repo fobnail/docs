@@ -64,46 +64,51 @@ directory.
   one specific TPM vendor. Either this or `FOBNAIL_EK_ROOT_DIR` (or both)
   **must be specified**.
 
-#### Building and flashing firmware to Fobnail Token
+#### Building and running firmware
 
-For hardware setup instructions see [Flashing preparation](flashing_preparation.md).
+=== "Physical Fobnail Token"
 
-Building and flashing is performed by executing (from `fobnail` directory):
+    For hardware setup instructions see [Flashing
+    preparation](flashing_preparation.md).
 
-```shell
-env FOBNAIL_PO_ROOT=root_ca.crt FOBNAIL_EK_ROOT_DIR=tpm_ek_roots \
-    ./build.sh -t nrf --run
-```
+    Building and flashing is performed by executing (from `fobnail` directory):
 
-A console with Fobnail Token output will be displayed. It is not required for
-normal operation but can be useful for debugging. It can be closed with Ctrl-C
-at any point. After that, Token can be used without nRF52840-DK - just plug it
-wherever it's needed.
+    ```shell
+    env FOBNAIL_PO_ROOT=root_ca.crt FOBNAIL_EK_ROOT_DIR=tpm_ek_roots \
+        ./build.sh -t nrf --run
+    ```
 
-#### Building and running firmware locally
+    A console with Fobnail Token output will be displayed. It is not required
+    for normal operation but can be useful for debugging. It can be closed with
+    Ctrl-C at any point. After that, Token can be used without nRF52840-DK -
+    just plug it wherever it's needed.
 
-Make sure you have the network set up properly. See [Networking setup](networking_setup.md)
-for instructions. For firmware to work properly you need the `fobnail0` network
-interface configured.
+=== "PC simulation"
 
-To build and run firmware execute the following commands (from `fobnail`
-directory).
+    Make sure you have the network set up properly. See [Networking
+    setup](networking_setup.md) for instructions. For firmware to work properly
+    you need the `fobnail0` network interface configured.
 
-```shell
-env FOBNAIL_LOG=info FOBNAIL_PO_ROOT=root_ca.crt \
-    FOBNAIL_EK_ROOT_DIR=tpm_ek_roots ./build.sh -t pc --run
-```
+    To build and run firmware execute the following commands (from `fobnail`
+    directory).
 
-`FOBNAIL_LOG` environment variable sets log level. The possible log levels are:
-`error`, `warning`, `info`, `debug`, `trace`. This variable is valid only for PC
-target.
+    ```shell
+    env FOBNAIL_LOG=info FOBNAIL_PO_ROOT=root_ca.crt \
+        FOBNAIL_EK_ROOT_DIR=tpm_ek_roots ./build.sh -t pc --run
+    ```
 
-Another variable used only on PC is `FOBNAIL_DEVICE_ID` - on hardware we used
-FICR registers to create a device ID, this gives a way of configuring it for
-emulation. This variable is optional, without it an ID of 0 is used.
+    `FOBNAIL_LOG` environment variable sets log level. The possible log levels
+    are: `error`, `warning`, `info`, `debug`, `trace`. This variable is valid
+    only for PC target.
 
-`build.sh` automatically starts Token emulation. It runs until it's terminated
-with Ctrl-C.
+    Another variable used only on PC is `FOBNAIL_DEVICE_ID` - on hardware we
+    used FICR registers to create a device ID, this gives a way of configuring
+    it for emulation. This variable is optional, without it an ID of 0 is used.
+
+    `build.sh` automatically starts Token emulation. It runs until it's
+    terminated with Ctrl-C.
+
+---
 
 ## PC applications
 
