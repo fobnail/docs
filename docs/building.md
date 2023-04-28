@@ -38,6 +38,12 @@ With the SDK installed, one can prepare for the build process itself. Firmware
 can be build for a physical Fobnail Token or simulated on PC, with different
 preparatory steps required.
 
+If TPM simulator is to be used, steps from [this document](/tpm-simulators) must
+be done before Token firmware is compiled. Instructions from the linked document
+result in creation of root CA certificate for EK chain, that certificate must be
+supplied as an input to Token build command. Physical TPMs require certificate
+provided by TPM vendor instead, those are included in `fobnail` repository.
+
 #### Environment variables common for both targets
 
 Fobnail Token firmware is configured with environment variables passed to
