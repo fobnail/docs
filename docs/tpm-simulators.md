@@ -3,8 +3,7 @@
 It is possible to use TPM simulators instead of real TPMs **for testing purposes
 only**. Two simulators were tested and are known to be working with Fobnail:
 [Microsoft's](https://github.com/microsoft/ms-tpm-20-ref) and
-[IBM's](https://sourceforge.net/projects/ibmswtpm2/). Refer to their respective
-documentations for build and launch instructions.
+[IBM's](https://sourceforge.net/projects/ibmswtpm2/).
 
 ## Differences between simulated and real TPM
 
@@ -38,6 +37,73 @@ specification allows for up to 2^22 milliseconds (around 70 minutes) to help
 with NVRAM wear leveling. Note that this field is checked by Fobnail during
 attestation.
 
+## Building
+
+=== "ms-tpm-20-ref"
+
+    Clone the repository and checkout commit that is known to work
+    (unfortunately, this repository doesn't use tags):
+
+    ```shell
+    git clone https://github.com/microsoft/ms-tpm-20-ref.git
+    cd ms-tpm-20-ref/TPMCmd/
+    git checkout f74c0d9686625c02b0fdd5b2bbe792a22aa96cb6
+    ```
+
+    Install prerequisites:
+
+    ```shell
+    sudo apt install autoconf-archive pkg-config build-essential automake \
+         tss2 libssl-dev
+    ```
+
+    Compile:
+
+    ```shell
+    ./bootstrap
+    ./configure
+    make
+    ```
+
+    TPM simulator is started with:
+
+    ```shell
+    ./Simulator/src/tpm2-simulator
+    ```
+
+=== "ibmswtpm2"
+
+    Clone the repository and checkout tag that is known to work:
+
+    ```shell
+    git clone https://git.code.sf.net/p/ibmswtpm2/tpm2 ibmswtpm2-tpm2
+    cd ibmswtpm2-tpm2/src/
+    git checkout rev1563
+    ```
+
+    Install prerequisites:
+
+    ```shell
+    sudo apt install build-essential libssl-dev tss2
+    ```
+
+    Compile:
+
+    ```shell
+    make
+    ```
+
+    TPM simulator is started with:
+
+    ```shell
+    ./tpm_server
+    ```
+
+The last command will create `NVChip` file in the current directory. Removing it
+(while simulator is not running) will restore TPM to clean state.
+
+---
+
 ## Provisioning simulated TPM
 
 As mentioned, EK certificate must be written to TPM NVRAM. In addition, it must
@@ -49,7 +115,7 @@ are included in [Attester's repository](https://github.com/fobnail/fobnail-attes
 To create root certificate, EK certificate and write the latter to NVRAM, it is
 enough to call the following (`-s` tells to send `TPM2_Startup` command):
 
-```
+```shell
 $ ./tools/tpm_manufacture.sh -s
 Sending TPM2_Startup command
 Generating a RSA private key
@@ -156,14 +222,18 @@ with additional `-f` flag that will overwrite EK certificate even if it is
 already present. **Do not use it on real TPM, there is no way of recovering
 original certificate if it was removed!**.
 
+Another option is to remove `NVChip` file. This option should be used if the
+platform provisioning is to be repeated, as it also removes saved EK (not only
+EK certificate) and AIK. In that case, `-f` is not required.
+
 ## Using simulated TPM
 
 For most cases running TPM simulator is enough. Only platform provisioning needs
 HTTP server in addition to TPM simulator. Easiest way to do so is to use Python:
 
-```
-$ cd tools/keys_and_certs
-$ python -m http.server 8080
+```shell
+cd tools/keys_and_certs
+python -m http.server 8080
 ```
 
 HTTP server can be closed after platform is successfully provisioned and never
