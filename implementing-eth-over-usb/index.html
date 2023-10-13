@@ -1,0 +1,1359 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://fobnail.3mdeb.com/implementing-eth-over-usb/">
+      
+      
+        <link rel="prev" href="../eth-over-usb-research/">
+      
+      
+        <link rel="next" href="../minimal-os-for-fobnail/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Implementation - Fobnail Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#implementing-ethernet-over-usb" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fobnail Documentation" class="md-header__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fobnail Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Implementation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fobnail Documentation" class="md-nav__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Fobnail Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Supported Hardware
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Supported Hardware
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail_token/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail Token
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Development Process
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Development Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-sdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloning and building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing_preparation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing preparation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networking_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Networking setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../token_provisioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token provisioning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-simulators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using TPM simulators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Example Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Example Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/disk_encryption/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disk encryption
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledge Base
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledge Base
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Detailed description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keys_and_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keys and certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blink-codes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail blink codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ek_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EK certificate chain sizes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ethernet over USB
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ethernet over USB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eth-over-usb-research/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Implementation
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Implementation
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#used-crates" class="md-nav__link">
+    Used crates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encountered-problems" class="md-nav__link">
+    Encountered problems
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-of-current-implementation" class="md-nav__link">
+    Status of current implementation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Minimal OSes used with Fobnail Token
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            Minimal OSes used with Fobnail Token
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../minimal-os-for-fobnail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-fobnail-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    meta-fobnail PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zephyr-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zephyr PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xen-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Xen PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archived
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Archived
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/local_development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developing firmware on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/charra-concept-on-pc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run CHARRA concept on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/preparation_for_tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparation for tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#used-crates" class="md-nav__link">
+    Used crates
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#encountered-problems" class="md-nav__link">
+    Encountered problems
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#status-of-current-implementation" class="md-nav__link">
+    Status of current implementation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing" class="md-nav__link">
+    Testing
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="implementing-ethernet-over-usb">Implementing Ethernet-over-USB</h1>
+<p>This document describes various stuff regarding implementation of
+Ethernet-over-USB. Before commencing implementation we have conducted research
+(see <a href="../eth-over-usb-research/">eth-over-usb-research.md</a>) for more information.
+To sum up, that's what we have decided:</p>
+<ul>
+<li>we run on bare-metal using <code>nrf-hal</code></li>
+<li>we use EEM protocol for Ethernet emulation and <code>smoltcp</code> as TCP/IP stack</li>
+</ul>
+<h2 id="used-crates">Used crates</h2>
+<p>We are using following crates</p>
+<ul>
+<li>
+<p><code>nrf-hal</code> - provides things related directly to nRF52840 hardware, like
+  register definitions, interrupt handling support, for some peripherals
+  provides higher-level API (Timers, GPIO, ...)</p>
+</li>
+<li>
+<p><code>nrf-usb</code> - provides implementation of <code>UsbBus</code> trait (from <code>usb-device</code>
+  crate)</p>
+</li>
+<li>
+<p><code>usb-device</code> - high level USB driver, on top of this we are building EMM
+  driver</p>
+</li>
+</ul>
+<h2 id="encountered-problems">Encountered problems</h2>
+<p>During implementation of EEM driver we have encountered following problems</p>
+<ul>
+<li>
+<p><code>nrf-usb</code> does not provide interrupt support, we have worked around this
+  problem by continuously polling USB, for testing purposes it is good enough
+  but ideally we should use interrupt-driven model.</p>
+</li>
+<li>
+<p><code>nrf-usb</code> underpowers DMA - during DMA transfers CPU busy-waits in a loop
+  till transfer is complete
+  (see <a href="https://github.com/nrf-rs/nrf-usbd/blob/main/src/usbd.rs#L437">here</a>)</p>
+</li>
+<li>
+<p><code>usb-device</code> API limitation - we cannot read single packet into two
+  non-contiguous memory regions, because of that we cannot use ring buffer, as a
+  temporary workaround we implemented a simple linear buffer where data is
+  appended to the tail, removing data from the front requires moving of large
+  amounts of memory which is very suboptimal. The same problem affects writes.</p>
+</li>
+<li>
+<p>smoltcp callback accepts a pointer to a continuous buffer, so we can't use
+  ring buffer anyway</p>
+</li>
+<li>
+<p>seems like <code>nrf-hal</code> provides no high level API for setting periodic timers
+  with automatic counter reset (does the hardware support it?), counter must be
+  manually reset on each interrupt handler invocation, or interrupt will keep
+  firing instantly one after another.</p>
+</li>
+<li>
+<p>integration of smoltcp may be quite hard to do efficiently - smoltcp uses
+  producer consumer model, when reading data from Ethernet smoltcp calls
+  <code>consume()</code> method providing a callback that is called when next Ethernet
+  frame is ready, so we have to efficiently transfer Ethernet frame from USB
+  thread to smoltcp thread, we want to avoid copying memory around as much as
+  possible.</p>
+</li>
+<li>
+<p>USB driver tends to hang if attempting to write packets into full buffer. When
+  we send USB packets to the host we call <code>usb_device::EndpointIn::write</code> method
+  which transfers packet to USBD internal memory, packet is actually sent when
+  host polls the endpoint. If USBD memory is full
+  <code>usb_device::EndpointIn::write</code> returns <code>WouldBlock</code> error. Now calling
+  <code>write()</code> a few times more causes the driver to deadlock forever (TX only, RX
+  still works). To workaround this we must track state TX buffer ourselves: when
+  we get <code>WouldBlock</code> we freeze any further transfers until USBD signals us that
+  previous packet was sent.</p>
+</li>
+<li>
+<p>Device is enumerated as a full-speed device instead of high-speed, because of
+  that we cannot use max packet size larger than 64 bytes.</p>
+</li>
+</ul>
+<h2 id="status-of-current-implementation">Status of current implementation</h2>
+<p>We have a working implementation with an echo service exposed over UDP port
+<code>9400</code>. Fobnail has IP address <code>169.254.0.1/16</code>. Host must have a manually
+assigned IP address as there is no DHCP. EEM implementation has few limitations
+which aren't a big problem for a PoC, but should eventually be solved.</p>
+<ul>
+<li>EEM driver cannot handle EEM packets exceeding internal buffer size (driver
+  will panic).</li>
+<li>EEM driver will panic when encounters an invalid EEM packet.</li>
+<li>because of problems described above we have to use a linear FIFO (instead of
+  ring), maybe we could somehow optimize it?</li>
+<li>driver needs more testing.</li>
+<li>Linux's NetworkManager tries to configure EEM network interface over DHCP
+  which fails. Then tries doing it again, showing every time an error message
+  and breaking internet connection (about every half minute). This is a Network
+  Managers's bug, but it affects Fobnail users. You can workaround this by
+  appending following lines to <code>/etc/NetworkManager/NetworkManager.conf</code>
+  <div class="highlight"><pre><span></span><code><span class="k">[keyfile]</span>
+<span class="na">unmanaged-devices</span><span class="o">=</span><span class="s">interface-name:usb0</span>
+</code></pre></div></li>
+</ul>
+<h2 id="testing">Testing</h2>
+<p>If your environment is properly set up, app can be flashed by simply running</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>cargo<span class="w"> </span>embed
+</code></pre></div>
+<p><code>cargo embed</code> spawns RTT console used for debugging. On host you should see new
+network interface.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>-a<span class="w"> </span>usb0
+usb0:<span class="w"> </span><span class="nv">flags</span><span class="o">=</span><span class="m">4098</span>&lt;BROADCAST,MULTICAST&gt;<span class="w">  </span>mtu<span class="w"> </span><span class="m">1500</span>
+<span class="w">        </span>ether<span class="w"> </span><span class="m">86</span>:7e:55:2c:a7:b5<span class="w">  </span>txqueuelen<span class="w"> </span><span class="m">1000</span><span class="w">  </span><span class="o">(</span>Ethernet<span class="o">)</span>
+<span class="w">        </span>RX<span class="w"> </span>packets<span class="w"> </span><span class="m">0</span><span class="w">  </span>bytes<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span><span class="m">0</span>.0<span class="w"> </span>B<span class="o">)</span>
+<span class="w">        </span>RX<span class="w"> </span>errors<span class="w"> </span><span class="m">0</span><span class="w">  </span>dropped<span class="w"> </span><span class="m">0</span><span class="w">  </span>overruns<span class="w"> </span><span class="m">0</span><span class="w">  </span>frame<span class="w"> </span><span class="m">0</span>
+<span class="w">        </span>TX<span class="w"> </span>packets<span class="w"> </span><span class="m">0</span><span class="w">  </span>bytes<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">(</span><span class="m">0</span>.0<span class="w"> </span>B<span class="o">)</span>
+<span class="w">        </span>TX<span class="w"> </span>errors<span class="w"> </span><span class="m">0</span><span class="w">  </span>dropped<span class="w"> </span><span class="m">0</span><span class="w"> </span>overruns<span class="w"> </span><span class="m">0</span><span class="w">  </span>carrier<span class="w"> </span><span class="m">0</span><span class="w">  </span>collisions<span class="w"> </span><span class="m">0</span>
+</code></pre></div>
+<p>Assign IP address to <code>usb0</code>, Fobnail token is at <code>169.254.0.1</code></p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>usb0<span class="w"> </span><span class="m">169</span>.254.0.2
+</code></pre></div>
+<p>Fobnail should start to print debug information on RTT console. Note that these
+errors are caused by host sending IPv6 packets. IPv6 support is disabled in
+<code>smoltcp</code>.</p>
+<div class="highlight"><pre><span></span><code>16:51:15.107 TRACE smoltcp::iface::neighbor &gt; filled 169.254.0.8 =&gt; ae-89-60-61-ca-4f (was empty)
+16:51:15.133 DEBUG smoltcp::iface::ethernet &gt; cannot process ingress packet: unrecognized packet
+16:51:15.133 DEBUG smoltcp::iface::ethernet &gt; packet dump follows:
+16:51:15.133 EthernetII src=ae-89-60-61-ca-4f dst=33-33-00-00-00-16 type=IPv6
+16:51:15.133 ERROR fobnail_poc &gt; smoltcp error: unrecognized packet
+16:51:15.224 DEBUG smoltcp::iface::ethernet &gt; cannot process ingress packet: unrecognized packet
+16:51:15.224 DEBUG smoltcp::iface::ethernet &gt; packet dump follows:
+16:51:15.224 EthernetII src=ae-89-60-61-ca-4f dst=33-33-00-00-00-16 type=IPv6
+16:51:15.224 ERROR fobnail_poc &gt; smoltcp error: unrecognized packet
+16:51:15.691 DEBUG smoltcp::iface::ethernet &gt; cannot process ingress packet: unrecognized packet
+16:51:15.691 DEBUG smoltcp::iface::ethernet &gt; packet dump follows:
+16:51:15.691 EthernetII src=ae-89-60-61-ca-4f dst=33-33-ff-61-ca-4f type=IPv6
+16:51:15.691 ERROR fobnail_poc &gt; smoltcp error: unrecognized packet
+16:51:16.669 DEBUG smoltcp::iface::ethernet &gt; cannot process ingress packet: unrecognized packet
+16:51:16.669 DEBUG smoltcp::iface::ethernet &gt; packet dump follows:
+16:51:16.669 EthernetII src=ae-89-60-61-ca-4f dst=33-33-00-00-00-16 type=IPv6
+16:51:16.669 ERROR fobnail_poc &gt; smoltcp error: unrecognized packet
+16:51:16.697 DEBUG smoltcp::iface::ethernet &gt; cannot process ingress packet: unrecognized packet
+16:51:16.697 DEBUG smoltcp::iface::ethernet &gt; packet dump follows:
+16:51:16.697 EthernetII src=ae-89-60-61-ca-4f dst=33-33-00-00-00-02 type=IPv6
+16:51:16.697 ERROR fobnail_poc &gt; smoltcp error: unrecognized packet
+</code></pre></div>
+<p>Fobnail responds to ICMP echo requests:</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>ping<span class="w"> </span><span class="m">169</span>.254.0.1
+PING<span class="w"> </span><span class="m">169</span>.254.0.1<span class="w"> </span><span class="o">(</span><span class="m">169</span>.254.0.1<span class="o">)</span><span class="w"> </span><span class="m">56</span><span class="o">(</span><span class="m">84</span><span class="o">)</span><span class="w"> </span>bytes<span class="w"> </span>of<span class="w"> </span>data.
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">1</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">24</span>.7<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">2</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">23</span>.1<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">22</span>.2<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">4</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">21</span>.4<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">5</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">30</span>.3<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">6</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">29</span>.4<span class="w"> </span>ms
+<span class="m">64</span><span class="w"> </span>bytes<span class="w"> </span>from<span class="w"> </span><span class="m">169</span>.254.0.1:<span class="w"> </span><span class="nv">icmp_seq</span><span class="o">=</span><span class="m">7</span><span class="w"> </span><span class="nv">ttl</span><span class="o">=</span><span class="m">64</span><span class="w"> </span><span class="nv">time</span><span class="o">=</span><span class="m">28</span>.2<span class="w"> </span>ms
+</code></pre></div>
+<p>Fobnail has an echo service exposed on UDP port <code>9400</code>, when you line of text it
+will be echoed back.</p>
+<div class="highlight"><pre><span></span><code>$<span class="w"> </span>nc<span class="w"> </span>-u<span class="w"> </span><span class="m">169</span>.254.0.1<span class="w"> </span><span class="m">9400</span>
+<span class="nb">test</span>
+<span class="nb">test</span>
+<span class="m">1234567890</span>
+<span class="m">1234567890</span>
+</code></pre></div>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>

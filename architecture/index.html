@@ -1,0 +1,1481 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://fobnail.3mdeb.com/architecture/">
+      
+      
+        <link rel="prev" href="../description/">
+      
+      
+        <link rel="next" href="../keys_and_certificates/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Architecture - Fobnail Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fobnail-architecture" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fobnail Documentation" class="md-header__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fobnail Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fobnail Documentation" class="md-nav__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Fobnail Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Supported Hardware
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Supported Hardware
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail_token/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail Token
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Development Process
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Development Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-sdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloning and building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing_preparation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing preparation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networking_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Networking setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../token_provisioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token provisioning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-simulators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using TPM simulators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Example Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Example Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/disk_encryption/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disk encryption
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledge Base
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledge Base
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Detailed description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fobnail-components" class="md-nav__link">
+    Fobnail components
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-owner" class="md-nav__link">
+    Platform Owner
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token" class="md-nav__link">
+    Fobnail Token
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform" class="md-nav__link">
+    Platform
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-parties" class="md-nav__link">
+    Other parties
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fobnail-provisioning" class="md-nav__link">
+    Fobnail provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-provisioning-diagram" class="md-nav__link">
+    Fobnail provisioning diagram
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-provisioning" class="md-nav__link">
+    Platform provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-platform-provisioning-diagram" class="md-nav__link">
+    Remote platform provisioning diagram
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-platform-provisioning-diagram" class="md-nav__link">
+    Local platform provisioning diagram
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attestation" class="md-nav__link">
+    Attestation
+  </a>
+  
+    <nav class="md-nav" aria-label="Attestation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attestation-diagram" class="md-nav__link">
+    Attestation diagram
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-appraisal-policy" class="md-nav__link">
+    Default appraisal policy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keys_and_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keys and certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blink-codes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail blink codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ek_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EK certificate chain sizes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ethernet over USB
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ethernet over USB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eth-over-usb-research/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementing-eth-over-usb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Minimal OSes used with Fobnail Token
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            Minimal OSes used with Fobnail Token
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../minimal-os-for-fobnail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-fobnail-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    meta-fobnail PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zephyr-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zephyr PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xen-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Xen PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archived
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Archived
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/local_development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developing firmware on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/charra-concept-on-pc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run CHARRA concept on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/preparation_for_tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparation for tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#fobnail-components" class="md-nav__link">
+    Fobnail components
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail components">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-owner" class="md-nav__link">
+    Platform Owner
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token" class="md-nav__link">
+    Fobnail Token
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform" class="md-nav__link">
+    Platform
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-parties" class="md-nav__link">
+    Other parties
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fobnail-provisioning" class="md-nav__link">
+    Fobnail provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-provisioning-diagram" class="md-nav__link">
+    Fobnail provisioning diagram
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-provisioning" class="md-nav__link">
+    Platform provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#remote-platform-provisioning-diagram" class="md-nav__link">
+    Remote platform provisioning diagram
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-platform-provisioning-diagram" class="md-nav__link">
+    Local platform provisioning diagram
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attestation" class="md-nav__link">
+    Attestation
+  </a>
+  
+    <nav class="md-nav" aria-label="Attestation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attestation-diagram" class="md-nav__link">
+    Attestation diagram
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-appraisal-policy" class="md-nav__link">
+    Default appraisal policy
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="fobnail-architecture">Fobnail architecture</h1>
+<h2 id="fobnail-components">Fobnail components</h2>
+<p>See <a href="https://datatracker.ietf.org/doc/draft-ietf-rats-architecture/">Remote Attestation Procedures Architecture</a>
+for definitions of roles and artifacts mentioned below.</p>
+<h3 id="platform-owner">Platform Owner</h3>
+<p>Takes roles of Verifier Owner and Relying Party Owner, as defined in RATS.
+Produces Appraisal Policies for Attestation Results and Evidence.</p>
+<p>During remote platform provisioning Platform Owner additionally proxies
+Reference Values, but Reference Value Provider role is still taken by the
+platform that is being provisioned.</p>
+<h3 id="fobnail-token">Fobnail Token</h3>
+<p>Combines roles of Verifier and Relying Party. Consumes Evidence (from Attester),
+Reference Values (from Attester during local platform provisioning or from
+Platform Owner during remote platform provisioning), Endorsements (same as
+Reference Values, in form of EK certificate), Appraisal Policies (either
+installed by Platform Owner during remote platform provisioning or preinstalled
+default policy). Produces Attestation Result.</p>
+<h3 id="platform">Platform</h3>
+<p>During platform provisioning, takes role of Reference Value Provider. It also
+relies Endorsements saved in TPM, but platform itself isn't an Endorser.</p>
+<p>During attestation, platform is an Attester - it collects Claims and produces
+an Evidence from it.</p>
+<h3 id="other-parties">Other parties</h3>
+<p>The only missing role is that of an Endorser. Usually this is TPM manufacturer
+that installs EK certificate in TPM NVRAM.</p>
+<p>In cases when this certificate is not generated by TPM vendor, Endorsement must
+be created by another entity; this is outside of scope of Fobnail architecture.</p>
+<hr />
+<h2 id="fobnail-provisioning">Fobnail provisioning</h2>
+<p>The purpose of provisioning is to provide a controlled process for an
+individual to take ownership and configure the Fobnail. During
+the provisioning process the token should provide the following information
+to the provisioner in the form of Certificate Signing Request (CSR):</p>
+<ul>
+<li>A public key to use for generating a certificate</li>
+<li>Metadata about the token, e.g. model, serial number, etc</li>
+</ul>
+<p>A token will consider itself provisioned when it is in an unprovisioned state
+and a provisioner sends it the certificate containing the public key the token
+generated. <code>keyUsage</code> field in that certificate depends on the actual use case,
+for example it may be used as an authentication certificate by platform when
+connecting with a server (e.g. SSH or mTLS). In that use case the platform
+doesn't know the private key, Fobnail Token performs the initial encryption
+during handshake.</p>
+<p>Either during provisioning or post provisioning a provisioner may send the
+following information,</p>
+<ul>
+<li>RIM Database</li>
+<li>Policy Database</li>
+<li>Attestation Protected Object</li>
+</ul>
+<p>This information must be signed by private key for the provisioner identity
+certificate contained in the provisioner Certificate Chain.</p>
+<h3 id="fobnail-provisioning-diagram">Fobnail provisioning diagram</h3>
+<p><img alt="Fobnail-provisioning" src="../images/Fobnail-flows-fobnail-provisioning.png" /></p>
+<hr />
+<h2 id="platform-provisioning">Platform provisioning</h2>
+<p>Fobnail architecture consists of two main functionalities - provisioning and
+attestation. We need to provision a Fobnail token and platform. The
+platform provisioning is split into remote provisioning and local
+provisioning. During the remote provisioning, the platform can connect to
+the platform owner. The platform owner verifies the platform state and provides
+the RIM and attestation policies to the Fobnail token.</p>
+<h3 id="remote-platform-provisioning-diagram">Remote platform provisioning diagram</h3>
+<p><img alt="remote-provisioning" src="../images/Fobnail-flows-remote-platform-provisioning.png" /></p>
+<p>In the case of local provisioning, the Fobnail token takes the platform
+owner role. The Fobnail token does not receive the policies, and default
+policies are used during the attestation.</p>
+<h3 id="local-platform-provisioning-diagram">Local platform provisioning diagram</h3>
+<p><img alt="local-provisioning" src="../images/Fobnail-flows-local-platform-provisioning.png" /></p>
+<hr />
+<h2 id="attestation">Attestation</h2>
+<p>Fobnail role in the attestation of a system is to evaluate an Attestation
+Token and arrive at a decision whether the attested platform represents
+a good state. Fobnail is not an enforcement point for this decision and can
+only provide a physical and digital response to convey its decision. The
+physical response assumes that a user is monitoring the Fobnail Token and will
+take appropriate enforcement action(s). A digital response comes in the form
+of an Authorization Token that is returned back to the system. The assumption
+here is that the Authorization Token can securely be used by the system to
+enforce the decision or forwarded to an external entity that can enforce
+the decision.</p>
+<h3 id="attestation-diagram">Attestation diagram</h3>
+<p><img alt="attestation" src="../images/Fobnail-flows-attestation.png" /></p>
+<h3 id="default-appraisal-policy">Default appraisal policy</h3>
+<p>Appraisal policy controls what part of Evidence must match RIM, and what "match"
+means for a given element of RIM. Sometimes this is exact match (e.g. hash), for
+other data this may be value relation to reference value (e.g. component version
+same or newer than that from RIM).</p>
+<p>Default policy for Fobnail includes comparison of hashes of PCRs 0-7 and 17-18,
+for SHA256 bank. It is checked by using <code>TPM2_Quote()</code> command in order to avoid
+sending true PCR values through potentially insecure channel during attestation,
+so only hash of concatenation of those values can be intercepted during transit.
+In addition to PCR selection, Fobnail Token sends nonce that is included in
+signed response, which protects against replay attacks, and in combination with
+TPM mechanism against signing external data starting with magic number also
+proves that Claims and Evidence are fresh.</p>
+<p>Reasoning for choosing this particular set of PCRs is that PCR0-7 are used by
+pre-OS environment, and PCR17-18 are used in DRTM flow. Other registers are used
+by OS and may change after software is updated, which would require frequent
+re-provisioning of platform. SHA256 is the only algorithm commonly used - SHA1
+is deprecated and SHA384, while mandatory according to latest TPM specification,
+is not implemented by majority of available TPMs.</p>
+<p>In addition to configurable part of policy described above, there are also
+implicit assumptions:</p>
+<ul>
+<li>Metadata is always checked - hash of metadata is used to generate filenames
+  for data stored in Fobnail Token.</li>
+<li>AIK (and because of its relation, also EK) doesn't change - it is saved during
+  platform provisioning and never again sent by the Attester. During attestation
+  Fobnail Token checks signatures of received data against this saved copy.</li>
+</ul>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>

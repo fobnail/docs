@@ -1,0 +1,2076 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://fobnail.3mdeb.com/keys_and_certificates/">
+      
+      
+        <link rel="prev" href="../architecture/">
+      
+      
+        <link rel="next" href="../fobnail-api/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Keys and certificates - Fobnail Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#keys-and-certificates" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fobnail Documentation" class="md-header__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fobnail Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Keys and certificates
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fobnail Documentation" class="md-nav__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Fobnail Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Supported Hardware
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Supported Hardware
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail_token/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail Token
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Development Process
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Development Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-sdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloning and building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing_preparation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing preparation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networking_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Networking setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../token_provisioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token provisioning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-simulators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using TPM simulators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Example Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Example Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/disk_encryption/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disk encryption
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledge Base
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledge Base
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Detailed description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Keys and certificates
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Keys and certificates
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-keys-and-certificates-used" class="md-nav__link">
+    List of keys and certificates used
+  </a>
+  
+    <nav class="md-nav" aria-label="List of keys and certificates used">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-owner" class="md-nav__link">
+    Platform Owner
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Owner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#knows-in-advance" class="md-nav__link">
+    Knows in advance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receives" class="md-nav__link">
+    Receives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produces" class="md-nav__link">
+    Produces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token" class="md-nav__link">
+    Fobnail Token
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail Token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#knows-in-advance_1" class="md-nav__link">
+    Knows in advance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receives_1" class="md-nav__link">
+    Receives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produces_1" class="md-nav__link">
+    Produces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform" class="md-nav__link">
+    Platform
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#knows-in-advance_2" class="md-nav__link">
+    Knows in advance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receives_2" class="md-nav__link">
+    Receives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produces_2" class="md-nav__link">
+    Produces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-owner-certificate-chain" class="md-nav__link">
+    Platform Owner certificate chain
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Owner certificate chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validity-checks" class="md-nav__link">
+    Validity checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Validity checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#informational-checks" class="md-nav__link">
+    Informational checks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporal-checks" class="md-nav__link">
+    Temporal checks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-platform-owner-certificate-chain-with-openssl" class="md-nav__link">
+    Creating Platform Owner certificate chain with OpenSSL
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Platform Owner certificate chain with OpenSSL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root-ca" class="md-nav__link">
+    Root CA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intermediatepo-issuing-ca" class="md-nav__link">
+    Intermediate/PO issuing CA
+  </a>
+  
+    <nav class="md-nav" aria-label="Intermediate/PO issuing CA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-intermediate-ca-key-and-csr" class="md-nav__link">
+    Generating intermediate CA key and CSR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-intermediate-ca-certificate" class="md-nav__link">
+    Generating intermediate CA certificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-po-issuer-ca-key-and-csr" class="md-nav__link">
+    Generating PO issuer CA key and CSR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-po-issuer-ca-certificate" class="md-nav__link">
+    Generating PO issuer CA certificate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-the-chain-together" class="md-nav__link">
+    Putting the chain together
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tldr-version" class="md-nav__link">
+    TL;DR version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blink-codes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail blink codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ek_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EK certificate chain sizes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ethernet over USB
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ethernet over USB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eth-over-usb-research/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementing-eth-over-usb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Minimal OSes used with Fobnail Token
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            Minimal OSes used with Fobnail Token
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../minimal-os-for-fobnail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-fobnail-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    meta-fobnail PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zephyr-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zephyr PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xen-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Xen PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archived
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Archived
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/local_development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developing firmware on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/charra-concept-on-pc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run CHARRA concept on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/preparation_for_tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparation for tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#list-of-keys-and-certificates-used" class="md-nav__link">
+    List of keys and certificates used
+  </a>
+  
+    <nav class="md-nav" aria-label="List of keys and certificates used">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#platform-owner" class="md-nav__link">
+    Platform Owner
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Owner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#knows-in-advance" class="md-nav__link">
+    Knows in advance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receives" class="md-nav__link">
+    Receives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produces" class="md-nav__link">
+    Produces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token" class="md-nav__link">
+    Fobnail Token
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail Token">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#knows-in-advance_1" class="md-nav__link">
+    Knows in advance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receives_1" class="md-nav__link">
+    Receives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produces_1" class="md-nav__link">
+    Produces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform" class="md-nav__link">
+    Platform
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#knows-in-advance_2" class="md-nav__link">
+    Knows in advance
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#receives_2" class="md-nav__link">
+    Receives
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#produces_2" class="md-nav__link">
+    Produces
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#platform-owner-certificate-chain" class="md-nav__link">
+    Platform Owner certificate chain
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform Owner certificate chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validity-checks" class="md-nav__link">
+    Validity checks
+  </a>
+  
+    <nav class="md-nav" aria-label="Validity checks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#informational-checks" class="md-nav__link">
+    Informational checks
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporal-checks" class="md-nav__link">
+    Temporal checks
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-platform-owner-certificate-chain-with-openssl" class="md-nav__link">
+    Creating Platform Owner certificate chain with OpenSSL
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Platform Owner certificate chain with OpenSSL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#root-ca" class="md-nav__link">
+    Root CA
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#intermediatepo-issuing-ca" class="md-nav__link">
+    Intermediate/PO issuing CA
+  </a>
+  
+    <nav class="md-nav" aria-label="Intermediate/PO issuing CA">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-intermediate-ca-key-and-csr" class="md-nav__link">
+    Generating intermediate CA key and CSR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-intermediate-ca-certificate" class="md-nav__link">
+    Generating intermediate CA certificate
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-po-issuer-ca-key-and-csr" class="md-nav__link">
+    Generating PO issuer CA key and CSR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-po-issuer-ca-certificate" class="md-nav__link">
+    Generating PO issuer CA certificate
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-the-chain-together" class="md-nav__link">
+    Putting the chain together
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tldr-version" class="md-nav__link">
+    TL;DR version
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="keys-and-certificates">Keys and certificates</h1>
+<p>Many different keys and certificates are used by all of Fobnail's components.
+Most of them are automatically generated, but some must be provided by user.</p>
+<h2 id="list-of-keys-and-certificates-used">List of keys and certificates used</h2>
+<p>Refer to <a href="../architecture/">architecture doc</a> for description of actors and
+phases listed below. List items have the following format:</p>
+<ul>
+<li><strong>Name of key or certificate</strong><ul>
+<li><strong>Phase during which it is obtained, received or used</strong></li>
+<li><strong>Other details, if any</strong></li>
+</ul>
+</li>
+</ul>
+<p>Note that this list includes possible usages that may not be implemented yet.</p>
+<h3 id="platform-owner">Platform Owner</h3>
+<h4 id="knows-in-advance">Knows in advance</h4>
+<ul>
+<li>Platform Owner key (signing and encryption)<ul>
+<li>Fobnail and remote platform provisioning</li>
+<li>used for TLS and for signing certificates</li>
+</ul>
+</li>
+<li>Platform Owner certificate<ul>
+<li>Fobnail and remote platform provisioning</li>
+<li>has to be able to provide whole CA chain</li>
+<li>both Fobnail Token and Platform must trust root CA in this chain</li>
+</ul>
+</li>
+<li>root CA certificate for EK certificate chain<ul>
+<li>remote platform provisioning</li>
+</ul>
+</li>
+</ul>
+<h4 id="receives">Receives</h4>
+<ul>
+<li>Fobnail Identity key<ul>
+<li>Fobnail provisioning</li>
+</ul>
+</li>
+<li>Fobnail Encryption key<ul>
+<li>Fobnail provisioning</li>
+</ul>
+</li>
+<li>EK certificate<ul>
+<li>remote platform provisioning</li>
+</ul>
+</li>
+<li>AIK<ul>
+<li>remote platform provisioning</li>
+</ul>
+</li>
+</ul>
+<h4 id="produces">Produces</h4>
+<ul>
+<li>Fobnail Identity certificate<ul>
+<li>Fobnail provisioning</li>
+</ul>
+</li>
+<li>Fobnail Encryption certificate<ul>
+<li>Fobnail provisioning</li>
+</ul>
+</li>
+<li>AIK certificate<ul>
+<li>remote platform provisioning</li>
+<li>simple signature instead of certificate may be sufficient</li>
+</ul>
+</li>
+</ul>
+<h3 id="fobnail-token">Fobnail Token</h3>
+<h4 id="knows-in-advance_1">Knows in advance</h4>
+<ul>
+<li>root CA certificate for EK certificate chain<ul>
+<li>local platform provisioning</li>
+</ul>
+</li>
+<li>root CA for Platform Owner certificate chain<ul>
+<li>Fobnail provisioning</li>
+</ul>
+</li>
+</ul>
+<h4 id="receives_1">Receives</h4>
+<ul>
+<li>Platform Owner certificate chain<ul>
+<li>Fobnail provisioning</li>
+<li>saved in flash, used in local platform provisioning and attestation</li>
+</ul>
+</li>
+<li>Fobnail Identity certificate<ul>
+<li>Fobnail provisioning</li>
+<li>signed by Platform Owner</li>
+</ul>
+</li>
+<li>Fobnail Encryption certificate<ul>
+<li>Fobnail provisioning</li>
+<li>signed by Platform Owner</li>
+</ul>
+</li>
+<li>EK certificate<ul>
+<li>local platform provisioning</li>
+</ul>
+</li>
+<li>AIK<ul>
+<li>local platform provisioning</li>
+<li>remote platform provisioning - signed by Platform Owner</li>
+<li>stored in flash and used during attestation</li>
+</ul>
+</li>
+</ul>
+<h4 id="produces_1">Produces</h4>
+<ul>
+<li>Fobnail Identity key (signing and encryption)<ul>
+<li>Fobnail provisioning</li>
+<li>key and certificate signed by Platform Owner is stored for later use</li>
+</ul>
+</li>
+<li>Fobnail Encryption key (encryption)<ul>
+<li>Fobnail provisioning</li>
+</ul>
+</li>
+</ul>
+<h3 id="platform">Platform</h3>
+<h4 id="knows-in-advance_2">Knows in advance</h4>
+<ul>
+<li>root CA for Platform Owner certificate chain<ul>
+<li>remote platform provisioning</li>
+<li>local platform provisioning and attestation - Fobnail Identity key is
+signed by Platform Owner, so Platform needs a way of verifying trust chain</li>
+</ul>
+</li>
+<li>Endorsement Key (encryption)<ul>
+<li>remote and local platform provisioning</li>
+<li>for this project may be considered immutable persistent key unique to TPM</li>
+</ul>
+</li>
+<li>EK certificate<ul>
+<li>EK is unique so is its certificate</li>
+<li><em>usually</em> saved in TPM NVRAM</li>
+<li>signed by TPM manufacturer CA</li>
+</ul>
+</li>
+</ul>
+<h4 id="receives_2">Receives</h4>
+<ul>
+<li>Platform Owner certificate chain<ul>
+<li>remote platform provisioning - directly from Platform Owner</li>
+<li>local platform provisioning and attestation - from Fobnail Token</li>
+<li>used for identification, TLS and verifying Fobnail Identity certificate</li>
+</ul>
+</li>
+<li>Fobnail Identity certificate<ul>
+<li>local platform provisioning and attestation</li>
+<li>used for identification and TLS</li>
+</ul>
+</li>
+</ul>
+<h4 id="produces_2">Produces</h4>
+<ul>
+<li>Attester Identity Key (signing)<ul>
+<li>local and remote platform provisioning</li>
+<li>created by TPM</li>
+<li>trusted based on Make/ActivateCredential and pairing with EK instead of
+certificate</li>
+</ul>
+</li>
+</ul>
+<h2 id="platform-owner-certificate-chain">Platform Owner certificate chain</h2>
+<p>Platform Owner trust chain uses X.509 certificates, usually in PEM format. It
+aims to be compatible with standard Public Key Infrastructure, as described in
+RFCs <a href="https://www.rfc-editor.org/rfc/rfc5280">5280</a> or <a href="https://www.rfc-editor.org/rfc/rfc3647">3647</a>,
+among others. At least basic understanding of PKI is strongly suggested, but if
+you just want to quickly test Fobnail, you may just do steps in <a href="#tldr-version">TL;DR</a>
+section.</p>
+<p>Platform Owner certificate is used during Fobnail provisioning. Its root CA
+certificate must be preinstalled on Fobnail Token. Due to limited hardware
+capabilities of Fobnail Token, following restrictions apply.</p>
+<h3 id="validity-checks">Validity checks</h3>
+<h4 id="informational-checks">Informational checks</h4>
+<ul>
+<li>
+<p>Maximum certificate chain length</p>
+<p>Maximal supported certificate chain consists of 3 CA certificates: root CA
+(flashed to Fobnail's memory), intermediate CA and final CA that is used to
+issue certificates for keys generated by Fobnail. Intermediate CA is
+optional, root and issuing CA aren't. During Fobnail provisioning, Platform
+Owner generates one additional certificate for Token, but this final
+certificate doesn't allow for use as a CA.</p>
+<p>This limit comes from hardware limitations (in terms of available memory)
+aggravated by chosen library (Trussed) and its <a href="https://github.com/fobnail/docs/blob/main/dev-notes/trussed-problems.md#low-quality-and-inconsistent-apis">limitations</a>.</p>
+</li>
+<li>
+<p>File format</p>
+<p>Certificates are concatenated to a single PEM file. Order of concatenation
+matters, certificates must be written starting with root CA certificate and
+moving through intermediate towards leaf certificate. All of them must be
+present, despite the fact that root CA is already known by Fobnail.</p>
+</li>
+<li>
+<p>Certificate extensions</p>
+<p>Trust chain will be traversed based on <code>X509v3 Authority Key Identifier</code>
+extension which is compared against <code>X509v3 Subject Key Identifier</code>, so both
+of them must be included in every certificate (former should be skipped for
+root CA). <code>X509v3 Basic Constraints</code> is required for CA certificates.
+<code>X509v3 Key Usage</code> must specify that all certificates in Platform Owner
+chain are able to sign certificates.</p>
+</li>
+</ul>
+<h4 id="temporal-checks">Temporal checks</h4>
+<ul>
+<li>Validity period</li>
+</ul>
+<p>Reference Fobnail Token (nRF52840 dongle) has no timekeeping capabilities.
+Because of that, validity period cannot be tested without adding another party
+that Fobnail Token trusts, or by using another dongle for Fobnail Token.</p>
+<ul>
+<li>Certificate revocation</li>
+</ul>
+<p>Fobnail Token doesn't have trusted network connection, so it can't access recent
+(i.e. one that happened after last firmware update) certificate revocation list
+at run time. Revocations can only be applied during flashing/update, which
+should be done by Platform Owner. During that process, attempt to use revoked
+certificates should result in failed provisioning.</p>
+<h2 id="creating-platform-owner-certificate-chain-with-openssl">Creating Platform Owner certificate chain with OpenSSL</h2>
+<p>This section describes how to create a certificate chain that conforms to
+restrictions mentioned earlier. This is just a minimal example showing all
+required configuration options and commands used in the process, fields listed
+here may be extended or modified, but should not be removed. Normally CAs do
+much more than what is presented here, some guidelines can be found in
+<a href="https://www.rfc-editor.org/rfc/rfc3647">RFC 3647</a>.</p>
+<p>Note that root CA doesn't have to be under Platform Owner's control, but it must
+issue a certificate that is (either directly or through intermediate issuer). In
+such cases the issuer may use other form of certificate request or additional
+mechanisms of proving the identity of the requester than those used by OpenSSL.</p>
+<h3 id="root-ca">Root CA</h3>
+<p>Root CA certificate is self-signed. This means that signed public and signing
+private keys belong to the same pair, and no exchange of data between separate
+entities happens. <code>-x509</code> parameter tells that this is the case and a
+self-signed certificate is to be made, instead of CSR (Certificate Signing
+Request).</p>
+<ul>
+<li>
+<p>First create configuration file <code>root_ca.cfg</code>, for example:</p>
+<div class="highlight"><pre><span></span><code>[ req ]
+distinguished_name     = req_distinguished_name
+prompt                 = no
+x509_extensions        = v3_ext
+
+[ req_distinguished_name ]
+C                      = PL
+O                      = Fobnail
+ST                     = State
+CN                     = Platform Owner root CA certificate
+
+[v3_ext]
+basicConstraints       = critical, CA:TRUE, pathlen:3
+keyUsage               = critical, keyCertSign, cRLSign
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always
+</code></pre></div>
+<p>Feel free to adjust configuration to your needs.</p>
+</li>
+<li>
+<p>Run command:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>req<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-nodes<span class="w"> </span>-keyout<span class="w"> </span>root_ca_priv.pem<span class="w"> </span>-x509<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span><span class="se">\</span>
+-out<span class="w"> </span>root.crt<span class="w"> </span>-config<span class="w"> </span>root_ca.cfg
+</code></pre></div>
+<ul>
+<li><code>root_ca_priv.pem</code> - newly created private root CA key. Keep it safe.</li>
+<li><code>root.crt</code> - root CA certificate. This will be hardcoded and marked as
+  trusted by Fobnail Token.</li>
+</ul>
+</li>
+</ul>
+<h3 id="intermediatepo-issuing-ca">Intermediate/PO issuing CA</h3>
+<blockquote>
+<p>Note: "PO issuing CA" in this part of the document should be understood as the
+CA that issues certificate requested by Fobnail Token. In general, each
+certificate has its own issuer. If that meaning of the word is required,
+"higher-level CA", "intermediate CA" or "root CA" is used.</p>
+</blockquote>
+<p>These certificates aren't self-signed. Creation of such certificates consists of
+two steps: first one is generating a CSR (Certificate Signing Request) and is
+done by key creator, second one is creating the certificate itself - this is
+done by the parent CA. This separation is done to keep private keys secret at
+all times.</p>
+<p>Steps for both intermediate and issuing CA certificates are mostly the same, the
+main difference is that CSR for intermediate is sent to root CA, and PO issuing
+CA's CSR is sent to intermediate CA. This chain can be longer in general, but
+Fobnail limits maximum length, as <a href="#informational-checks">mentioned above</a>.
+Intermediate CA is optional, PO issuing CA certificate can be signed by root CA
+directly.</p>
+<p>Before issuing a certificate, issuer must check if subject is authorized to
+ask for it. It can't just blindly provide a new certificate to anyone that asks
+for it, because by creating a signed certificate CA tells others that it trusts
+its subject. Trust decision can be based on fields of CSR, challenge password,
+secure and non-public way of conveying CSR to issuer, or other means. Sometimes
+the decision is made by another entity called Registration Authority (RA) on
+behalf of CA.</p>
+<p>In this case because subject of each signed certificate is itself a CA and can
+create certificates for other entities. Certificate revocation for Fobnail can't
+be done by means other than firmware updates, so issuing a certificate to
+untrustworthy subject impacts not only the security of devices provisioned by
+issuer, but also every device with the same root CA.</p>
+<h4 id="generating-intermediate-ca-key-and-csr">Generating intermediate CA key and CSR</h4>
+<p>This is similar to creating root CA with two small but important differences:</p>
+<ul>
+<li><code>-x509</code> flag is not used in the command line</li>
+<li><code>x509_extensions</code> are not present (those are added by the issuer)</li>
+</ul>
+<p>Command executed by <strong>intermediate CA</strong>:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>req<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-nodes<span class="w"> </span>-keyout<span class="w"> </span>intermediate_priv_key.pem
+-out<span class="w"> </span>intermediate.csr<span class="w"> </span>-config<span class="w"> </span>intermediate.cfg
+</code></pre></div>
+<ul>
+<li><code>intermediate_priv_key.pem</code> (out) - newly created private intermediate CA key.
+  Keep it safe.</li>
+<li><code>intermediate.csr</code> (out) - intermediate CA certificate signing request. This
+  file is signed with private intermediate CA key by above command and must be
+  passed to root CA.</li>
+<li><code>intermediate.cfg</code> (in) - configuration file, e.g.:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>[ req ]
+distinguished_name     = req_distinguished_name
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = PL
+O                      = Fobnail
+ST                     = State
+CN                     = Intermediate CA certificate
+</code></pre></div>
+<h4 id="generating-intermediate-ca-certificate">Generating intermediate CA certificate</h4>
+<blockquote>
+<p><code>openssl ca</code> can also be used for this purpose, but <code>openssl x509</code> is easier
+to use for single chain. On the other hand, <code>openssl ca</code> better suits the needs
+of CA after configuration and may do more checks in semi-automatic process than
+<code>openssl x509</code>.</p>
+</blockquote>
+<p>Command executed by <strong>root CA</strong>:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>intermediate.csr<span class="w"> </span>-CA<span class="w"> </span>root.crt<span class="w"> </span>-CAkey<span class="w"> </span>root_ca_priv.pem<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-CAcreateserial<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-extfile<span class="w"> </span>intermediate.ext<span class="w"> </span>-out<span class="w"> </span>intermediate.crt
+</code></pre></div>
+<ul>
+<li><code>intermediate.csr</code> (in) - sent by intermediate CA.</li>
+<li><code>root.crt</code> and <code>root_ca_priv.pem</code> (in) - those were created by root CA
+  earlier.</li>
+<li><code>intermediate.crt</code> (out) - intermediate CA certificate signed with root CA key
+  <code>root_ca_priv.pem</code>.</li>
+<li><code>intermediate.ext</code> (in) - file describing certificate extensions, e.g.:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>basicConstraints       = critical, CA:TRUE, pathlen:2
+keyUsage               = critical, keyCertSign, cRLSign
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always
+</code></pre></div>
+<h4 id="generating-po-issuer-ca-key-and-csr">Generating PO issuer CA key and CSR</h4>
+<p>Command executed by <strong>PO issuer CA</strong>:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>req<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-nodes<span class="w"> </span>-keyout<span class="w"> </span>root_ca_priv.pem<span class="w"> </span>-out<span class="w"> </span>issuer.csr<span class="w"> </span><span class="se">\</span>
+-config<span class="w"> </span>issuer.cfg
+</code></pre></div>
+<ul>
+<li><code>root_ca_priv.pem</code> (out) - newly created private PO issuing CA key. Keep it
+  safe.</li>
+<li><code>issuer.csr</code> (out) - PO issuing CA certificate signing request. This file is
+  signed with private PO issuing CA key by above command and must be passed to
+  intermediate CA.</li>
+<li><code>issuer.cfg</code> (in) - configuration file, e.g.:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>[ req ]
+distinguished_name     = req_distinguished_name
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = PL
+O                      = Fobnail
+ST                     = State
+CN                     = Platform Owner issuer CA certificate
+</code></pre></div>
+<h4 id="generating-po-issuer-ca-certificate">Generating PO issuer CA certificate</h4>
+<p>Command executed by <strong>intermediate CA</strong>:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>issuer.csr<span class="w"> </span>-CA<span class="w"> </span><span class="nv">$AUTHORITY_CERT</span><span class="w"> </span>-CAkey<span class="w"> </span><span class="nv">$AUTHORITY_PRIV</span><span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-CAcreateserial<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-extfile<span class="w"> </span><span class="nv">$SUBJECT_EXT</span><span class="w"> </span>-out<span class="w"> </span><span class="nv">$SUBJECT_CERT</span>
+</code></pre></div>
+<ul>
+<li><code>issuer.csr</code> (in) - sent by PO issuer CA.</li>
+<li><code>intermediate_priv_key.pem</code> (in) - created by intermediate CA earlier.</li>
+<li><code>intermediate.crt</code> (in) - issued by root CA in response to request from
+  intermediate CA.</li>
+<li><code>issuer.crt</code> (out) - PO issuer CA certificate signed with
+  <code>intermediate_priv_key.pem</code>.</li>
+<li><code>issuer.ext</code> (in) - file describing certificate extensions, e.g.:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>basicConstraints       = critical, CA:TRUE, pathlen:1
+keyUsage               = critical, keyCertSign, cRLSign
+subjectKeyIdentifier   = hash
+authorityKeyIdentifier = keyid:always
+</code></pre></div>
+<h3 id="putting-the-chain-together">Putting the chain together</h3>
+<p>PEM files contain certificates (among other objects that are not relevant here)
+encoded as text. They can be concatenated e.g. with <code>cat</code> to form a chain. As
+<a href="#informational-checks">mentioned above</a>, the order of certificates matters:
+leaf (i.e. PO issuing certificate) must come first, root CA - last. Assuming
+<code>*.crt</code> files are PEM certificates of various CAs, full chain is produced by:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>root.crt<span class="w"> </span>intermediate.crt<span class="w"> </span>issuer.crt<span class="w"> </span>&gt;<span class="w"> </span>cert_chain.pem
+</code></pre></div>
+<h3 id="tldr-version">TL;DR version</h3>
+<p>While it is strongly suggested to understand and follow steps described above,
+these steps can be used to produce a chain that will be accepted by Fobnail. It
+can be used to quickly build and test Fobnail project, but such approach defies
+the idea of Fobnail provisioning and Platform Owner in general. <strong>It should not
+be used on Tokens for production environments</strong>.</p>
+<ol>
+<li>
+<p>Create root CA key and certificate:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>req<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-nodes<span class="w"> </span>-keyout<span class="w"> </span>root_ca_priv.pem<span class="w"> </span>-x509
+<span class="w">            </span>-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>-out<span class="w"> </span>root_ca.crt<span class="w"> </span>-config<span class="w"> </span>&lt;<span class="o">(</span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+
+<span class="s">[ req ]</span>
+<span class="s">distinguished_name     = req_distinguished_name</span>
+<span class="s">prompt                 = no</span>
+<span class="s">x509_extensions        = v3_ext</span>
+
+<span class="s">[ req_distinguished_name ]</span>
+<span class="s">C                      = PL</span>
+<span class="s">O                      = Fobnail</span>
+<span class="s">ST                     = State</span>
+<span class="s">CN                     = Platform Owner root CA certificate</span>
+
+<span class="s">[v3_ext]</span>
+<span class="s">basicConstraints       = critical, CA:TRUE, pathlen:2</span>
+<span class="s">keyUsage               = critical, keyCertSign, cRLSign</span>
+<span class="s">subjectKeyIdentifier   = hash</span>
+<span class="s">authorityKeyIdentifier = keyid:always</span>
+
+<span class="s">EOF</span>
+<span class="o">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>Create PO issuing CA private key and CSR:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>req<span class="w"> </span>-newkey<span class="w"> </span>rsa:2048<span class="w"> </span>-nodes<span class="w"> </span>-keyout<span class="w"> </span>po_priv_key.pem<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-out<span class="w"> </span>issuer_ca.csr<span class="w"> </span>-config<span class="w"> </span>&lt;<span class="o">(</span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+
+<span class="s">[ req ]</span>
+<span class="s">distinguished_name     = req_distinguished_name</span>
+<span class="s">prompt                 = no</span>
+
+<span class="s">[ req_distinguished_name ]</span>
+<span class="s">C                      = PL</span>
+<span class="s">O                      = Fobnail</span>
+<span class="s">ST                     = State</span>
+<span class="s">CN                     = Platform Owner issuer CA certificate</span>
+
+<span class="s">EOF</span>
+<span class="o">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>Create PO issuing CA certificate:</p>
+<div class="highlight"><pre><span></span><code>openssl<span class="w"> </span>x509<span class="w"> </span>-req<span class="w"> </span>-in<span class="w"> </span>issuer_ca.csr<span class="w"> </span>-CA<span class="w"> </span>root_ca.crt<span class="w"> </span>-CAcreateserial<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-CAkey<span class="w"> </span>root_ca_priv.pem<span class="w"> </span>-days<span class="w"> </span><span class="m">30</span><span class="w"> </span>-out<span class="w"> </span>issuer_ca.crt<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-extfile<span class="w"> </span>&lt;<span class="o">(</span>cat<span class="w"> </span><span class="s">&lt;&lt; EOF</span>
+
+<span class="s">basicConstraints       = critical, CA:TRUE, pathlen:1</span>
+<span class="s">keyUsage               = critical, keyCertSign, cRLSign</span>
+<span class="s">subjectKeyIdentifier   = hash</span>
+<span class="s">authorityKeyIdentifier = keyid:always</span>
+
+<span class="s">EOF</span>
+<span class="o">)</span>
+</code></pre></div>
+</li>
+<li>
+<p>Create chain from both certificates:</p>
+<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>root_ca.crt<span class="w"> </span>issuer_ca.crt<span class="w"> </span>&gt;<span class="w"> </span>cert_chain.pem
+</code></pre></div>
+</li>
+</ol>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>

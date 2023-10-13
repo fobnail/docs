@@ -1,0 +1,2123 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://fobnail.3mdeb.com/fobnail-api/">
+      
+      
+        <link rel="prev" href="../keys_and_certificates/">
+      
+      
+        <link rel="next" href="../blink-codes/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.5">
+    
+    
+      
+        <title>Fobnail API - Fobnail Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.6a10b989.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fobnail-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Fobnail Documentation" class="md-header__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Fobnail Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fobnail API
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Fobnail Documentation" class="md-nav__button md-logo" aria-label="Fobnail Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Fobnail Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Intro
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Supported Hardware
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Supported Hardware
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail_token/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail Token
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Development Process
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Development Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fobnail-sdk/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail SDK
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../building/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cloning and building
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../flashing_preparation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Flashing preparation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../networking_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Networking setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../token_provisioning/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Token provisioning
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tpm-simulators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Using TPM simulators
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../debugging/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Debugging
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Example Applications
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Example Applications
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/disk_encryption/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Disk encryption
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Knowledge Base
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Knowledge Base
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../description/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Detailed description
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../keys_and_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Keys and certificates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Fobnail API
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail API
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-considerations" class="md-nav__link">
+    General considerations
+  </a>
+  
+    <nav class="md-nav" aria-label="General considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-request-handling-rules" class="md-nav__link">
+    General request handling rules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-responses" class="md-nav__link">
+    Error responses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-data-format" class="md-nav__link">
+    Fobnail Data format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-signing" class="md-nav__link">
+    Data signing
+  </a>
+  
+    <nav class="md-nav" aria-label="Data signing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exception" class="md-nav__link">
+    Exception
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    API endpoints
+  </a>
+  
+    <nav class="md-nav" aria-label="API endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uncategorized-endpoints" class="md-nav__link">
+    Uncategorized endpoints
+  </a>
+  
+    <nav class="md-nav" aria-label="Uncategorized endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nonce" class="md-nav__link">
+    /nonce
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token-provisioning" class="md-nav__link">
+    Fobnail Token provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail Token provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#admintoken_provision" class="md-nav__link">
+    /admin/token_provision
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovision_complete" class="md-nav__link">
+    /admin/provision_complete
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-provisioning" class="md-nav__link">
+    Platform provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionek" class="md-nav__link">
+    /admin/provision/ek
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionaik" class="md-nav__link">
+    /admin/provision/aik
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovision" class="md-nav__link">
+    /admin/provision
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionidmeta" class="md-nav__link">
+    /admin/provision/{id}/meta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionidrim" class="md-nav__link">
+    /admin/provision/{id}/rim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionid" class="md-nav__link">
+    /admin/provision/{id}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attestation" class="md-nav__link">
+    Attestation
+  </a>
+  
+    <nav class="md-nav" aria-label="Attestation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attest" class="md-nav__link">
+    /attest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attestid" class="md-nav__link">
+    /attest/{id}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token-services" class="md-nav__link">
+    Fobnail Token Services
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail Token Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-storagefsname" class="md-nav__link">
+    GET /storage/fs/{name}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put-storagefsname" class="md-nav__link">
+    PUT /storage/fs/{name}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-storagefsname" class="md-nav__link">
+    DELETE /storage/fs/{name}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../blink-codes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fobnail blink codes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ek_certificates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    EK certificate chain sizes
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_7" id="__nav_5_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Ethernet over USB
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Ethernet over USB
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eth-over-usb-research/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../implementing-eth-over-usb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Implementation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_8" id="__nav_5_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Minimal OSes used with Fobnail Token
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_8">
+            <span class="md-nav__icon md-icon"></span>
+            Minimal OSes used with Fobnail Token
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../minimal-os-for-fobnail/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Research
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../meta-fobnail-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    meta-fobnail PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../zephyr-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Zephyr PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xen-in-dlme/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Xen PoC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Archived
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Archived
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/environment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Environment setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/local_development/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Developing firmware on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/charra-concept-on-pc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Run CHARRA concept on PC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../archive/preparation_for_tests/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Preparation for tests
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#general-considerations" class="md-nav__link">
+    General considerations
+  </a>
+  
+    <nav class="md-nav" aria-label="General considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-request-handling-rules" class="md-nav__link">
+    General request handling rules
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#error-responses" class="md-nav__link">
+    Error responses
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-data-format" class="md-nav__link">
+    Fobnail Data format
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-signing" class="md-nav__link">
+    Data signing
+  </a>
+  
+    <nav class="md-nav" aria-label="Data signing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#exception" class="md-nav__link">
+    Exception
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-endpoints" class="md-nav__link">
+    API endpoints
+  </a>
+  
+    <nav class="md-nav" aria-label="API endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#uncategorized-endpoints" class="md-nav__link">
+    Uncategorized endpoints
+  </a>
+  
+    <nav class="md-nav" aria-label="Uncategorized endpoints">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nonce" class="md-nav__link">
+    /nonce
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token-provisioning" class="md-nav__link">
+    Fobnail Token provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail Token provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#admintoken_provision" class="md-nav__link">
+    /admin/token_provision
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovision_complete" class="md-nav__link">
+    /admin/provision_complete
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#platform-provisioning" class="md-nav__link">
+    Platform provisioning
+  </a>
+  
+    <nav class="md-nav" aria-label="Platform provisioning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionek" class="md-nav__link">
+    /admin/provision/ek
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionaik" class="md-nav__link">
+    /admin/provision/aik
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovision" class="md-nav__link">
+    /admin/provision
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionidmeta" class="md-nav__link">
+    /admin/provision/{id}/meta
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionidrim" class="md-nav__link">
+    /admin/provision/{id}/rim
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#adminprovisionid" class="md-nav__link">
+    /admin/provision/{id}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attestation" class="md-nav__link">
+    Attestation
+  </a>
+  
+    <nav class="md-nav" aria-label="Attestation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#attest" class="md-nav__link">
+    /attest
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attestid" class="md-nav__link">
+    /attest/{id}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fobnail-token-services" class="md-nav__link">
+    Fobnail Token Services
+  </a>
+  
+    <nav class="md-nav" aria-label="Fobnail Token Services">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get-storagefsname" class="md-nav__link">
+    GET /storage/fs/{name}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#put-storagefsname" class="md-nav__link">
+    PUT /storage/fs/{name}
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-storagefsname" class="md-nav__link">
+    DELETE /storage/fs/{name}
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="fobnail-api">Fobnail API</h1>
+<p>Fobnail Token exposes API over
+<a href="https://datatracker.ietf.org/doc/html/rfc7252">CoAP</a> server exposed over UDP.</p>
+<h2 id="general-considerations">General considerations</h2>
+<p>This document describes API (major) version 1, and all API endpoint addresses
+are relative to (starting with) <code>/api/v1</code>. The version will be increased only
+when backward-incompatible changes are done.</p>
+<h3 id="general-request-handling-rules">General request handling rules</h3>
+<p>Some APIs create temporary objects that live at most as long as the client is
+connected. To check connection status, the server issues CoAP Ping requests,
+which clients <strong>must</strong> respond to in order to avoid losing their objects.</p>
+<p>When an object is created, the server responds with <strong>2.01</strong>, <code>Location-Path</code>
+specifying the resource's path (a numeric object ID). Object IDs are specific to
+a client - a client cannot access object IDs of other clients. <code>Location-Path</code>
+is a string option, whereas object ID is an integer, so it must be encoded as a
+string. Object IDs may be passed as part of the CBOR payload (as an integer) or
+in URI (as a string).</p>
+<p>If the <code>Content-Format</code> option is not present, Fobnail Token assumes that
+<code>Content-Format</code> is <code>application/octet-stream</code>. All requests which pass
+CBOR-encoded data <strong>must</strong> set <code>Content-Format</code> option to <code>application/cbor</code> for
+Fobnail Token to interpret the payload as CBOR. The server responds with
+<strong>4.00</strong> (Bad Request) if unknown or invalid <code>Content-Format</code> is given. If
+passing CBOR-encoded data which is improperly encoded or not valid (e.g.,
+required fields missing) server responds with <strong>4.00</strong>. Passing
+<code>application/cbor</code> to an endpoint that expects <code>application/octet-stream</code> is
+invalid and will result in a <strong>4.00</strong> response.</p>
+<p>The client may send one or more <code>Accept</code> options which <strong>must</strong> be handled by
+the server. If the server can not respond in the format requested by the
+<code>Accept</code> options, it <strong>must</strong> respond with <strong>4.06</strong> (Not Acceptable).</p>
+<p><a href="https://datatracker.ietf.org/doc/html/rfc7252#section-5.10.8">Conditional Request Options</a>
+are <strong>not</strong> supported and will result in <strong>4.02</strong> (Bad Option). The payload
+should contain a human-readable message describing what options are not
+supported. See
+<a href="https://datatracker.ietf.org/doc/html/rfc7252#section-5.4.1">RFC7252 section 5.4.1</a>
+for details.</p>
+<p>Each response from the Fobnail Token <strong>must</strong> contain the <code>Content-Format</code>
+option unless it is an error response with a diagnostic payload. See
+<a href="https://datatracker.ietf.org/doc/html/rfc7252#section-5.5.1">RFC7252</a> for
+details.</p>
+<h3 id="error-responses">Error responses</h3>
+<p>Fobnail Token may return error codes as defined by the CoAP specification. An
+error response <strong>may</strong> contain an additional context sent as a payload. All
+cacheable error responses <strong>must</strong> have <code>Max-Age</code> set to 0.</p>
+<p>Error response must not contain the <code>Content-Format</code> option. Message (if present)
+must be passed as a raw UTF-8 string.</p>
+<h3 id="fobnail-data-format">Fobnail Data format</h3>
+<p>Fobnail uses CBOR (with a few exceptions) to transmit structured data from
+Fobnail to Attester and from Attester to Fobnail. We use a subset of
+<a href="https://datatracker.ietf.org/doc/html/rfc7049">RFC7049</a> (no tagging and no
+extensions).</p>
+<p>Clients are <strong>required</strong> to set <code>Content-Format</code> to <code>application/cbor</code> when
+transmitting CBOR-encoded data.</p>
+<h3 id="data-signing">Data signing</h3>
+<p>A signature is generated by taking an already CBOR-encoded object, a nonce
+(generated by Fobnail), and signing the hash of both of them. The nonce is
+appended to the CBOR blob as plain bytes. The resulting signature and original
+data (without nonce) are wrapped into another CBOR object:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// The data we signed (nested CBOR, without nonce)</span>
+<span class="w">    </span><span class="c1">// major 2 (byte array)</span>
+<span class="w">    </span><span class="nt">&quot;data&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">42</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span>
+<span class="w">    </span><span class="c1">// The signature we just computed (major 2, byte array)</span>
+<span class="w">    </span><span class="nt">&quot;signature&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>To obtain nonce for data signing, please use the <a href="#nonce">/nonce</a> endpoint.</p>
+<h4 id="exception">Exception</h4>
+<p>Request for <code>/attest/{id}</code> command has nonce explicitly included in sent structure.
+No additional data is appended before signing. Sent CBOR object has the same
+format as above. This (along with other mechanisms) ensures freshness of Claims,
+in addition to freshness of Evidence (see RATS architecture for description of
+those artifacts).</p>
+<h2 id="api-endpoints">API endpoints</h2>
+<p>Please note that all addresses listed below are relative to <code>/api/v1</code>, except
+the <code>/api/version</code> endpoint which is used to query supported API versions. To
+query supported API versions, please issue GET request to <code>/api/v1</code>. Server
+responds with <strong>2.05</strong> code and CoAP payload contains CBOR-encoded message:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Array of supported API versions (major 4)</span>
+<span class="w">    </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="c1">// API version 1 (major 0)</span>
+<span class="w">        </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// API version 2 (major 0)</span>
+<span class="w">        </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">// API version 3 (major 0)</span>
+<span class="w">        </span><span class="mi">3</span><span class="p">,</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+<h3 id="uncategorized-endpoints">Uncategorized endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint Name</th>
+<th>Method</th>
+<th>Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/nonce</td>
+<td>GET</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h4 id="nonce">/nonce</h4>
+<p>This endpoint is used to receive the nonce to be used for data signing. When
+called, Fobnail Token generates new nonce and responds with <strong>2.05</strong>. Payload
+contains nonce as a raw byte array (currently 32 bytes).</p>
+<p>Nonce is bound to each client and is valid until it is used. When used, the
+client must call <code>/nonce</code> again to obtain a new nonce.</p>
+<p>Some requests return a new nonce as part of their response That's the case with
+the <code>/attest</code> endpoint and client must use nonce from <code>/attest</code> response in call
+to <code>/attest/{id}</code>. Attempt to call <code>/nonce</code> endpoint <strong>will invalidate</strong>
+Attestation Context.</p>
+<h3 id="fobnail-token-provisioning">Fobnail Token provisioning</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint Name</th>
+<th>Method</th>
+<th>Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/admin/token_provision</td>
+<td>POST</td>
+<td>PO certificate chain</td>
+</tr>
+<tr>
+<td>/admin/provision_complete</td>
+<td>POST</td>
+<td>Fobnail Identity/Encryption certificate</td>
+</tr>
+</tbody>
+</table>
+<p>These APIs may only be executed when Fobnail Token is in an unprovisioned state.
+Fobnail Token <strong>must</strong> respond with <strong>4.03</strong> if these APIs are called after
+provisioning is complete.</p>
+<h4 id="admintoken_provision">/admin/token_provision</h4>
+<p>PO certificate chain is transferred as an ordered array of raw DER certificates,
+starting with the certificate directly after the root certificate (the Fobnail
+Token already knows the root).</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Array of certificates in DER format (major 4)</span>
+<span class="w">    </span><span class="nt">&quot;certs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="c1">// CA immediately under root (major 2)</span>
+<span class="w">        </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">82</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">03</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">8</span><span class="err">b</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<span class="w">        </span><span class="c1">// Intermediate CAs, if any</span>
+<span class="w">        </span><span class="err">...</span>
+<span class="w">        </span><span class="c1">// PO certificate for certificate signing (major 2)</span>
+<span class="w">        </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">82</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">04</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">8</span><span class="kc">f</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Fobnail Token verifies certificate the chain against the trust anchor embedded
+into its firmware. If verification fails, <strong>4.03</strong> is returned.</p>
+<p>On success, Fobnail generates an Identity/Encryption key, prepares a Certificate
+Signing Request, and responds with a <strong>2.01</strong> status code, response <strong>must</strong>
+contain CSR as a payload. CSR is sent in DER format and <code>Content-Format</code>
+<strong>must</strong> be set to <code>application/octet-stream</code>.</p>
+<h4 id="adminprovision_complete">/admin/provision_complete</h4>
+<p>The client sends a certificate generated from CSR previously provided by
+<code>/admin/token_provision</code>. Fobnail Token verifies the provided certificat
+correctness, such as whether it is properly signed, has correct extensions
+defined, etc. On error <strong>4.03</strong> is returned.</p>
+<p>On success, <strong>2.01</strong> is returned, and provisioning is complete.</p>
+<p>The certificate is sent as a raw DER, and <code>Content-Format</code> must be set to
+<code>application/octet-stream</code>, or the request will be rejected. Future API versions
+may accept <code>application/cbor</code>.</p>
+<h3 id="platform-provisioning">Platform provisioning</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint Name</th>
+<th>Method</th>
+<th>Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/admin/provision/ek</td>
+<td>POST</td>
+<td>EK certificate chain</td>
+</tr>
+<tr>
+<td>/admin/provision/aik</td>
+<td>POST</td>
+<td>AIK public part</td>
+</tr>
+<tr>
+<td>/admin/provision</td>
+<td>POST</td>
+<td>Credential Activation result</td>
+</tr>
+<tr>
+<td>/admin/provision/{id}/meta</td>
+<td>POST</td>
+<td>Platform metadata</td>
+</tr>
+<tr>
+<td>/admin/provision/{id}/rim</td>
+<td>POST</td>
+<td>Reference Integrity Measurements</td>
+</tr>
+<tr>
+<td>/admin/provision/{id}</td>
+<td>POST</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h4 id="adminprovisionek">/admin/provision/ek</h4>
+<p>EK certificate chain is transferred in the same format as PO certificate chain
+described above. The certificate directly after the root certificate is the
+first certificate in the array, while the EK certificate is the last.</p>
+<p>Client issues POST request with <code>Content-Format</code> set to <code>application/cbor</code> and
+payload containing CBOR-encoded certificate array as described above. Fobnail
+Token verifies the provided certificate chain against one of the roots embedded
+into its firmware. On success <strong>2.01</strong> response is returned, <code>Location-Path</code>
+contains EK object ID. If EK certificate chain verification fails, <strong>4.03</strong> is
+returned.</p>
+<h4 id="adminprovisionaik">/admin/provision/aik</h4>
+<p>AIK is transferred in TPM format (TPM2B_PUBLIC structure). Re-encoding this into
+CBOR would strip essential data. Fobnail needs unmodified TPM2B_PUBLIC to
+successfully perform the "make credential" operation which is needed for
+credential activation. Unmodified AIK and EK object ID are wrapped into CBOR:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// AIK (TPM2B_PUBLIC, major 2)</span>
+<span class="w">    </span><span class="nt">&quot;aik&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">01</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span>
+<span class="w">    </span><span class="c1">// EK object ID (major 0 - unsigned integer)</span>
+<span class="w">    </span><span class="nt">&quot;ek&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Fobnail Token verifies whether AIK is a valid TPM2B_PUBLIC and whether the key's
+algorithm is supported. On success, <strong>2.01</strong> response is returned, and
+<code>Location-Path</code> contains AIK object ID. Response payload contains a challenge
+(Make Credential) prepared using the provided AIK and EK.</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;idObject&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">02</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span>
+<span class="w">    </span><span class="nt">&quot;encSecret&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">02</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>If AIK verification fails, <strong>4.03</strong> is returned, and the payload may contain
+additional context. If provided EK object ID is invalid, <strong>4.04</strong> is returned.</p>
+<h4 id="adminprovision">/admin/provision</h4>
+<p>This endpoint is used to create a Provisioning Context. The client provides the
+result of Credential Activation as a payload:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// EK object ID of the EK used to make the challenge (major 0)</span>
+<span class="w">    </span><span class="nt">&quot;ek&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// AIK object ID of the AIK used to make the challenge (major 0)</span>
+<span class="w">    </span><span class="nt">&quot;aik&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// Decrypted secret - output of TPM Credential Activation (major 2)</span>
+<span class="w">    </span><span class="nt">&quot;secret&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">01</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">02</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">03</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Fobnail Token verifies whether the decrypted secret matches the secret kept in
+Fobnail Token's memory. If verification is successful, Fobnail Token creates a
+Provisioning Context and responds with a <strong>2.01</strong> response (<code>Location-Path</code>
+contains Provisioning Context ID).</p>
+<p>If the secret does not match, <strong>4.03</strong> is returned. If either EK object ID or
+AIK object ID is invalid, <strong>4.04</strong> is returned.</p>
+<h4 id="adminprovisionidmeta">/admin/provision/{id}/meta</h4>
+<p>This method is used to upload platform metadata. After upload, the platform
+metadata is bound to the provisioning context specified by <code>{id}</code>.</p>
+<p>Metadata is sent in CBOR-encoded format (also described
+<a href="https://github.com/fobnail/docs/blob/main/dev-notes/metadata.md">here</a> in more
+detail). Example metadata looks like this</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// metadata version, used to detect backward-incompatible changes</span>
+<span class="w">    </span><span class="c1">// (major 0, unsigned integer)</span>
+<span class="w">    </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// device manufacturer extracted from SMBIOS tables (major 3, UTF-8 string)</span>
+<span class="w">    </span><span class="nt">&quot;manufacturer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Gigabyte&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// device model extracted from SMBIOS tables (major 3, UTF-8 string)</span>
+<span class="w">    </span><span class="nt">&quot;model&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Gigabyte A520 AORUS ELITE&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// MAC address of primary network card (major 2, byte string)</span>
+<span class="w">    </span><span class="nt">&quot;mac&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">xea</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">96</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">91</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">26</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">8</span><span class="err">d</span><span class="p">],</span>
+<span class="w">    </span><span class="c1">// device serial number extracted from SMBIOS tables (major 3, UTF-8 string)</span>
+<span class="w">    </span><span class="nt">&quot;sn&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S21N559B431&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Client <strong>must</strong> sign metadata with AIK (see the <a href="#data-signing">Data signing</a>
+section above).</p>
+<p>Fobnail Token verifies the provided metadata against AIK bound to the
+Provisioning Context. If signature verification fails, <strong>4.03</strong> is returned. If
+the metadata format is invalid, <strong>4.00</strong> is returned. On success, either
+<strong>2.01</strong> or <strong>2.04</strong> are returned. On the first successful call, <strong>2.01</strong> is
+returned (<code>Location-Path</code> must not be present), and on subsequent calls,
+<strong>2.04</strong> is returned to signify that metadata has been replaced.</p>
+<h4 id="adminprovisionidrim">/admin/provision/{id}/rim</h4>
+<p>RIM holds PCR registers (from TPM) which are used for attestation. It doesn't
+contain information about the Attester since these are part of the metadata. RIM
+may contain multiple PCR banks (depending on the hash algorithm: SHA-1, SHA-256,
+others). Each PCR bank contains a bitmap of present PCRs (<code>pcrs</code> field) and an
+array of PCR itself. The LSB of bitmap corresponds to PCR0. RIMs are sent in
+CBOR:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// PCR update counter, incremented every time when some PCR gets updated.</span>
+<span class="w">    </span><span class="nt">&quot;update_ctr&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// Array of PCR banks (major 4)</span>
+<span class="w">    </span><span class="nt">&quot;banks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="c1">// First PCR bank</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Algorithm ID as used by TPMs (TPM2_ALG_* constants from libtss)</span>
+<span class="w">            </span><span class="c1">// (major 0, unsigned integer)</span>
+<span class="w">            </span><span class="nt">&quot;algo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">xb</span><span class="p">,</span>
+<span class="w">            </span><span class="c1">// Bitmap of present PCRs (major 0, unsigned integer)</span>
+<span class="w">            </span><span class="nt">&quot;pcrs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="kc">ffffffff</span><span class="p">,</span>
+<span class="w">            </span><span class="c1">// Array of PCR registers, each register holds hash corresponding to the</span>
+<span class="w">            </span><span class="c1">// type of bank.</span>
+<span class="w">            </span><span class="c1">// There must be as many hashes as set bits in &quot;pcrs&quot; field. If</span>
+<span class="w">            </span><span class="c1">// these don&#39;t match then RIM is considered invalid.</span>
+<span class="w">            </span><span class="nt">&quot;pcr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="c1">// Size of hash is verified, whether all hashes in a bank have</span>
+<span class="w">                </span><span class="c1">// the same size, if these don&#39;t match then entire RIM is</span>
+<span class="w">                </span><span class="c1">// considered invalid</span>
+<span class="w">                </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<span class="w">                </span><span class="err">...</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// Another PCR bank (major 5, map)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;algo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">xb</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;pcrs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">000000</span><span class="kc">ff</span><span class="p">,</span>
+<span class="w">            </span><span class="c1">// major 4 (array)</span>
+<span class="w">            </span><span class="nt">&quot;pcr&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="c1">// major 2 (byte string)</span>
+<span class="w">                </span><span class="p">[</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<span class="w">                </span><span class="err">...</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Client <strong>must</strong> sign RIM with AIK (see the <a href="#data-signing">Data signing</a> section
+above).</p>
+<p>Fobnail Token verifies RIM signature and format. If signature verification
+fails, <strong>4.03</strong> is returned. If RIM has an invalid format, <strong>4.00</strong> is returned.
+On success <strong>2.01</strong> or <strong>2.04</strong> is returned. On the first successful call,
+<strong>2.01</strong> is returned (<code>Location-Path</code> must not be present); on subsequent calls,
+<strong>2.04</strong> is returned to signify that the previous RIM has been replaced with the
+new RIM.</p>
+<h4 id="adminprovisionid">/admin/provision/{id}</h4>
+<p>POST request to this endpoint results in writing data attached to the
+Provisioning Context into persistent storage. Currently, this request does not
+contain any data, and payload <strong>must</strong> be empty or <strong>4.00</strong> response will be
+returned.</p>
+<p>Fobnail Token verifies whether all required data has been provided (metadata and
+RIM is mandatory). On error, <strong>4.03</strong> response is returned. If verification is
+successful, Fobnail Token writes all required data into persistent storage,
+completing the provisioning process. If an error occurs while writing into
+persistent storage, <strong>5.00</strong> is returned (the payload may contain additional
+context). On success, <strong>2.04</strong> response is returned to signify provisioning is
+complete. At this point, the Provisioning Context becomes invalid, and all
+subsequent requests to the Provisioning Context will return <strong>4.04</strong>.</p>
+<h3 id="attestation">Attestation</h3>
+<table>
+<thead>
+<tr>
+<th>Endpoint Name</th>
+<th>Method</th>
+<th>Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/attest</td>
+<td>POST</td>
+<td>Platform metadata</td>
+</tr>
+<tr>
+<td>/attest/{id}</td>
+<td>POST</td>
+<td>Output of TPM quote</td>
+</tr>
+</tbody>
+</table>
+<h4 id="attest">/attest</h4>
+<p>The client sends platform metadata in the same format as when calling
+<code>/admin/provision/{id}/meta</code>. Metadata <strong>must</strong> be signed by the same AIK that
+was used during platform provisioning. If verification is successful <strong>2.01</strong> is
+returned (otherwise <strong>4.04</strong>) and <code>Location-Path</code> contains Attestation Context
+ID. The response's payload contains PCR selection and nonce:</p>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="c1">// Array of PCR banks (major 4)</span>
+<span class="w">    </span><span class="nt">&quot;banks&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="c1">// First PCR bank</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// ID of algorithm used by PCRs (major 0)</span>
+<span class="w">            </span><span class="nt">&quot;algo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">0004</span><span class="p">,</span>
+<span class="w">            </span><span class="c1">// Bitmap of present PCRs (major 0, unsigned integer)</span>
+<span class="w">            </span><span class="nt">&quot;pcrs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="kc">ffffffff</span><span class="p">,</span>
+<span class="w">        </span><span class="p">},</span>
+<span class="w">        </span><span class="c1">// Another PCR bank (major 5, map)</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;algo_id&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">000</span><span class="err">b</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;pcrs&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">000000</span><span class="kc">ff</span><span class="p">,</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">],</span>
+<span class="w">    </span><span class="c1">// Nonce to be passed to TPM_Quote() (major 2)</span>
+<span class="w">    </span><span class="nt">&quot;nonce&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">x</span><span class="mi">00</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">01</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">02</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="err">x</span><span class="mi">03</span><span class="p">,</span><span class="w"> </span><span class="err">...</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>The PCR selection format is similar to that of <a href="#adminprovisionidrim">RIM</a> but
+stripped of unnecessary fields. Due to the nature of PCR selection parsing done
+by <code>TPM2_Quote()</code>, order of PCR banks matters.</p>
+<h4 id="attestid">/attest/{id}</h4>
+<p>The client sends the evidence to this endpoint (the result of TPM Quote). Based
+on the evidence, Fobnail Token decides whether the platform is trustworthy or
+not. If Fobnail Token decides that the platform is trustworthy, <strong>2.04</strong>
+response is returned, <strong>4.03</strong> otherwise.</p>
+<p>If attestation is successful, Fobnail Token unlocks access to the Fobnail Token
+Services.</p>
+<h3 id="fobnail-token-services">Fobnail Token Services</h3>
+<p>Fobnail Token Services are available after successful platform attestation.
+Fobnail Token can store cryptographic keys (or other data) in its internal
+flash. Depending on the key's type (symmetric or asymmetric) and usage
+permissions, various operations are available. For symmetric keys, it is
+encryption and decryption. For asymmetric keys, it is signing, decryption, KDF,
+and public key read (the client extracts the public key and does encryption on
+its own).</p>
+<p>Key, once created, may not be read (except for the public key). Fobnail Token
+performs cryptographic operations on behalf of the client, which may be slow. If
+this behavior is undesired, Secure Storage may be used instead to store the key
+as a file inside Fobnail Token.</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint Name</th>
+<th>Method</th>
+<th>Arguments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>/crypto</td>
+<td>POST</td>
+<td>Key name, type, etc.</td>
+</tr>
+<tr>
+<td>/crypto/{id}/type</td>
+<td>GET</td>
+<td>None</td>
+</tr>
+<tr>
+<td>/crypto/{id}/encrypt</td>
+<td>POST</td>
+<td>Data to encrypt</td>
+</tr>
+<tr>
+<td>/crypto/{id}/decrypt</td>
+<td>POST</td>
+<td>Data to decrypt</td>
+</tr>
+<tr>
+<td>/crypto/{id}/sign</td>
+<td>PUT</td>
+<td>Data to sign</td>
+</tr>
+<tr>
+<td>/crypto/{id}/pub</td>
+<td>GET</td>
+<td>None</td>
+</tr>
+<tr>
+<td>/storage/fs/{name}</td>
+<td>GET</td>
+<td>File name</td>
+</tr>
+<tr>
+<td>/storage/fs/{name}</td>
+<td>PUT</td>
+<td>File name and file contents</td>
+</tr>
+<tr>
+<td>/storage/fs/{name}</td>
+<td>DELETE</td>
+<td>File name</td>
+</tr>
+</tbody>
+</table>
+<p>If the platform has not been attested (or failed attestation), these APIs will
+return a <strong>4.04</strong> error. If attestation is successful, Fobnail Token checks
+whether a specified key exists and whether the platform has access to that key.
+If the key or file does not exist or there is no access <strong>4.04</strong> error is
+returned.</p>
+<blockquote>
+<p>Note: currently, crypto API is not fully defined. Future versions of this
+document will address this problem.</p>
+</blockquote>
+<h4 id="get-storagefsname">GET /storage/fs/{name}</h4>
+<p>The client sends a request to this endpoint to read a file. The file path is
+encoded as part of the URI. If the file exists (and if it's accessible),
+<strong>2.05</strong> response is sent with the file contents as the payload. <code>Max-Age</code>
+option <strong>must</strong> be set to 0 to prevent caching. ETag option <strong>must not</strong> be
+present in the response, and if present in the request, it <strong>must</strong> be ignored.</p>
+<blockquote>
+<p>The GET method always returns the full contents of the file. Further versions
+of this document may define API using the FETCH method from RFC8132.</p>
+</blockquote>
+<p>Fobnail Token attempts to open the requested file and returns <strong>2.05</strong> response
+with file contents. <strong>4.04</strong> is returned if the file does not exist or there is
+no access.</p>
+<h4 id="put-storagefsname">PUT /storage/fs/{name}</h4>
+<p>This endpoint is used to write file contents. Fobnail Token attempts to write
+the specified file (URI) with the provided payload. If successful, Fobnail Token
+returns either <strong>2.01</strong> (when the file has been created) or <strong>2.04</strong> (when the
+file has been updated). Request may fail in the following situations:</p>
+<ul>
+<li>If the name contains invalid characters (name may not contain NULLs and slash,
+  '.' and '..' names are banned), <strong>4.03</strong> error is returned.</li>
+<li>If the platform is not allowed to create a file, <strong>4.03</strong> error is returned.</li>
+<li>If writing the file failed for any reason - <strong>5.00</strong> error (payload may
+  contain additional context).</li>
+</ul>
+<h4 id="delete-storagefsname">DELETE /storage/fs/{name}</h4>
+<p>This endpoint is used to delete a file. The file name is provided in URI, and
+the payload should be empty. On success, or if the file didn't exist before
+<strong>2.02</strong> is returned. On error, such as when the file does exist, but there is
+no permission to remove it, <strong>4.03</strong> is returned.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.aecac24b.min.js"></script>
+      
+    
+  </body>
+</html>
