@@ -2,7 +2,7 @@
 
 Fobnail Project provides resources to create axiomatically trustworthy
 [device][mccune] and simple user interface to attest platform state. For a
-detailed project description, please check [here](description).s
+detailed project description, please check [here](description).
 
 * [Fobnail firmware][fobnail_fw] is an open-source implementation of the
   [iTurtle][mccune] security architecture concept presented at HotSec07; in
